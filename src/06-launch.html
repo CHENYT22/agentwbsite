@@ -1,0 +1,190 @@
+<div class="callout">
+  <div class="callout-title">本章要点</div>
+  <p>本地看得见不算完成，<strong>别人能打开才算完成</strong>。这一步通常只花 15 分钟，但它是「玩一玩」和「真的做了个网站」的分界线。</p>
+</div>
+
+<h2 id="local">一、先分清：本地预览和上线是两件事</h2>
+
+<p>你在自己电脑上双击 <code>index.html</code>，浏览器打开了页面——这个地址通常是 <code>file:///C:/...</code> 开头。这个网址<strong>只有你能用</strong>，发给别人是打不开的。</p>
+
+<p>上线（部署）做的事，就是把这些文件复制到一台一直开着的公网服务器上，然后给你一个 <code>https://</code> 开头的网址。这个网址任何人都能打开。</p>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>本地预览</th>
+        <th>上线之后</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>地址形式</td><td>file:///C:/... 或 localhost</td><td>https://你的站点地址</td></tr>
+      <tr><td>别人能看吗</td><td>不能</td><td>能</td></tr>
+      <tr><td>适合干什么</td><td>自己检查效果、反复修改</td><td>分享、收反馈、正式使用</td></tr>
+      <tr><td>成本</td><td>0</td><td>静态站点通常也是 0</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="ways">二、三种上线方式，按省事程度排</h2>
+
+<div class="numlist">
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">方式一：让 Agent 直接部署（最省事）</p>
+      <p class="numlist-desc">如果你用的 Agent 支持连接部署平台，直接说一句「把这个站点部署上线，返回访问地址」，它会完成上传和发布。你只需要点一下确认、拿到链接。</p>
+      <p class="small muted">适合：新手第一次上线、只需要一个能分享的链接。</p>
+    </div>
+  </div>
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">方式二：拖拽上传到静态托管平台</p>
+      <p class="numlist-desc">把整个文件夹拖进平台的上传区，几十秒后得到网址。多数平台提供免费额度和自动 HTTPS，超出后按量付费。常见选择是各家云厂商的静态网站托管、以及面向开发者的静态托管服务。</p>
+      <p class="small muted">适合：完全不想接触命令行、又希望有稳定长期地址的人。</p>
+    </div>
+  </div>
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">方式三：代码仓库 + 自动构建（最「正统」）</p>
+      <p class="numlist-desc">把项目推到代码托管平台，开启 Pages 功能，之后每次更新代码就自动重新发布。首次配置需要几步，但后续改版最省心。</p>
+      <p class="small muted">适合：会持续维护、或者以后要交给别人接手的情况。</p>
+    </div>
+  </div>
+</div>
+
+<p>对新手来说，<strong>先用方式一拿到第一个链接</strong>，建立「我真的做出了一个网站」的实感，比一开始就研究配置重要得多。</p>
+
+<h2 id="steps">三、上线的具体动作</h2>
+
+<div class="steps">
+  <div class="step">
+    <div class="step-body">
+      <p class="step-title">检查入口文件</p>
+      <p>确认首页文件名是 <code>index.html</code>（小写）。这是服务器默认打开的文件，命名不对会出现「目录列表」或 404。</p>
+      <div class="codeblock">
+        <div class="codeblock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fname">向 Agent 确认</span></div>
+<pre><code>检查这个项目准备上线还缺什么：
+1. 首页文件是否叫 index.html 且拼写正确；
+2. 所有资源引用是否都是相对路径（不要出现 C:/Users/... 这种本地绝对路径）；
+3. 有没有引用本地才有的文件（比如桌面上的图片）；
+4. 把需要修的地方直接改掉。</code></pre>
+      </div>
+      <p class="small muted">第 2 条是新手上线最常见的翻车点：图片用的是本地绝对路径，部署后图片全变成破图。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-body">
+      <p class="step-title">执行部署，拿到网址</p>
+      <p>按你选的方式操作。用 Agent 部署时，它一般会返回一个可访问地址。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-body">
+      <p class="step-title">用三种设备验证</p>
+      <ul>
+        <li>电脑浏览器打开——看整体布局；</li>
+        <li>手机打开——看有没有横向滚动、字会不会太小；</li>
+        <li>把链接发给一个朋友，问一句：「你能打开吗？」</li>
+      </ul>
+      <p class="small muted">第三步听起来多余，但它能排掉「只有你自己能打开」这一类问题。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-body">
+      <p class="step-title">补上分享信息（让别人愿意点）</p>
+      <p>链接发到聊天软件里时会显示一个标题和一句描述，这就是 SEO 基础里的 <code>meta</code> 标签在起作用。让 Agent 补上：</p>
+      <div class="codeblock">
+        <div class="codeblock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fname">补 meta 信息</span></div>
+<pre><code>补全分享相关的 meta 标签：
+1. &lt;title&gt; 写成年份会变的话术：「周末手冲咖啡课 · 一个下午学会」
+2. &lt;meta name="description"&gt; 一句话讲清是什么、适合谁、怎么报名；
+3. 补 og:title / og:description / og:image / og:url，便于分享时预览；
+4. 一句 &lt;html lang="zh-CN"&gt; 确认语言标注正确。</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-body">
+      <p class="step-title">关于域名：先别急着买</p>
+      <p>平台给的网址（一串字母）完全够用。等你确认这个网站会长期存在、并且真的有人访问，再去买一个属于自己的域名，指向这个站点。先买域名、后想内容，是最典型的顺序颠倒。</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="feedback">四、怎么收集反馈才有用</h2>
+
+<p>把链接发出去，然后<strong>不要问「你觉得怎么样」</strong>。这种问题只会得到「挺好的」。换成具体问题：</p>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>别这么问</th>
+        <th>这么问</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>好不好看？</td><td>打开之后，你第一眼看懂这个页面是干什么的吗？</td></tr>
+      <tr><td>有什么建议？</td><td>哪一句话你没看懂？</td></tr>
+      <tr><td>完整吗？</td><td>如果想报名，你知道该点哪里吗？</td></tr>
+      <tr><td>——</td><td>你猜价格大概是多少？（验价格是否够醒目）</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>「第一眼看懂吗」「知道点哪里吗」这两个问题的答案，比一百句「挺好看」都有价值。</p>
+
+<h2 id="iterate">五、迭代循环：把反馈变成可执行的修改</h2>
+
+<p>收到的反馈往往是模糊的（「有点空」「不够吸引人」）。你的工作是把它翻译成一句具体的修改指令：</p>
+
+<div class="flow">
+  <div class="flow-step">
+    <div class="flow-badge">01</div>
+    <div class="flow-body">
+      <p class="flow-title">收到模糊反馈</p>
+      <p class="flow-desc">「感觉太空了，不知道要干什么。」</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="flow-badge">02</div>
+    <div class="flow-body">
+      <p class="flow-title">翻译成具体问题</p>
+      <p class="flow-desc">不是空，是首屏缺一个明确的行动指引。访客看完标语不知道下一步做什么。</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="flow-badge">03</div>
+    <div class="flow-body">
+      <p class="flow-title">变成一句修改指令</p>
+      <p class="flow-desc">「在首屏标语下方 32px 处加一个报名按钮，文案『查看课程时间』，并在按钮下方用 13px 灰字写上『每周六下午，还剩 6 个名额』。」</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="flow-badge">04</div>
+    <div class="flow-body">
+      <p class="flow-title">改完重新发布，再问一遍</p>
+      <p class="flow-desc">同一个访客再看一次：「现在知道点哪里了吗？」——这就是完整的迭代闭环。</p>
+    </div>
+  </div>
+</div>
+
+<div class="callout">
+  <div class="callout-title">别怕改坏</div>
+  <p>在动手改之前，让 Agent 先复制一份当前版本（比如 <code>index-v1.html</code>），或者把项目整理成一个代码仓库。有了退路，你才敢大胆试。</p>
+</div>
+
+<h2 id="perf">六、让页面打开更快（新手版，三件事）</h2>
+
+<ul class="checklist">
+  <li><strong>图片压缩</strong>：上传前把图片压到 200KB 以内。手机拍的原图动辄 5MB，是页面变慢的头号原因。</li>
+  <li><strong>图片懒加载</strong>：非首屏图片加 <code>loading="lazy"</code>，让浏览器先加载看得见的部分。</li>
+  <li><strong>别引外部大字体</strong>：中文字体文件通常几 MB，用系统字体栈就够，视觉上也没有损失。</li>
+</ul>
+
+<p>网站已经上线了。最后一章，我们把上线前该检查的内容和最常见的坑一次说清——它也可以当作以后每次发版的固定流程。</p>

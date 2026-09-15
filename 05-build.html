@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>实战：从零做一个落地页 · Agent 建站指南</title>
+<meta name="description" content="跟着做一遍。从空文件到完整页面，六步走完，每一句提示词和关键代码都给你。">
+<meta name="theme-color" content="#FBFBF9">
+<link rel="stylesheet" href="assets/style.css?v=20260915b">
+</head>
+<body class="page-docs">
+<div class="progress-track"><span class="progress-bar" id="progressBar"></span></div>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html" aria-label="Agent 建站指南 首页">
+      <span class="brand-mark" aria-hidden="true">A</span>
+      <span>Agent 建站指南</span>
+      <span class="brand-sub">Beginner's Guide</span>
+    </a>
+    <nav class="topnav" aria-label="主导航"><a href="index.html">首页</a><a href="01-agent-tools.html">工具地图</a><a href="02-workflow.html">工作流</a><a href="05-build.html">实战</a><a href="07-checklist.html">检查清单</a></nav>
+    <button class="nav-toggle" id="navToggle" aria-label="打开章节导航" aria-expanded="false">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" aria-label="章节导航">
+  <div class="sidebar-group">
+    <div class="sidebar-title">Beginner's Guide</div>
+    <ul class="sidebar-list">
+      <li class=""><a href="index.html"><span class="idx">00</span><span>教程首页</span></a></li>
+    </ul>
+  </div>
+  <div class="sidebar-group">
+    <div class="sidebar-title">章节</div>
+    <ul class="sidebar-list"><li class=""><a href="01-agent-tools.html"><span class="idx">01</span><span>先认识 Agent 工具</span></a></li><li class=""><a href="02-workflow.html"><span class="idx">02</span><span>Agent 做网站的完整流程</span></a></li><li class=""><a href="03-prompt.html"><span class="idx">03</span><span>把需求讲清楚</span></a></li><li class=""><a href="04-design-system.html"><span class="idx">04</span><span>设计系统速成</span></a></li><li class="is-active"><a href="05-build.html"><span class="idx">05</span><span>动手做一个落地页</span></a></li><li class=""><a href="06-launch.html"><span class="idx">06</span><span>发布上线与迭代</span></a></li><li class=""><a href="07-checklist.html"><span class="idx">07</span><span>检查清单与常见坑</span></a></li></ul>
+  </div>
+</aside>
+<div class="sidebar-scrim" id="sidebarScrim" aria-hidden="true"></div>
+<main class="content">
+<header class="chapter-head">
+  <span class="eyebrow">第 05 章 · Beginner's Guide</span>
+  <h1 class="display">实战：从零做一个落地页</h1>
+  <p class="lede">跟着做一遍。从空文件到完整页面，六步走完，每一句提示词和关键代码都给你。</p>
+  <div class="chapter-meta">
+    <span>预估阅读 15 分钟</span>
+    <span>难度：新手友好</span>
+  </div>
+</header>
+<article class="prose">
+<div class="callout">
+  <div class="callout-title">本章要点</div>
+  <p>跟着做一遍完整的六步。案例是「周末手冲咖啡课」的单页介绍站——内容真实、结构典型，做完你就掌握了八九成的场景。</p>
+</div>
+
+<h2 id="prep">准备：你需要知道的两个概念</h2>
+
+<p>只有一个前置知识：<strong>网站就是一堆文件</strong>。一个最简单的网站通常长这样：</p>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>文件</th>
+        <th>作用</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>index.html</td><td>页面本体。文件名固定，因为服务器默认打开它</td></tr>
+      <tr><td>assets/style.css</td><td>样式表。也可以直接写在 HTML 里（新手推荐）</td></tr>
+      <tr><td>assets/</td><td>放图片、图标、字体等素材的文件夹</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>你要做的第一件事，是在电脑上新建一个空文件夹，比如 <code>my-site</code>，然后用 Agent 打开这个文件夹。后面所有文件都会生成在这里，不会弄乱你的桌面。</p>
+
+<div class="callout">
+  <div class="callout-title">给用方案 A 的同学</div>
+  <p>如果你用的是建站生成型平台，跳过「建文件夹」这一步——平台已经替你准备好了项目空间，直接从下面第 1 步的提示词开始。</p>
+</div>
+
+<div class="steps">
+
+<div class="step">
+  <div class="step-body">
+    <p class="step-title">提第一轮需求：只要结构，不要样式</p>
+    <p>先把六要素写全，并且明确要求「先不要写样式」。这一步的产出是一份清楚的内容骨架。</p>
+
+    <div class="codeblock">
+      <div class="codeblock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fname">第 1 轮提示词</span></div>
+<pre><code>【目标】做一个周末手冲咖啡体验课的单页介绍站，目的是让感兴趣的人看完就报名。
+【受众】25–35 岁城市白领，想学点新东西、周末有事做，最关心课程内容、时间和价格。
+【内容】从上到下：
+  1. 一句招牌标语 + 一句话说明
+  2. 这门课适合谁（三个简短的判断句）
+  3. 三节课的内容安排（每节一句话）
+  4. 讲师介绍（一段短文）
+  5. 时间、地点、价格（清楚易读）
+  6. 报名方式与联系方式
+【风格】先不定视觉，只做结构。
+【技术】单个 index.html 文件，样式写在文件内的 style 标签里，不要后端。
+【约束】先不要写任何 CSS，只输出 HTML 结构和占位文案，中文。</code></pre>
+    </div>
+
+    <p class="small muted"><strong>验收点：</strong>区块顺序对不对？有没有你不需要的块？标语是否有吸引力？文案是否用了真实语气（而不是「这里是副标题」这种占位符）？</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-body">
+    <p class="step-title">确认结构，删掉多余的东西</p>
+    <p>第一版结构通常会多出一些「看起来应该要有」的块，比如邮箱订阅、合作伙伴 logo。新手页面最大的敌人就是贪多。</p>
+
+    <div class="codeblock">
+      <div class="codeblock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fname">第 2 轮提示词</span></div>
+<pre><code>结构基本可以。做三处调整：
+1. 删掉「邮箱订阅」那一整块，现在不需要；
+2. 把「时间地点价格」移到「讲师介绍」前面，报名的信息越靠前越好；
+3. 首屏标语换成：「一个下午，学会自己冲出一杯好咖啡。」
+其他块保留，仍然不要写任何样式。</code></pre>
+    </div>
+
+    <p class="small muted"><strong>验收点：</strong>调整到位且没有顺手改别的地方。如果它多做动作了，直接说「第 3 点以外的部分保持原样」。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-body">
+    <p class="step-title">给设计规范，让它套样式</p>
+    <p>把上一章那套设计规范整段贴进去，再加一句「所有值只能引用这些变量」。这一步通常是效果最惊艳的一次修改。</p>
+
+    <div class="codeblock">
+      <div class="codeblock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fname">第 3 轮提示词</span></div>
+<pre><code>现在开始写样式，严格遵循下面这套设计规范，不要新造任何色值：
+
+:root {
+  --paper:#FBFBF9; --surface:#FFFFFF; --surface-2:#F4F3EF;
+  --ink:#0C0C0B;   --ink-2:#46453F;   --ink-3:#78776F;
+  --line:#E7E6E0;
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
+  --r-s:10px; --r-m:16px; --r-l:24px;
+}
+
+具体要求：
+1. 整站只用黑白灰，不出现任何彩色；
+2. 首屏标题 font-size: clamp(2.5rem, 6vw, 4.4rem)，字重 600，
+   letter-spacing: -0.035em，行高 1.06；正文字号 16px、行高 1.8；
+3. 每个区块之间垂直间距 96px，区块之间用 1px 的 --line 横线分隔；
+4. 不用大面积阴影，需要层次的块用 1px 边框；
+5. 全站统一左对齐，只有首屏标语可以居中。</code></pre>
+    </div>
+
+    <p>它大概会给你这样的结构：</p>
+
+    <div class="codeblock">
+      <div class="codeblock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fname">关键样式示意</span></div>
+<pre><code><span class="key">.hero</span> {
+  padding: 128px 24px 96px;
+  border-bottom: 1px solid var(--line);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+<span class="key">.hero h1</span> {
+  font-size: clamp(2.5rem, 6vw, 4.4rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  max-width: 18ch;        <span class="cmt">/* 标题一行别超过 18 个字 */</span>
+  margin: 0;
+}
+<span class="key">.section</span> {
+  padding: 96px 24px;
+  border-bottom: 1px solid var(--line);
+}
+<span class="key">.cards</span> {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+<span class="key">.card</span> {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-m);
+  padding: 32px;
+}</code></pre>
+    </div>
+
+    <p class="small muted"><strong>验收点：</strong>是否出现了彩色？区块之间是否够空？标题是否够大？——如果「像文档不像作品」，八成是间距不够，直接说「所有区块间距从 64 提到 96」。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-body">
+    <p class="step-title">手机端适配</p>
+    <p>这一步一定要做，而且一定要<strong>真的用手机打开看</strong>。只让 Agent「检查一下响应式」，它会敷衍你。</p>
+
+    <div class="codeblock">
+      <div class="codeblock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fname">第 4 轮提示词</span></div>
+<pre><code>现在处理手机端（宽度 375px 到 720px）：
+1. 三列卡片改成单列，间距 16px；
+2. 首屏上下内边距减半，标题字号用 clamp 自适应；
+3. 所有左右内边距统一 16px，不要出现横向滚动条；
+4. 检查长英文单词和链接会不会溢出容器，会的话加 word-break。
+
+改完告诉我：在 375px 宽度下，页面有没有横向滚动。</code></pre>
+    </div>
+
+    <p class="small muted"><strong>验收点：</strong>在手机浏览器里把页面缩小到最小，左右滑动一下——如果页面能左右晃动，就是有元素溢出了。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-body">
+    <p class="step-title">补细节：这些小事决定专业度</p>
+    <p>结构、样式、适配都对了，最后一轮补上「看起来很舒服但说不出为什么」的部分。</p>
+
+    <div class="codeblock">
+      <div class="codeblock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fname">第 5 轮提示词</span></div>
+<pre><code>做最后一轮细节打磨，不要改动布局和配色：
+1. 报名按钮加悬停效果：底色不变，轻微上移 1px + 淡阴影，过渡 0.2s 缓动；
+2. 所有可点击元素加 transition，时长 0.18–0.22s；
+3. 卡片悬停时边框颜色加深一点（--line 到 #D7D6CE）；
+4. 给页面加 meta：title、description、viewport、theme-color；
+5. 用等宽字体给「时间 / 时长 / 价格」这类数字，让数字对齐更整齐；
+6. 尊重用户的减少动效设置：加 @media (prefers-reduced-motion: reduce) 关闭动画。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-body">
+    <p class="step-title">本地打开，逐条验收</p>
+    <p>用浏览器打开 <code>index.html</code>，按下面的清单看一遍。发现问题就描述现象，不要描述原因——把判断交给 Agent：</p>
+
+    <ul>
+      <li>「首屏标题和下面那句话挨太近了，间距加大。」（说现象就够了）</li>
+      <li>「手机上第二张卡片文字贴到边框了，内边距要加大。」</li>
+      <li>「第三块的横线和文字距离不一致，统一一下。」</li>
+    </ul>
+
+    <p>到这一步，你手上已经是一个完整、可用、看起来不廉价的落地页。下一步把它发出去。</p>
+  </div>
+</div>
+
+</div>
+
+<h2 id="files">这一章的产出</h2>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>文件</th>
+        <th>作用</th>
+        <th>大致规模</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>index.html</td><td>整个页面：结构 + 内联样式 + 少量交互</td><td>300–500 行，够用</td></tr>
+      <tr><td>assets/（可选）</td><td>放产品图、讲师照片、微信二维码</td><td>按需</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="callout">
+  <div class="callout-title">下一步之前</div>
+  <p>先别急着优化。把这一版发布出去，让别人真的打开看一眼——他们的第一个问题，往往是你完全没想到的那个。</p>
+</div>
+</article>
+<nav class="pager" aria-label="章节翻页"><a class="pager-link prev" href="04-design-system.html"><span class="dir">← 上一章</span><span class="t">设计系统速成</span></a><a class="pager-link next" href="06-launch.html"><span class="dir">下一章 →</span><span class="t">发布上线与迭代</span></a></nav>
+</main>
+</div>
+<footer class="sitefoot">
+  <div class="sitefoot-inner">
+    <span class="small">Agent 建站指南 · 写给完全新手的 Agent 建站入门教程</span>
+    <span class="mono-label">使用 ← → 方向键翻章</span>
+  </div>
+</footer>
+<script src="assets/site.js?v=20260915b"></script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>市面上有哪些 Agent 工具 · Agent 建站指南</title>
+<meta name="description" content="先把工具地图看一遍。知道每类工具擅长什么，你就不会拿着锤子找钉子。">
+<meta name="theme-color" content="#FBFBF9">
+<link rel="stylesheet" href="assets/style.css?v=20260915b">
+</head>
+<body class="page-docs">
+<div class="progress-track"><span class="progress-bar" id="progressBar"></span></div>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html" aria-label="Agent 建站指南 首页">
+      <span class="brand-mark" aria-hidden="true">A</span>
+      <span>Agent 建站指南</span>
+      <span class="brand-sub">Beginner's Guide</span>
+    </a>
+    <nav class="topnav" aria-label="主导航"><a href="index.html">首页</a><a href="01-agent-tools.html">工具地图</a><a href="02-workflow.html">工作流</a><a href="05-build.html">实战</a><a href="07-checklist.html">检查清单</a></nav>
+    <button class="nav-toggle" id="navToggle" aria-label="打开章节导航" aria-expanded="false">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" aria-label="章节导航">
+  <div class="sidebar-group">
+    <div class="sidebar-title">Beginner's Guide</div>
+    <ul class="sidebar-list">
+      <li class=""><a href="index.html"><span class="idx">00</span><span>教程首页</span></a></li>
+    </ul>
+  </div>
+  <div class="sidebar-group">
+    <div class="sidebar-title">章节</div>
+    <ul class="sidebar-list"><li class="is-active"><a href="01-agent-tools.html"><span class="idx">01</span><span>先认识 Agent 工具</span></a></li><li class=""><a href="02-workflow.html"><span class="idx">02</span><span>Agent 做网站的完整流程</span></a></li><li class=""><a href="03-prompt.html"><span class="idx">03</span><span>把需求讲清楚</span></a></li><li class=""><a href="04-design-system.html"><span class="idx">04</span><span>设计系统速成</span></a></li><li class=""><a href="05-build.html"><span class="idx">05</span><span>动手做一个落地页</span></a></li><li class=""><a href="06-launch.html"><span class="idx">06</span><span>发布上线与迭代</span></a></li><li class=""><a href="07-checklist.html"><span class="idx">07</span><span>检查清单与常见坑</span></a></li></ul>
+  </div>
+</aside>
+<div class="sidebar-scrim" id="sidebarScrim" aria-hidden="true"></div>
+<main class="content">
+<header class="chapter-head">
+  <span class="eyebrow">第 01 章 · Beginner's Guide</span>
+  <h1 class="display">市面上有哪些 Agent 工具</h1>
+  <p class="lede">先把工具地图看一遍。知道每类工具擅长什么，你就不会拿着锤子找钉子。</p>
+  <div class="chapter-meta">
+    <span>预估阅读 8 分钟</span>
+    <span>难度：新手友好</span>
+  </div>
+</header>
+<article class="prose">
+<div class="callout">
+  <div class="callout-title">本章要点</div>
+  <p>Agent 工具分四类：<strong>对话型、编程型、建站生成型、设计型</strong>。它们的差别不在「谁更聪明」，而在「谁被允许动手」——能不能读写文件、能不能跑命令、能不能直接发布。搞清楚这一点，选型就不会错。</p>
+</div>
+
+<h2 id="what-is-agent">一、先分清：Agent 和聊天机器人有什么不同</h2>
+
+<p>你可能已经在用 AI 聊天工具了。但「会聊天」和「会干活」是两件不同的事。</p>
+
+<p><strong>聊天机器人</strong>只做一件事：你问，它答。它给你一段文字、一段代码，然后停在那里。剩下的事情——把代码存成文件、起一个本地服务器、检查页面有没有跑起来——都得你自己来。</p>
+
+<p><strong>Agent（智能体）</strong>在「回答」之外，还被授予了动手的权限。它能：</p>
+
+<ul>
+  <li><strong>读写文件</strong>：直接在磁盘上创建 <code>index.html</code>、<code>style.css</code>，而不是把代码贴在聊天框里等你复制。</li>
+  <li><strong>执行命令</strong>：自己运行代码、起本地预览服务、看报错、再自己改。</li>
+  <li><strong>多步骤完成任务</strong>：你给一个目标，它自己拆成若干步，边做边检查，做完再汇报。</li>
+  <li><strong>调用外部服务</strong>：连接部署平台、设计工具、数据源，把「做完」推进到「上线」。</li>
+</ul>
+
+<p>所以本教程里说的「用 Agent 做网站」，真实含义是：<strong>你负责说清楚要什么和判断好不好，Agent 负责把文件写出来、跑起来、发上去。</strong></p>
+
+<h2 id="four-types">二、四类工具的完整地图</h2>
+
+<p>市面上的工具数量很多，但按「能力边界」拆开，其实只有四类：</p>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>类别</th>
+        <th>代表工具</th>
+        <th>它最擅长</th>
+        <th>新手典型场景</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>对话型通用 Agent</td>
+        <td>ChatGPT、Claude、Gemini、豆包、腾讯元宝、Kimi</td>
+        <td>理清思路、写文案、生成单页代码</td>
+        <td>想不清楚要做什么时，先聊一轮</td>
+      </tr>
+      <tr>
+        <td>编程型 Agent</td>
+        <td>Cursor、Claude Code、GitHub Copilot、Windsurf、Trae</td>
+        <td>在真实项目里建多个文件、跑命令、调试</td>
+        <td>要把网站做完整并反复修改</td>
+      </tr>
+      <tr>
+        <td>建站生成型 Agent</td>
+        <td>v0、Bolt.new、Lovable、Replit Agent、秒哒、云指建站</td>
+        <td>对话直出可视化页面，自带预览与一键发布</td>
+        <td>最快看到一个能打开的网站</td>
+      </tr>
+      <tr>
+        <td>设计型 Agent</td>
+        <td>Canva 可画、MasterGo 莫高、Figma、创客贴、美图设计室</td>
+        <td>配色排版、出图、把设计稿转成代码</td>
+        <td>页面内容有了但「不好看」</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p class="small muted">注：以上工具的免费额度、付费方式与能力更新非常快，本章只讲定位与适用场景，具体价格与功能请以各产品官网为准。</p>
+
+<h3 id="type-chat">1. 对话型通用 Agent：用来想清楚，不是用来收尾</h3>
+
+<p>这类工具最普及，也最容易被误用。它们的强项是<strong>理解与梳理</strong>：帮你把模糊的想法变成一句能执行的需求，帮你写页面上的文案，帮你判断两个方案哪个更合适。</p>
+
+<p>部分产品已经可以生成可在浏览器里直接预览的网页代码（例如产物预览类功能），做「单页小东西」完全够用。但当项目变成多个文件、要加交互、要反复迭代时，你会明显感觉到聊天框装不下这个工作量。</p>
+
+<div class="callout">
+  <div class="callout-title">一句话定位</div>
+  <p>把它当<strong>策划和文案</strong>用，效果最好；把它当唯一的开发工具，很快就会难受。</p>
+</div>
+
+<h3 id="type-code">2. 编程型 Agent：真正能把网站「做出来」的一类</h3>
+
+<p>这类工具运行在你的编辑器或终端里，被授予了读写文件和执行命令的权限。它可以直接：</p>
+
+<ul>
+  <li>创建 <code>index.html</code>、<code>style.css</code>、<code>assets/</code> 等一整套文件结构；</li>
+  <li>自己运行本地预览，发现报错后自己修；</li>
+  <li>一次修改影响五个文件时，同步改掉，不用你来回粘贴。</li>
+</ul>
+
+<p>对新手而言，这类工具的价值是：<strong>你不需要看得懂所有代码，但你可以要求它解释、要求它改、要求它重做。</strong>它把「写代码」变成了「提要求 + 验收」。</p>
+
+<p>代价是它需要一点环境概念——本地要有一个文件夹、要知道怎么打开预览。这几步在第 6 章会手把手过一遍。</p>
+
+<h3 id="type-site">3. 建站生成型 Agent：最快拿到一个能打开的网址</h3>
+
+<p>这类平台把「生成代码 + 预览 + 部署」打包在一个网页里。你描述需求，它给你一个实时预览窗口，满意了直接点发布，拿到一个公开链接。整个流程不需要装任何软件，最适合零基础的第一站。</p>
+
+<p>适合的场景：落地页、个人主页、活动页、产品介绍页。它们的默认审美通常已经在及格线以上，模板化程度高——这也意味着深度定制会比较受限。</p>
+
+<div class="callout">
+  <div class="callout-title">新手建议</div>
+  <p>如果你只想尽快看到成果建立信心，<strong>从这类工具开始</strong>；如果你想把网站当成长期资产持续改，再转向前两类。</p>
+</div>
+
+<h3 id="type-design">4. 设计型 Agent：解决「不好看」这个具体问题</h3>
+
+<p>页面结构对了、内容齐了，但看上去就是廉价——这是新手最常卡住的一关。这类工具的职责是把设计水准补齐：</p>
+
+<ul>
+  <li><strong>素材与配图</strong>：海报、封面、图标、社媒配图，一句话生成；</li>
+  <li><strong>排版与配色</strong>：基于成熟模板调整版式，避免自己从零调；</li>
+  <li><strong>设计转代码（D2C）</strong>：把设计稿直接转成前端代码，减少「设计很好看、实现很崩坏」的落差。</li>
+</ul>
+
+<p>如果你不想引入额外工具，也可以只用第 4 章的设计系统四变量 + 提示词约束，让编程型 Agent 直接产出及格线以上的视觉。</p>
+
+<h2 id="how-to-choose">三、用三个问题选出你的工具</h2>
+
+<div class="numlist">
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">问题一：我今天就想发给别人看，还是慢慢打磨？</p>
+      <p class="numlist-desc">想立刻发出去 → 建站生成型。愿意花两三天打磨 → 编程型 Agent。</p>
+    </div>
+  </div>
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">问题二：我连要做什么都还没想清楚？</p>
+      <p class="numlist-desc">那就先用对话型 Agent 聊一轮。把「目标、受众、包含哪些内容」聊出来，再换工具动手。这一步花 20 分钟，能省掉后面两小时的返工。</p>
+    </div>
+  </div>
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">问题三：做完之后，是不是还要改很多次？</p>
+      <p class="numlist-desc">会反复改 → 一定要选能修改源文件、能长期维护的方式。纯拖拽式工具在第三次改版时开始让人难受。</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="recommend">四、给新手的推荐组合</h2>
+
+<div class="compare">
+  <div class="compare-col">
+    <span class="compare-tag">方案 A · 零基础最快路径</span>
+    <p><strong>建站生成型 + 设计型</strong></p>
+    <p class="small muted">对话直出页面并一键发布，配图与视觉交给设计型工具。全程不需要装软件，一两个小时内能拿到公开链接。</p>
+    <p class="small"><strong>代价：</strong>深度定制受限，后期改版依赖平台。</p>
+  </div>
+  <div class="compare-col">
+    <span class="compare-tag">方案 B · 长期可用路径（推荐）</span>
+    <p><strong>对话型 + 编程型 Agent</strong></p>
+    <p class="small muted">先用对话型理清需求，再用编程型 Agent 在本地建项目、跑预览、部署上线。文件在你手里，随时能改、能搬、能扩展。</p>
+    <p class="small"><strong>代价：</strong>前 20 分钟需要熟悉「文件夹 + 本地预览」这两个概念。</p>
+  </div>
+</div>
+
+<p>本教程剩下的章节按 <strong>方案 B</strong> 展开，但在每一步都会说明「如果你想用方案 A，对应该怎么操作」。</p>
+
+<h2 id="glossary">五、先认识这几个词，后面不卡壳</h2>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>术语</th>
+        <th>说白了是什么意思</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>提示词（Prompt）</td>
+        <td>你对 Agent 说的那段话。它的质量直接决定产出质量。</td>
+      </tr>
+      <tr>
+        <td>本地预览</td>
+        <td>在你自己的电脑上先把网站打开看效果，只有你能看到。</td>
+      </tr>
+      <tr>
+        <td>静态网站</td>
+        <td>没有后端数据库的网站，由 HTML/CSS/JS 文件组成，免费托管即可上线。</td>
+      </tr>
+      <tr>
+        <td>部署 / 上线</td>
+        <td>把这些文件放到公网服务器上，别人就能通过网址访问。</td>
+      </tr>
+      <tr>
+        <td>响应式</td>
+        <td>同一个页面在手机和电脑上都能正常显示、不串行不溢出。</td>
+      </tr>
+      <tr>
+        <td>设计系统</td>
+        <td>一套统一的颜色、字号、间距规则，用来保证整站看起来是一家人。</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>工具地图到这里就完整了。下一章我们看真正动手时的完整流程——从一句需求，到页面上线，中间到底发生了什么。</p>
+</article>
+<nav class="pager" aria-label="章节翻页"><span class="pager-link prev empty"><span class="dir">已是最前</span><span class="t">—</span></span><a class="pager-link next" href="02-workflow.html"><span class="dir">下一章 →</span><span class="t">Agent 做网站的完整流程</span></a></nav>
+</main>
+</div>
+<footer class="sitefoot">
+  <div class="sitefoot-inner">
+    <span class="small">Agent 建站指南 · 写给完全新手的 Agent 建站入门教程</span>
+    <span class="mono-label">使用 ← → 方向键翻章</span>
+  </div>
+</footer>
+<script src="assets/site.js?v=20260915b"></script>
+</body>
+</html>

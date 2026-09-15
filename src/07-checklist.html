@@ -1,0 +1,157 @@
+<div class="callout">
+  <div class="callout-title">本章要点</div>
+  <p>十条上线前清单 + 六个新手必踩的坑 + 三个进阶方向。做完这章，你的页面已经超过大多数人的第一版了。</p>
+</div>
+
+<h2 id="checklist">一、上线前十条清单</h2>
+
+<p>每次发布前过一遍，一条 10 秒，两分钟就能走完，能挡掉九成的低级问题。</p>
+
+<ul class="checklist">
+  <li><strong>首屏说清了「这是什么」</strong>——把页面缩到 30% 看一眼，三秒内能看懂主题吗？</li>
+  <li><strong>每块内容都有存在理由</strong>——有没有为了「看起来丰富」而放的凑数块？删掉它。</li>
+  <li><strong>区块间距够大</strong>——区块之间至少 64px，推荐 96px。挤是廉价感第一来源。</li>
+  <li><strong>颜色不超过「黑白灰 + 一个强调色」</strong>——多出来的彩色一律删掉。</li>
+  <li><strong>字号层级只有三级</strong>——大标题、小标题、正文。第四级开始必乱。</li>
+  <li><strong>手机端无横向滚动</strong>——真机左滑右滑验证，不要只靠肉眼。</li>
+  <li><strong>所有链接可点、指向正确</strong>——包括页脚、按钮、外链，逐个点一遍。</li>
+  <li><strong>图片是相对路径且已压缩</strong>——不能出现 C:/Users/... 这类本地路径。</li>
+  <li><strong>meta 信息完整</strong>——title、description、viewport、og 标签齐全。</li>
+  <li><strong>有人真的打开过</strong>——把链接发给一个人，确认他能正常访问。</li>
+</ul>
+
+<h2 id="traps">二、新手最常踩的六个坑</h2>
+
+<div class="numlist">
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">坑一：文案一股「AI 味」</p>
+      <p class="numlist-desc">症状：满屏「赋能」「打造极致体验」「开启全新篇章」，读完不知道这家在卖什么。<br>
+      <strong>解法：</strong>在提示词里明确「不要营销套话，用具体名词和数字」。写完自己读一遍——你会这样跟朋友介绍这件事吗？不会就重写。</p>
+    </div>
+  </div>
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">坑二：什么都想要，首页塞成仓库</p>
+      <p class="numlist-desc">症状：首屏同时出现公司介绍、产品、团队、新闻、招聘入口。<br>
+      <strong>解法：</strong>一个页面只有一个目标。做咖啡课报名页，就只服务「报名」这一件事，介绍公司请留给「关于我们」。</p>
+    </div>
+  </div>
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">坑三：只看电脑，不看手机</p>
+      <p class="numlist-desc">症状：电脑上完美，手机上文字溢出、按钮点不到、卡片挤成一团。而大部分分享链接是在手机上被点开的。<br>
+      <strong>解法：</strong>每改完一轮，手机刷新一次。给 Agent 的指令里永远带一句「手机端也要正常」。</p>
+    </div>
+  </div>
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">坑四：无限打磨，永远不上线</p>
+      <p class="numlist-desc">症状：改了二十版配色，仍然没有一个可访问的网址。<br>
+      <strong>解法：</strong>先上线一个「及格版」，再迭代。上线本身会带来真实反馈，而打磨只会带来新的不确定。</p>
+    </div>
+  </div>
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">坑五：把控制权全交出去</p>
+      <p class="numlist-desc">症状：全程只说「你看着办」，最后拿到一个自己不满意的页面，也不知道从哪改。<br>
+      <strong>解法：</strong>关键决策自己做——配色方向、区块顺序、文案语气。Agent 负责实现，不负责审美判断。</p>
+    </div>
+  </div>
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">坑六：素材版权不清楚</p>
+      <p class="numlist-desc">症状：随手从搜索引擎存图、用不明来源的字体，商用后收到侵权通知。<br>
+      <strong>解法：</strong>用可商用图库或自己拍；字体优先用系统字体；让 Agent 生成配图时说明用途为商用。</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="a11y">三、两个容易被忽略但很值得做的事</h2>
+
+<h3>1. 键盘也能用</h3>
+
+<p>让 Agent 检查：所有可点击元素是否可用 Tab 键依次聚焦？焦点样式是否可见？图片是否有 <code>alt</code> 描述？这三项做到，页面的专业度就上了一个台阶，也顺带改善了无障碍体验。</p>
+
+<h3>2. 尊重「减少动效」设置</h3>
+
+<p>有些用户会因为前庭敏感而关闭动画。加一段几行的媒体查询就能照顾到：</p>
+
+<div class="codeblock">
+  <div class="codeblock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fname">减少动效</span></div>
+<pre><code>@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}</code></pre>
+</div>
+
+<h2 id="next">四、接下来可以往哪走</h2>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>方向</th>
+        <th>适合什么情况</th>
+        <th>第一步怎么做</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>多页面站点</td>
+        <td>内容开始变多，单页讲不完</td>
+        <td>让 Agent 抽出共享的导航与页脚，再拆出 3–5 个页面</td>
+      </tr>
+      <tr>
+        <td>加真实功能</td>
+        <td>需要收集报名、留言、数据</td>
+        <td>接入现成的表单服务，避免自己写后端</td>
+      </tr>
+      <tr>
+        <td>迁移到前端框架</td>
+        <td>页面数量上去、需要组件复用</td>
+        <td>让 Agent 把现有页面转成组件结构，一页一页迁移</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p class="small muted">建议顺序也是从上到下。不要在第一版就用框架——你会把时间花在配置上，而不是内容上。</p>
+
+<hr class="hairline">
+
+<h2 id="recap">五、回顾：你已经掌握的东西</h2>
+
+<div class="numlist">
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">你会分辨工具了</p>
+      <p class="numlist-desc">四类 Agent 工具的能力边界，以及什么情况下该用哪一类。</p>
+    </div>
+  </div>
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">你会提需求了</p>
+      <p class="numlist-desc">六要素模板 + 把模糊形容词翻译成可执行特征的能力。这一项价值最高，也最通用。</p>
+    </div>
+  </div>
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">你会判断页面好坏了</p>
+      <p class="numlist-desc">颜色、字体、间距、圆角四个变量，让你从「说不上来哪里怪」变成「间距不够，翻倍」。</p>
+    </div>
+  </div>
+  <div class="numlist-item">
+    <div class="numlist-body">
+      <p class="numlist-title">你有一个真实上线的网站</p>
+      <p class="numlist-desc">这是最难从零跨过的一步，你已经跨过去了。</p>
+    </div>
+  </div>
+</div>
+
+<div class="callout">
+  <div class="callout-title">最后一句</div>
+  <p>Agent 把「会不会写代码」这道门槛挪开了，剩下的是<strong>你想清楚要做什么，以及你能不能看出问题</strong>——这两件事，练一次就长一分。现在，去做第二个网站吧。</p>
+</div>

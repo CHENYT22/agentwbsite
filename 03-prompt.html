@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>提示词：把需求讲清楚 · Agent 建站指南</title>
+<meta name="description" content="Agent 做得好不好，八成取决于你说得清不清楚。这一章给你一个能直接套用的需求模板。">
+<meta name="theme-color" content="#FBFBF9">
+<link rel="stylesheet" href="assets/style.css?v=20260915b">
+</head>
+<body class="page-docs">
+<div class="progress-track"><span class="progress-bar" id="progressBar"></span></div>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html" aria-label="Agent 建站指南 首页">
+      <span class="brand-mark" aria-hidden="true">A</span>
+      <span>Agent 建站指南</span>
+      <span class="brand-sub">Beginner's Guide</span>
+    </a>
+    <nav class="topnav" aria-label="主导航"><a href="index.html">首页</a><a href="01-agent-tools.html">工具地图</a><a href="02-workflow.html">工作流</a><a href="05-build.html">实战</a><a href="07-checklist.html">检查清单</a></nav>
+    <button class="nav-toggle" id="navToggle" aria-label="打开章节导航" aria-expanded="false">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" aria-label="章节导航">
+  <div class="sidebar-group">
+    <div class="sidebar-title">Beginner's Guide</div>
+    <ul class="sidebar-list">
+      <li class=""><a href="index.html"><span class="idx">00</span><span>教程首页</span></a></li>
+    </ul>
+  </div>
+  <div class="sidebar-group">
+    <div class="sidebar-title">章节</div>
+    <ul class="sidebar-list"><li class=""><a href="01-agent-tools.html"><span class="idx">01</span><span>先认识 Agent 工具</span></a></li><li class=""><a href="02-workflow.html"><span class="idx">02</span><span>Agent 做网站的完整流程</span></a></li><li class="is-active"><a href="03-prompt.html"><span class="idx">03</span><span>把需求讲清楚</span></a></li><li class=""><a href="04-design-system.html"><span class="idx">04</span><span>设计系统速成</span></a></li><li class=""><a href="05-build.html"><span class="idx">05</span><span>动手做一个落地页</span></a></li><li class=""><a href="06-launch.html"><span class="idx">06</span><span>发布上线与迭代</span></a></li><li class=""><a href="07-checklist.html"><span class="idx">07</span><span>检查清单与常见坑</span></a></li></ul>
+  </div>
+</aside>
+<div class="sidebar-scrim" id="sidebarScrim" aria-hidden="true"></div>
+<main class="content">
+<header class="chapter-head">
+  <span class="eyebrow">第 03 章 · Beginner's Guide</span>
+  <h1 class="display">提示词：把需求讲清楚</h1>
+  <p class="lede">Agent 做得好不好，八成取决于你说得清不清楚。这一章给你一个能直接套用的需求模板。</p>
+  <div class="chapter-meta">
+    <span>预估阅读 9 分钟</span>
+    <span>难度：新手友好</span>
+  </div>
+</header>
+<article class="prose">
+<div class="callout">
+  <div class="callout-title">本章要点</div>
+  <p>一份能直接套用的需求模板：<strong>目标、受众、内容、风格、技术、约束</strong>六个要素。缺一个，Agent 就得靠猜；猜错了，你就要重来一遍。</p>
+</div>
+
+<h2 id="template">一、六要素需求模板</h2>
+
+<p>把下面这段复制下来，填空，就是一份及格线以上的需求描述。第一次用会有点慢，第三次开始你会发现它能用在几乎所有事情上。</p>
+
+<div class="codeblock">
+  <div class="codeblock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fname">需求模板.txt</span></div>
+<pre><code>【目标】我要做一个 ______ 的网站，主要目的是 ______。
+【受众】访问者主要是 ______，他们最关心 ______。
+【内容】页面从上到下包含这几块：
+        1. ______
+        2. ______
+        3. ______
+【风格】参考 ______（网站/图片），我想要的感觉是 ______，
+        特别注意 ______（例如：留白多、标题很大、颜色很克制）。
+【技术】单个 HTML 文件，样式写在文件内部，
+        不需要后端和数据库，桌面和手机都要正常显示。
+【约束】不要 ______（例如：不要花哨渐变动画、不要圆角过大、
+        不要用 emoji 当图标）；文案用中文，语气 ______。</code></pre>
+</div>
+
+<p>六个要素里，<strong>【目标】和【风格】是新手最容易省掉、也最不该省的两项</strong>。前者决定内容取舍，后者决定视觉方向。</p>
+
+<h2 id="compare">二、差提示词 vs 好提示词，逐句对比</h2>
+
+<div class="compare">
+  <div class="compare-col bad">
+    <span class="compare-tag">✕ 差 · 常见新手写法</span>
+    <p class="small">帮我做一个咖啡店的网站，要好看一点的，高级感。</p>
+    <p class="small muted">Agent 需要自己猜：是单页还是多页？放菜单还是放故事？「高级感」是酷黑还是奶油白？——每一项都可能猜错。</p>
+  </div>
+  <div class="compare-col">
+    <span class="compare-tag">✓ 好 · 六要素写法</span>
+    <p class="small">帮我做一个独立咖啡馆的单页介绍网站，目的是让附近的人愿意来店里坐坐。</p>
+    <p class="small">访问者是 25–35 岁的城市白领，他们最关心营业时间、位置和店里的氛围。</p>
+    <p class="small">页面从上到下：一句招牌标语、三张氛围图区域、菜单价格表、门店地址与营业时间、一行联系方式。</p>
+    <p class="small">风格参考一家我很喜欢的极简杂志站，我想要的感觉是干净、暖、留白多、标题大而细。</p>
+    <p class="small">单个 HTML 文件，样式写在里面，不要后端，手机和电脑都要正常显示。</p>
+    <p class="small">不要花哨动画，不要 emoji 图标，文案中文、语气温和。</p>
+  </div>
+</div>
+
+<p>效果差别有多大？<strong>差写法通常要来回改 5–8 轮才勉强能看；好写法基本第一版就可用，后面只是微调。</strong></p>
+
+<h2 id="style">三、怎么描述「风格」——最难也最有价值的一项</h2>
+
+<p>「高级」「简约」「有质感」这类词，对 Agent 来说信息量极低。真正有效的方式是<strong>用参考物 + 可验证的特征</strong>：</p>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>模糊说法</th>
+        <th>可执行的替代写法</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>简约</td>
+        <td>只用黑白灰三种颜色，一个页面最多一个强调色</td>
+      </tr>
+      <tr>
+        <td>高级</td>
+        <td>标题字号比正文大 3 倍以上，区块之间留白至少 96px，不要阴影</td>
+      </tr>
+      <tr>
+        <td>有科技感</td>
+        <td>深色背景、等宽字体用于标签、细线条分割、圆形按钮</td>
+      </tr>
+      <tr>
+        <td>温暖亲和</td>
+        <td>米白底色、圆角 16px、正文行高 1.8、避免纯黑文字</td>
+      </tr>
+      <tr>
+        <td>活泼</td>
+        <td>高饱和撞色、倾斜元素、圆润大字号、卡片轻微旋转</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>如果你有喜欢的网站，直接把网址给 Agent，并说明<strong>你喜欢它的哪一点</strong>：</p>
+
+<div class="codeblock">
+  <div class="codeblock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fname">风格描述示例.txt</span></div>
+<pre><code>参考 https://example.com 的感觉，具体喜欢三点：
+1. 首屏标题特别大，几乎占满一行，字重不重但很有气势；
+2. 区块之间用很细的浅灰线分隔，不用卡片阴影；
+3. 小标签用等宽字体大写字母，显得很克制。
+
+我们的内容换成 ______，其他保持这种气质。</code></pre>
+</div>
+
+<div class="callout">
+  <div class="callout-title">提示</div>
+  <p>不要照抄参考站的<strong>内容</strong>，只抄它的<strong>规则</strong>（字号关系、留白尺度、色彩克制程度）。抄规则会得到自己的风格，抄内容只会得到一张似是而非的仿制品。</p>
+</div>
+
+<h2 id="iterate">四、迭代时怎么说——「改哪里、别动哪里」</h2>
+
+<p>第一版出来之后，才是提示词真正的战场。两个原则：</p>
+
+<h3>1. 一次只说一件事</h3>
+
+<p>不要说「整体调整一下，感觉哪里都不太对」。要拆成具体的句子：</p>
+
+<ul>
+  <li>「首屏副标题和标题挨得太近，间距加大到标题高度的三分之一。」</li>
+  <li>「卡片的圆角太大了，改成 12px 左右，边框颜色再淡一点。」</li>
+  <li>「第三块和第四块交换顺序，其他都不要动。」</li>
+</ul>
+
+<h3>2. 每次都加一句「不要动其他部分」</h3>
+
+<p>Agent 在修改时容易顺手「优化」你没提的地方，结果你好不容易满意的部分被改掉了。明确边界：</p>
+
+<div class="codeblock">
+  <div class="codeblock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fname">修改话术.txt</span></div>
+<pre><code>只修改 ______ 这一处：把 ______ 改成 ______。
+其他部分（尤其是 ______）保持原样，不要重构、不要顺手优化。
+改完只告诉我改了哪几行。</code></pre>
+</div>
+
+<h2 id="askback">五、让它反过来问你</h2>
+
+<p>最省事的一招：在需求末尾加一句「信息不足的地方先问我，不要猜」。Agent 会列出一串问题，你回答完再动手——比它猜错三轮快得多。</p>
+
+<div class="codeblock">
+  <div class="codeblock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fname">主动提问话术.txt</span></div>
+<pre><code>先别写代码。读完上面的需求后，列出你不确定的信息，
+最多问 5 个问题，我回答完你再动手。</code></pre>
+</div>
+
+<h2 id="checklist">六、出手前的 60 秒自检</h2>
+
+<ul class="checklist">
+  <li><strong>目标</strong>：我写清楚这个网站是给谁、为什么而做了吗？</li>
+  <li><strong>内容</strong>：区块顺序我确认过吗？有没有「先放上去再说」的凑数块？</li>
+  <li><strong>风格</strong>：我给的是可验证的特征，还是「高级一点」这种形容词？</li>
+  <li><strong>技术</strong>：单文件还是多文件？要不要后端？手机端要不要管？</li>
+  <li><strong>约束</strong>：我知道自己讨厌什么吗（颜色、圆角、动效、语气）？</li>
+  <li><strong>验收</strong>：第一版出来后，我打算先看哪一部分？</li>
+</ul>
+
+<p>下一章进入视觉。你不需要有设计基础——只要掌握四个变量，页面就能从「能用」变成「像样」。</p>
+</article>
+<nav class="pager" aria-label="章节翻页"><a class="pager-link prev" href="02-workflow.html"><span class="dir">← 上一章</span><span class="t">Agent 做网站的完整流程</span></a><a class="pager-link next" href="04-design-system.html"><span class="dir">下一章 →</span><span class="t">设计系统速成</span></a></nav>
+</main>
+</div>
+<footer class="sitefoot">
+  <div class="sitefoot-inner">
+    <span class="small">Agent 建站指南 · 写给完全新手的 Agent 建站入门教程</span>
+    <span class="mono-label">使用 ← → 方向键翻章</span>
+  </div>
+</footer>
+<script src="assets/site.js?v=20260915b"></script>
+</body>
+</html>
