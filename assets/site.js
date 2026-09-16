@@ -27,12 +27,28 @@
     rvs.forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* --- 3. 折叠解释卡：同一时间只展开一个 --- */
+  /* --- 3. 折叠解释卡：同一时间只展开一个（高度 JS 动态计算） --- */
+  function pinFoldOpen(e) {
+    if (e.propertyName !== 'max-height') return;
+    var body = e.target;
+    if (body.parentElement && body.parentElement.classList.contains('open')) {
+      body.style.maxHeight = 'none'; /* 展开完成后解除上限，防窄屏/改字号后裁切 */
+    }
+  }
   document.querySelectorAll('[data-fold]').forEach(function (head) {
     head.addEventListener('click', function () {
       var item = head.closest('.fold');
       var wasOpen = item.classList.contains('open');
       document.querySelectorAll('.fold.open').forEach(function (f) {
+        var body = f.querySelector('.fold-body');
+        if (body) {
+          body.removeEventListener('transitionend', pinFoldOpen);
+          if (body.style.maxHeight === 'none') {
+            body.style.maxHeight = body.scrollHeight + 'px';
+            void body.offsetHeight; /* 从实际高度回收，避免瞬间跳变 */
+          }
+          body.style.maxHeight = '0px';
+        }
         f.classList.remove('open');
         var h = f.querySelector('[data-fold]');
         if (h) h.setAttribute('aria-expanded', 'false');
@@ -40,6 +56,11 @@
       if (!wasOpen) {
         item.classList.add('open');
         head.setAttribute('aria-expanded', 'true');
+        var body = item.querySelector('.fold-body');
+        if (body) {
+          body.style.maxHeight = body.scrollHeight + 'px';
+          body.addEventListener('transitionend', pinFoldOpen);
+        }
       }
     });
   });

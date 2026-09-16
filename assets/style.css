@@ -82,12 +82,12 @@ code {
 .hero-sub { font-size: 20px; color: var(--ink-2); max-width: 34em; }
 .btn-row { margin-top: 32px; }
 
-/* 动效 2：首屏依次淡入上移 8px（各隔 80ms） */
+/* 动效 2：首屏依次淡入上移 8px（各隔 100ms，同屏最多 3 个元素在动） */
 @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .hero .pill { animation: rise .3s var(--ease) both; }
-.hero .hero-title { animation: rise .3s var(--ease) .08s both; }
-.hero .hero-sub { animation: rise .3s var(--ease) .16s both; }
-.hero .btn-row { animation: rise .3s var(--ease) .24s both; }
+.hero .hero-title { animation: rise .3s var(--ease) .1s both; }
+.hero .hero-sub { animation: rise .3s var(--ease) .2s both; }
+.hero .btn-row { animation: rise .3s var(--ease) .3s both; }
 
 /* ---------- 按钮（动效 5：点击缩放 0.98） ---------- */
 .btn {
@@ -156,7 +156,7 @@ a.card { display: block; }
 .fold-arrow { margin-left: auto; color: var(--ink-3); font-size: 16px; transition: transform .24s ease; }
 .fold.open .fold-arrow { transform: rotate(90deg); color: var(--ink); }
 .fold-body { max-height: 0; overflow: hidden; transition: max-height .24s ease; }
-.fold.open .fold-body { max-height: 220px; }
+/* 展开高度由 JS 读取 scrollHeight 动态赋值，不设固定值，避免长文案窄屏被裁切 */
 .fold-text { padding: 0 22px 20px; font-size: 16px; color: var(--ink-2); max-width: 40em; }
 
 /* ---------- 选择器（动效 7：结果卡淡入 + 上移 8px，260ms） ---------- */
