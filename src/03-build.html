@@ -1,26 +1,84 @@
-<section class="section">
+<!-- ============ 三步：竖向步骤卡 ============ -->
+<section class="sec" id="launch-steps">
   <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">最短路径</span>
-      <h2 class="h2">三步，做出你的第一个页面。</h2>
-      <p class="small">照着做一遍，10 分钟内能看到自己的网站在浏览器里打开。</p>
+    <div class="sec-head rv">
+      <span class="mono-label">Step By Step</span>
+      <h2 class="h2">三步，做出第一个页面</h2>
+      <p class="sec-sub">左边是你做的，右边是 Agent 做的。照着走一遍。</p>
     </div>
 
-    <h3 class="h3">第 1 步 · 把需求发给 Agent</h3>
-    <p class="prose">把第 2 章的三要素直接发给任何对话型 Agent。例：</p>
-    <div class="callout">
-      <div class="callout-title">示例提示词</div>
-      <p>我想要一个咖啡课程报名落地页。受众是 25–35 岁想学手冲的城市白领。风格极简黑白、大字标题、像 Apple 官网那样留白多。单页，顶部一句话主张 + 三个课程亮点 + 底部报名表单。</p>
+    <div class="build-step rv">
+      <div class="bs-head">
+        <span class="bs-num">STEP 1</span>
+        <span class="bs-title">把需求发给 Agent</span>
+      </div>
+      <div class="bs-cols">
+        <div class="bs-col">
+          <div class="bs-k">你要做的</div>
+          <p class="bs-v">打开任意对话窗口，把第 2 章的四句话提示词发给它。下方有现成模板，可直接复制。</p>
+        </div>
+        <div class="bs-col">
+          <div class="bs-k">Agent 做的</div>
+          <p class="bs-v">拆解需求，一轮生成完整的 HTML + CSS 代码。</p>
+        </div>
+      </div>
     </div>
 
-    <h3 class="h3">第 2 步 · 把 Agent 给的代码存成本地文件</h3>
-    <p class="prose">在桌面新建一个文件夹，比如 <code>my-site</code>。在文件夹里新建一个文本文件，把 Agent 给的代码粘进去，保存为 <code>index.html</code>。注意文件名后缀必须是 <code>.html</code>。</p>
+    <div class="build-step rv">
+      <div class="bs-head">
+        <span class="bs-num">STEP 2</span>
+        <span class="bs-title">把代码存成本地文件</span>
+      </div>
+      <div class="bs-cols">
+        <div class="bs-col">
+          <div class="bs-k">你要做的</div>
+          <p class="bs-v">桌面新建文件夹 <code>my-site</code>，新建文本文件，粘贴代码，保存为 <code>index.html</code>。</p>
+        </div>
+        <div class="bs-col">
+          <div class="bs-k">Agent 做的</div>
+          <p class="bs-v">待命。你随时可以把报错或疑问丢回给它。</p>
+        </div>
+      </div>
+    </div>
 
-    <h3 class="h3">第 3 步 · 双击打开看效果</h3>
-    <p class="prose">直接双击 <code>index.html</code>，浏览器里就出现了你的页面。不满意？回到 Agent 对话框：「把标题再大一点，标题改为『用一杯咖啡，慢下来』，配色换成奶咖色」。改完再覆盖保存，再双击——这就是迭代。</p>
+    <div class="build-step rv">
+      <div class="bs-head">
+        <span class="bs-num">STEP 3</span>
+        <span class="bs-title">双击打开看效果</span>
+      </div>
+      <div class="bs-cols">
+        <div class="bs-col">
+          <div class="bs-k">你要做的</div>
+          <p class="bs-v">双击 <code>index.html</code>，页面就在浏览器里了。不满意就回去说一句，改完覆盖保存再看。</p>
+        </div>
+        <div class="bs-col">
+          <div class="bs-k">Agent 做的</div>
+          <p class="bs-v">按你的新要求改代码，比如「标题再大一点，配色换成奶咖色」。</p>
+        </div>
+      </div>
+    </div>
 
-    <hr class="hairline">
+    <div class="warn rv" style="margin-top:24px;">
+      <span class="w-ico" aria-hidden="true">⚠️</span>
+      <span><b>最常见的坑：</b>文件名后缀必须是 <b>.html</b>。Windows 默认隐藏扩展名，小心存成了「index.html.txt」。</span>
+    </div>
+  </div>
+</section>
 
-    <p class="prose">到这里你就掌握了 Agent 建站的核心循环：<b>写需求 → 看效果 → 改需求</b>。剩下的只是熟练度问题。</p>
+<!-- ============ 示例提示词：可复制 ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">Example Prompt</span>
+      <h2 class="h2">第 1 步的示例提示词</h2>
+      <p class="sec-sub">不想自己写？直接复制这条发给 Agent，先把流程跑通。</p>
+    </div>
+    <div class="prompt-card rv">
+      <button class="copy-btn" type="button" data-copy>复制</button>
+      <div class="prompt-tag">PROMPT · 咖啡课落地页</div>
+      <div class="prompt-text">我想要一个咖啡课程报名落地页。受众是 25–35 岁想学手冲的城市白领。风格极简黑白、大字标题、像 Apple 官网那样留白多。单页，顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
+    </div>
+
+    <p class="prose rv mt">到这里你就掌握了核心循环：<b>写需求 → 看效果 → 改需求</b>。剩下的只是熟练度。</p>
   </div>
 </section>
