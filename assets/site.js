@@ -46,6 +46,42 @@
     if (e.key === 'Escape') close();
   });
 
+  /* --- 关键词入口卡：点击展开 / 收起面板 --- */
+  document.querySelectorAll('[data-reveal]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-reveal');
+      var panel = document.getElementById(id + '-panel');
+      if (!panel) return;
+      var willOpen = !panel.classList.contains('is-open');
+      panel.classList.toggle('is-open', willOpen);
+      document.querySelectorAll('[data-reveal="' + id + '"]').forEach(function (b) {
+        b.classList.toggle('is-active', willOpen);
+        b.setAttribute('aria-expanded', String(willOpen));
+      });
+      if (willOpen) {
+        setTimeout(function () {
+          panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 350);
+      } else {
+        var cards = document.querySelector('.term-cards');
+        if (cards) cards.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  document.querySelectorAll('[data-collapse]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-collapse');
+      var panel = document.getElementById(id + '-panel');
+      if (panel) panel.classList.remove('is-open');
+      document.querySelectorAll('[data-reveal="' + id + '"]').forEach(function (b) {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-expanded', 'false');
+      });
+      var cards = document.querySelector('.term-cards');
+      if (cards) cards.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
   /* --- 键盘左右方向键翻章 --- */
   var prev = document.querySelector('.pager-link.prev:not(.empty)');
   var next = document.querySelector('.pager-link.next:not(.empty)');

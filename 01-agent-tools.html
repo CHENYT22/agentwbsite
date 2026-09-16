@@ -6,7 +6,7 @@
 <title>市面上有哪些 Agent 工具 · Agent 建站指南</title>
 <meta name="description" content="五类工具的边界与分工。看完这一章，你就知道该把任务交给谁。">
 <meta name="theme-color" content="#FBFBF9">
-<link rel="stylesheet" href="assets/style.css?v=20260916a">
+<link rel="stylesheet" href="assets/style.css?v=20260916b">
 </head>
 <body class="page-docs">
 <div class="progress-track"><span class="progress-bar" id="progressBar"></span></div>
@@ -53,77 +53,102 @@
 <section class="section">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">先懂三个词</span>
-      <h2 class="h2">聊工具之前，先把三个词弄清楚。</h2>
+      <span class="eyebrow">先选一个入口</span>
+      <h2 class="h2">三个词里，先点开你看不懂的那个。</h2>
+      <p class="small">点哪个都是一样的整章内容——选个你最想搞清楚的词就行。</p>
     </div>
 
-    <div class="grid grid-3">
-      <div class="def-card">
-        <div class="def-term">Agent</div>
-        <p class="def-line">一个能听懂你说话、并代替你动手干活的 AI 员工。</p>
-      </div>
-      <div class="def-card">
-        <div class="def-term">Skill</div>
-        <p class="def-line">给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」。</p>
-      </div>
-      <div class="def-card">
-        <div class="def-term">插件</div>
-        <p class="def-line">让 Agent 能直接连上外部 App 的钥匙，比如直接收发邮件。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">核心结论</span>
-      <h2 class="h2">五类工具，分工明确。</h2>
-      <p class="small">选错类别，再贵的产品也做不出你想要的东西。先记住这张表，再挑工具。</p>
+    <div class="term-cards">
+      <button class="term-card" type="button" data-reveal="ch1" aria-expanded="false">
+        <span class="term-card-word">Agent</span>
+        <span class="term-card-hint">点击查看</span>
+      </button>
+      <button class="term-card" type="button" data-reveal="ch1" aria-expanded="false">
+        <span class="term-card-word">Skill</span>
+        <span class="term-card-hint">点击查看</span>
+      </button>
+      <button class="term-card" type="button" data-reveal="ch1" aria-expanded="false">
+        <span class="term-card-word">插件</span>
+        <span class="term-card-hint">点击查看</span>
+      </button>
     </div>
 
-    <div class="numlist">
-      <div class="numlist-item">
-        <div class="numlist-num">01</div>
-        <div class="numlist-body">
-          <p class="numlist-title">对话型 Agent</p>
-          <p class="numlist-desc">聊天窗口里完成「想—说—改」全过程。代表：ChatGPT、Claude、文心一言。适合不会写代码的人，缺点是输出要自己复制粘贴到本地。</p>
+    <div class="reveal-panel" id="ch1-panel" aria-hidden="true">
+      <button class="collapse-btn" type="button" data-collapse="ch1">← 收起，回到入口</button>
+
+      <section class="section" style="padding-top:0;">
+        <div class="section-head">
+          <span class="eyebrow">先懂三个词</span>
+          <h2 class="h2">聊工具之前，先把三个词弄清楚。</h2>
         </div>
-      </div>
-      <div class="numlist-item">
-        <div class="numlist-num">02</div>
-        <div class="numlist-body">
-          <p class="numlist-title">编程型 Agent</p>
-          <p class="numlist-desc">读你的代码库，直接改文件并提交。代表：Cursor、Claude Code、Codex、Trae、Cline。需要安装客户端但效率最高。</p>
+
+        <div class="grid grid-3">
+          <div class="def-card">
+            <div class="def-term">Agent</div>
+            <p class="def-line">一个能听懂你说话、并代替你动手干活的 AI 员工。</p>
+          </div>
+          <div class="def-card">
+            <div class="def-term">Skill</div>
+            <p class="def-line">给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」。</p>
+          </div>
+          <div class="def-card">
+            <div class="def-term">插件</div>
+            <p class="def-line">让 Agent 能直接连上外部 App 的钥匙，比如直接收发邮件。</p>
+          </div>
         </div>
-      </div>
-      <div class="numlist-item">
-        <div class="numlist-num">05</div>
-        <div class="numlist-body">
-          <p class="numlist-title">通用型 Agent</p>
-          <p class="numlist-desc">把对话、工具调用、浏览器、Skills 插件整合在一起的「什么都干」型。代表：<b>WorkBuddy</b>、Manus、Devin。新手选这一类通常就够了，它能覆盖前四类的大部分场景。本教程就是在 WorkBuddy 里写的。</p>
+      </section>
+
+      <section class="section" style="padding-top:0;">
+        <div class="section-head">
+          <span class="eyebrow">核心结论</span>
+          <h2 class="h2">五类工具，分工明确。</h2>
+          <p class="small">选错类别，再贵的产品也做不出你想要的东西。先记住这张表，再挑工具。</p>
         </div>
-      </div>
-      <div class="numlist-item">
-        <div class="numlist-num">03</div>
-        <div class="numlist-body">
-          <p class="numlist-title">建站生成型</p>
-          <p class="numlist-desc">一句描述直接生成可发布站点。代表：v0、Lovable、Bolt。一键出图最快，但样式固定、二次改动受限。</p>
+
+        <div class="numlist">
+          <div class="numlist-item">
+            <div class="numlist-num">01</div>
+            <div class="numlist-body">
+              <p class="numlist-title">对话型 Agent</p>
+              <p class="numlist-desc">聊天窗口里完成「想—说—改」全过程。代表：ChatGPT、Claude、文心一言。适合不会写代码的人，缺点是输出要自己复制粘贴到本地。</p>
+            </div>
+          </div>
+          <div class="numlist-item">
+            <div class="numlist-num">02</div>
+            <div class="numlist-body">
+              <p class="numlist-title">编程型 Agent</p>
+              <p class="numlist-desc">读你的代码库，直接改文件并提交。代表：Cursor、Claude Code、Codex、Trae、Cline。需要安装客户端但效率最高。</p>
+            </div>
+          </div>
+          <div class="numlist-item">
+            <div class="numlist-num">05</div>
+            <div class="numlist-body">
+              <p class="numlist-title">通用型 Agent</p>
+              <p class="numlist-desc">把对话、工具调用、浏览器、Skills 插件整合在一起的「什么都干」型。代表：<b>WorkBuddy</b>、Manus、Devin。新手选这一类通常就够了，它能覆盖前四类的大部分场景。本教程就是在 WorkBuddy 里写的。</p>
+            </div>
+          </div>
+          <div class="numlist-item">
+            <div class="numlist-num">03</div>
+            <div class="numlist-body">
+              <p class="numlist-title">建站生成型</p>
+              <p class="numlist-desc">一句描述直接生成可发布站点。代表：v0、Lovable、Bolt。一键出图最快，但样式固定、二次改动受限。</p>
+            </div>
+          </div>
+          <div class="numlist-item">
+            <div class="numlist-num">04</div>
+            <div class="numlist-body">
+              <p class="numlist-title">设计型 Agent</p>
+              <p class="numlist-desc">从设计稿或截图出页面。代表：MasterGo 莫高、Figma Make。已有设计稿、或想高度还原参考站时用。</p>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="numlist-item">
-        <div class="numlist-num">04</div>
-        <div class="numlist-body">
-          <p class="numlist-title">设计型 Agent</p>
-          <p class="numlist-desc">从设计稿或截图出页面。代表：MasterGo 莫高、Figma Make。已有设计稿、或想高度还原参考站时用。</p>
-        </div>
-      </div>
+
+        <h3 class="h3">新手怎么选</h3>
+        <p class="prose">零基础想要「聊着聊着就出页面」：选 03（建站生成型）。想完全可控、能逐字改：选 01（对话型）+ 自己保存文件。已经会装客户端、追求效率：选 02（编程型）。有现成设计稿：选 04。懒得选 / 想要一个万能帮手：选 05（通用型 Agent，比如 WorkBuddy）。</p>
+
+        <p class="prose">本教程用的是 <b>通用型 Agent（WorkBuddy）</b>——最普适的一种。它把对话、写代码、调用工具、读文件、打开浏览器这些事一次性搞定，省去了「选哪个类型」的纠结。掌握了再换别的很容易。</p>
+      </section>
     </div>
-
-    <h3 class="h3">新手怎么选</h3>
-    <p class="prose">零基础想要「聊着聊着就出页面」：选 03（建站生成型）。想完全可控、能逐字改：选 01（对话型）+ 自己保存文件。已经会装客户端、追求效率：选 02（编程型）。有现成设计稿：选 04。懒得选 / 想要一个万能帮手：选 05（通用型 Agent，比如 WorkBuddy）。</p>
-
-    <p class="prose">本教程用的是 <b>通用型 Agent（WorkBuddy）</b>——最普适的一种。它把对话、写代码、调用工具、读文件、打开浏览器这些事一次性搞定，省去了「选哪个类型」的纠结。掌握了再换别的很容易。</p>
   </div>
 </section>
 </article>
@@ -136,6 +161,6 @@
     <span class="mono-label">使用 ← → 方向键翻章</span>
   </div>
 </footer>
-<script src="assets/site.js?v=20260916a"></script>
+<script src="assets/site.js?v=20260916d"></script>
 </body>
 </html>

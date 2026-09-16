@@ -400,6 +400,52 @@ tbody tr:hover { background: rgba(12,12,11,.015); }
   font-size: 14.5px; line-height: 1.55; color: var(--ink-2); margin: 0;
 }
 
+/* 大词入口卡 + 点击展开面板 */
+.term-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2);
+  margin-top: var(--s3);
+}
+.term-card {
+  appearance: none; -webkit-appearance: none;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: var(--s4) var(--s3); min-height: 220px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-m);
+  cursor: pointer; text-align: left; color: inherit; font: inherit;
+  transition: border-color .2s ease, transform .2s ease, background .2s ease;
+}
+.term-card:hover { border-color: var(--ink); transform: translateY(-2px); }
+.term-card:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.term-card.is-active { border-color: var(--ink); background: var(--paper); }
+.term-card-word {
+  font-size: clamp(2.4rem, 4.6vw, 3.4rem); font-weight: 600;
+  letter-spacing: -.025em; line-height: 1; color: var(--ink);
+}
+.term-card-hint {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-3);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.term-card-hint::before { content: "+"; font-weight: 500; }
+.term-card.is-active .term-card-hint::before { content: "−"; }
+.term-card.is-active .term-card-hint { color: var(--ink); }
+
+.reveal-panel {
+  overflow: hidden; max-height: 0; opacity: 0;
+  transition: max-height .55s ease, opacity .35s ease .1s, margin-top .35s ease;
+}
+.reveal-panel.is-open {
+  max-height: 12000px; opacity: 1; margin-top: var(--s5);
+}
+.collapse-btn {
+  appearance: none; -webkit-appearance: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 0; background: none; border: 0; cursor: pointer;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-3);
+  border-bottom: 1px solid var(--line-2);
+}
+.collapse-btn:hover { color: var(--ink); border-color: var(--ink); }
+
 /* 步骤清单（实战章节） */
 .steps { counter-reset: st; margin: var(--s3) 0; }
 .step {
