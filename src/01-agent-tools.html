@@ -1,21 +1,20 @@
 <section class="section">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">先选一个入口</span>
-      <h2 class="h2">三个词里，先点开你看不懂的那个。</h2>
-      <p class="small">点哪个都是一样的整章内容——选个你最想搞清楚的词就行。</p>
+      <span class="eyebrow">先懂三个词</span>
+      <h2 class="h2">聊工具之前，先把三个词弄清楚。</h2>
     </div>
 
     <div class="term-cards">
-      <button class="term-card" type="button" data-reveal="ch1" aria-expanded="false">
+      <button class="term-card" type="button" data-reveal="ch1" data-target="#def-agent" aria-expanded="false">
         <span class="term-card-word">Agent</span>
         <span class="term-card-hint">点击查看</span>
       </button>
-      <button class="term-card" type="button" data-reveal="ch1" aria-expanded="false">
+      <button class="term-card" type="button" data-reveal="ch1" data-target="#def-skill" aria-expanded="false">
         <span class="term-card-word">Skill</span>
         <span class="term-card-hint">点击查看</span>
       </button>
-      <button class="term-card" type="button" data-reveal="ch1" aria-expanded="false">
+      <button class="term-card" type="button" data-reveal="ch1" data-target="#def-plugin" aria-expanded="false">
         <span class="term-card-word">插件</span>
         <span class="term-card-hint">点击查看</span>
       </button>
@@ -25,21 +24,16 @@
       <button class="collapse-btn" type="button" data-collapse="ch1">← 收起，回到入口</button>
 
       <section class="section" style="padding-top:0;">
-        <div class="section-head">
-          <span class="eyebrow">先懂三个词</span>
-          <h2 class="h2">聊工具之前，先把三个词弄清楚。</h2>
-        </div>
-
         <div class="grid grid-3">
-          <div class="def-card">
+          <div class="def-card" id="def-agent">
             <div class="def-term">Agent</div>
             <p class="def-line">一个能听懂你说话、并代替你动手干活的 AI 员工。</p>
           </div>
-          <div class="def-card">
+          <div class="def-card" id="def-skill">
             <div class="def-term">Skill</div>
             <p class="def-line">给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」。</p>
           </div>
-          <div class="def-card">
+          <div class="def-card" id="def-plugin">
             <div class="def-term">插件</div>
             <p class="def-line">让 Agent 能直接连上外部 App 的钥匙，比如直接收发邮件。</p>
           </div>

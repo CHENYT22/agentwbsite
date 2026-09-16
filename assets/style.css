@@ -399,6 +399,8 @@ tbody tr:hover { background: rgba(12,12,11,.015); }
 .def-line {
   font-size: 14.5px; line-height: 1.55; color: var(--ink-2); margin: 0;
 }
+.def-card { transition: border-color .3s ease, background .3s ease; scroll-margin-top: calc(var(--topbar-h) + 20px); }
+.def-card.is-flashed { border-color: var(--ink); background: var(--paper); }
 
 /* 大词入口卡 + 点击展开面板 */
 .term-cards {

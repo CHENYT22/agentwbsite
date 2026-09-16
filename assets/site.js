@@ -46,25 +46,41 @@
     if (e.key === 'Escape') close();
   });
 
-  /* --- 关键词入口卡：点击展开 / 收起面板 --- */
+  /* --- 关键词入口卡：点击展开面板并跳到对应定义卡 --- */
+  function flash(el) {
+    if (!el) return;
+    el.classList.add('is-flashed');
+    setTimeout(function () { el.classList.remove('is-flashed'); }, 1400);
+  }
   document.querySelectorAll('[data-reveal]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var id = btn.getAttribute('data-reveal');
       var panel = document.getElementById(id + '-panel');
       if (!panel) return;
+      var target = btn.getAttribute('data-target');
+      var targetEl = target ? document.querySelector(target) : null;
       var willOpen = !panel.classList.contains('is-open');
-      panel.classList.toggle('is-open', willOpen);
+      panel.classList.add('is-open');
       document.querySelectorAll('[data-reveal="' + id + '"]').forEach(function (b) {
-        b.classList.toggle('is-active', willOpen);
-        b.setAttribute('aria-expanded', String(willOpen));
+        b.classList.add('is-active');
+        b.setAttribute('aria-expanded', 'true');
       });
+      var done = false;
+      var go = function () {
+        if (done) return;
+        done = true;
+        (targetEl || panel).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        flash(targetEl);
+      };
       if (willOpen) {
-        setTimeout(function () {
-          panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 350);
-      } else {
-        var cards = document.querySelector('.term-cards');
-        if (cards) cards.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        panel.addEventListener('transitionend', function h(e) {
+          if (e.propertyName !== 'max-height') return;
+          panel.removeEventListener('transitionend', h);
+          setTimeout(go, 60);
+        });
+        setTimeout(go, 900);
+      } else if (targetEl) {
+        go();
       }
     });
   });

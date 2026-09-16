@@ -159,7 +159,7 @@ def render(page, body):
 </main>
 </div>
 {footer()}
-<script src="assets/site.js?v=20260916d"></script>
+<script src="assets/site.js?v=20260916f"></script>
 </body>
 </html>
 """
@@ -182,7 +182,7 @@ def render_home(page, body):
 {body.strip()}
 </main>
 {footer()}
-<script src="assets/site.js?v=20260916d"></script>
+<script src="assets/site.js?v=20260916f"></script>
 </body>
 </html>
 """
