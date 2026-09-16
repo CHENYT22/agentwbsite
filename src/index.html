@@ -1,55 +1,128 @@
-<section class="hero">
+<!-- ============ 三秒选工具 ============ -->
+<section class="sec" id="chooser">
   <div class="wrap">
-    <span class="eyebrow">写给完全新手 · 4 章 · 约 15 分钟</span>
-    <h1 class="display">你只要说清楚想要什么，网站交给 Agent 做。</h1>
-    <p class="lede">从「认识工具」到「上线一个可分享的网址」，四章讲完。没有代码门槛。</p>
-    <div class="btn-row">
-      <a class="btn btn-solid" href="01-agent-tools.html">从第 1 章开始 →</a>
+    <div class="sec-head rv">
+      <span class="mono-label">Three-Second Pick</span>
+      <h2 class="h2">三秒选工具</h2>
+      <p class="sec-sub">你更像哪一种？点一下，马上看到推荐。</p>
+    </div>
+    <div class="chooser rv">
+      <button class="chip" type="button" data-pick="nocode">我完全不会代码</button>
+      <button class="chip" type="button" data-pick="fast">我要最快出图</button>
+      <button class="chip" type="button" data-pick="design">我有设计稿</button>
+      <button class="chip" type="button" data-pick="all">我想要万能帮手</button>
+    </div>
+    <div class="chooser-result" data-result hidden>
+      <div class="result-card" data-pick="nocode" hidden>
+        <span class="result-emoji" aria-hidden="true">🤖</span>
+        <div>
+          <span class="result-tag">为你推荐</span>
+          <div class="result-name">通用型 Agent · WorkBuddy</div>
+          <p class="result-why">网页登录就能用：聊天、写代码、存文件一条龙，不用安装任何东西，新手从它开始最省心。</p>
+        </div>
+      </div>
+      <div class="result-card" data-pick="fast" hidden>
+        <span class="result-emoji" aria-hidden="true">⚡</span>
+        <div>
+          <span class="result-tag">为你推荐</span>
+          <div class="result-name">建站生成型 · v0 / Lovable / Bolt</div>
+          <p class="result-why">一句话直接生成可发布站点，出图最快。注意：样式固定，二次改动受限。</p>
+        </div>
+      </div>
+      <div class="result-card" data-pick="design" hidden>
+        <span class="result-emoji" aria-hidden="true">🎨</span>
+        <div>
+          <span class="result-tag">为你推荐</span>
+          <div class="result-name">设计型 Agent · MasterGo 莫高 / Figma Make</div>
+          <p class="result-why">从设计稿或截图直接出页面，还原度最高。前提是你已经有稿子。</p>
+        </div>
+      </div>
+      <div class="result-card" data-pick="all" hidden>
+        <span class="result-emoji" aria-hidden="true">🧰</span>
+        <div>
+          <span class="result-tag">为你推荐</span>
+          <div class="result-name">通用型 Agent · WorkBuddy / Manus / Devin</div>
+          <p class="result-why">把对话、工具调用、浏览器、插件整合在一起，覆盖前几类的大部分场景，一个帮手全包了。</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section">
+<!-- ============ 四章路径 ============ -->
+<section class="sec">
   <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">四章路径</span>
-      <h2 class="h2">读完这四章，你就做完了。</h2>
+    <div class="sec-head rv">
+      <span class="mono-label">Four Chapters</span>
+      <h2 class="h2">读完这四章，你就做完了</h2>
     </div>
-
-    <div class="grid grid-2">
-      <a class="card" href="01-agent-tools.html">
-        <span class="card-num">第 01 章</span>
-        <h3 class="card-title">工具地图</h3>
-        <p class="card-desc">对话型 / 编程型 / 建站生成型 / 设计型 / 通用型——知道每类擅长什么，就不会用错地方。</p>
-        <div class="card-foot">3 分钟</div>
+    <div class="grid-2">
+      <a class="card chap-card rv" href="01-agent-tools.html">
+        <div class="chap-top"><span class="chap-num">第 01 章</span><span class="chap-time">3 分钟</span></div>
+        <span class="chap-icon" aria-hidden="true">🗺️</span>
+        <h3 class="chap-title">工具地图</h3>
+        <p class="chap-desc">五类 Agent 工具，各有分工。</p>
+        <p class="chap-can"><b>读完你能：</b>挑对工具，不再纠结</p>
       </a>
-
-      <a class="card" href="02-workflow.html">
-        <span class="card-num">第 02 章</span>
-        <h3 class="card-title">流程与提示词</h3>
-        <p class="card-desc">五步看清全貌，三要素让你一句话讲清楚要什么。</p>
-        <div class="card-foot">3 分钟</div>
+      <a class="card chap-card rv" href="02-workflow.html">
+        <div class="chap-top"><span class="chap-num">第 02 章</span><span class="chap-time">3 分钟</span></div>
+        <span class="chap-icon" aria-hidden="true">🗣️</span>
+        <h3 class="chap-title">流程与提示词</h3>
+        <p class="chap-desc">五步走完全程，三要素讲清需求。</p>
+        <p class="chap-can"><b>读完你能：</b>一句话把需求讲清楚</p>
       </a>
-
-      <a class="card" href="03-build.html">
-        <span class="card-num">第 03 章</span>
-        <h3 class="card-title">动手做一个页面</h3>
-        <p class="card-desc">从空白文件到能打开的页面，最短路径。</p>
-        <div class="card-foot">5 分钟</div>
+      <a class="card chap-card rv" href="03-build.html">
+        <div class="chap-top"><span class="chap-num">第 03 章</span><span class="chap-time">5 分钟</span></div>
+        <span class="chap-icon" aria-hidden="true">🛠️</span>
+        <h3 class="chap-title">动手做一个页面</h3>
+        <p class="chap-desc">从空白文件到浏览器打开，最短路径。</p>
+        <p class="chap-can"><b>读完你能：</b>做出自己的第一个网页</p>
       </a>
-
-      <a class="card" href="04-launch.html">
-        <span class="card-num">第 04 章</span>
-        <h3 class="card-title">上线与避坑</h3>
-        <p class="card-desc">GitHub Pages 一键部署；四条经验省你两小时踩坑。</p>
-        <div class="card-foot">2 分钟</div>
+      <a class="card chap-card rv" href="04-launch.html">
+        <div class="chap-top"><span class="chap-num">第 04 章</span><span class="chap-time">2 分钟</span></div>
+        <span class="chap-icon" aria-hidden="true">🚀</span>
+        <h3 class="chap-title">上线与避坑</h3>
+        <p class="chap-desc">GitHub Pages 部署 + 四个新手坑。</p>
+        <p class="chap-can"><b>读完你能：</b>拿到能分享的网址</p>
       </a>
     </div>
+  </div>
+</section>
 
-    <hr class="hairline">
-
-    <div class="btn-row">
-      <a class="btn btn-solid" href="01-agent-tools.html">开始第 1 章：工具地图 →</a>
+<!-- ============ 全流程预览 ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">The Big Picture</span>
+      <h2 class="h2">全流程，就这五步</h2>
+      <p class="sec-sub">每一步都标了谁负责——你会发现大部分是 Agent 在干活。</p>
+    </div>
+    <div class="stepbar">
+      <div class="card rv">
+        <div class="step-num">01</div>
+        <div class="step-act">想清楚要什么</div>
+        <span class="step-who">你</span>
+      </div>
+      <div class="card rv">
+        <div class="step-num">02</div>
+        <div class="step-act">讲给 Agent 听</div>
+        <span class="step-who">你</span>
+      </div>
+      <div class="card rv">
+        <div class="step-num">03</div>
+        <div class="step-act">生成页面</div>
+        <span class="step-who bot">Agent</span>
+      </div>
+      <div class="card rv">
+        <div class="step-num">04</div>
+        <div class="step-act">预览改稿</div>
+        <span class="step-who">你</span>
+      </div>
+      <div class="card rv">
+        <div class="step-num">05</div>
+        <div class="step-act">部署上线</div>
+        <span class="step-who">你</span>
+      </div>
     </div>
   </div>
 </section>

@@ -3,53 +3,396 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>做网站的流程和怎么开口 · Agent 建站指南</title>
-<meta name="description" content="五步流程看清全貌；三要素需求法让你一句话就能讲清楚要什么。">
-<meta name="theme-color" content="#FBFBF9">
-<link rel="stylesheet" href="assets/style.css?v=20260916h">
+<title>五步流程，一句话需求 · Agent 建站指南</title>
+<meta name="description" content="先看清全貌再动手；三要素让你把需求一次讲清楚。">
+<meta name="theme-color" content="#FAFAF7">
+<style>
+/* ============================================================
+   Agent 建站指南 · 设计系统 v2（重构版）
+   硬性规范：字号只用 12/14/16/20/24/32/40/48；两种字体栈；
+   内容区 ≤1120px；动效 ≤8 种；prefers-reduced-motion 降级。
+   ============================================================ */
+:root {
+  --paper: #FAFAF7;
+  --surface: #FFFFFF;
+  --ink: #161613;
+  --ink-2: #4A4A44;
+  --ink-3: #8A8A80;
+  --line: #E7E7DF;
+  --line-2: #D6D6CC;
+  --warn-bg: #FFF8E1;
+  --warn-line: #EFDFA9;
+  --warn-ink: #6D5A19;
+  --ok: #2E7D46;
+  --sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, "Segoe UI", sans-serif;
+  --mono: "SF Mono", Menlo, Consolas, "Courier New", monospace;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --shadow: 0 10px 28px rgba(20, 20, 16, .08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans); font-size: 14px; line-height: 1.7;
+  color: var(--ink); background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--ink); color: var(--paper); }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+code {
+  font-family: var(--mono); font-size: 12px;
+  background: #F0F0EA; border: 1px solid var(--line);
+  border-radius: 4px; padding: 1px 5px;
+}
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+
+/* ---------- 动效 1：阅读进度条（3px，跟手线性） ---------- */
+.progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 60; }
+.progress span { display: block; height: 3px; width: 0; background: var(--ink); }
+
+/* ---------- 吸顶导航 ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(250, 250, 247, .92); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner {
+  max-width: 1120px; margin: 0 auto; padding: 0 32px; height: 56px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.brand { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
+.brand-mark {
+  width: 22px; height: 22px; border-radius: 6px; flex: 0 0 22px;
+  background: var(--ink); color: var(--paper);
+  display: grid; place-items: center; font-family: var(--mono); font-size: 12px;
+}
+.topnav { display: flex; gap: 4px; }
+.topnav a {
+  font-size: 14px; color: var(--ink-2); padding: 6px 12px; border-radius: 999px;
+  transition: color .18s ease, background .18s ease; white-space: nowrap;
+}
+.topnav a:hover { color: var(--ink); }
+.topnav a.is-active { background: var(--ink); color: var(--paper); }
+
+/* ---------- 首屏 ---------- */
+.hero { padding: 88px 0 64px; }
+.pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .08em;
+  color: var(--ink-2); background: var(--surface);
+  border: 1px solid var(--line-2); border-radius: 999px; padding: 5px 14px;
+}
+.hero-title {
+  font-size: 48px; font-weight: 700; letter-spacing: -.03em; line-height: 1.12;
+  margin: 22px 0 14px; max-width: 22em;
+}
+.hero-sub { font-size: 20px; color: var(--ink-2); max-width: 34em; }
+.btn-row { margin-top: 32px; }
+
+/* 动效 2：首屏依次淡入上移 8px（各隔 80ms） */
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.hero .pill { animation: rise .3s var(--ease) both; }
+.hero .hero-title { animation: rise .3s var(--ease) .08s both; }
+.hero .hero-sub { animation: rise .3s var(--ease) .16s both; }
+.hero .btn-row { animation: rise .3s var(--ease) .24s both; }
+
+/* ---------- 按钮（动效 5：点击缩放 0.98） ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 16px; font-weight: 600; padding: 12px 26px;
+  border-radius: 12px; border: 1px solid var(--ink); cursor: pointer;
+  transition: transform .12s ease, background .18s ease, color .18s ease;
+}
+.btn:active { transform: scale(.98); }
+.btn-primary { background: var(--ink); color: var(--paper); }
+.btn-primary:hover { background: #000; }
+.btn-ghost { background: transparent; color: var(--ink); }
+.btn-ghost:hover { background: var(--surface); }
+
+/* ---------- 区块 ---------- */
+.sec { padding: 52px 0; border-top: 1px solid var(--line); }
+.hero + .sec { border-top: 0; padding-top: 16px; }
+.h2 { font-size: 24px; font-weight: 700; letter-spacing: -.02em; }
+.h3 { font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
+.sec-sub { font-size: 14px; color: var(--ink-3); margin-top: 6px; }
+.sec-head { margin-bottom: 24px; }
+.mono-label { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--ink-3); text-transform: uppercase; }
+
+/* 动效 3：滚动进场（淡入 + 上移 12px，只播一次） */
+.rv { opacity: 0; transform: translateY(12px); }
+.rv.in { opacity: 1; transform: none; transition: opacity .4s ease-out, transform .4s ease-out; }
+
+/* ---------- 卡片基类（动效 4：悬停上移 4px + 阴影） ---------- */
+.card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 24px;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--line-2); }
+a.card { display: block; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.grid-a3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.tool-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+/* ---------- 章节卡 ---------- */
+.chap-card { display: flex; flex-direction: column; gap: 8px; }
+.chap-top { display: flex; align-items: center; justify-content: space-between; }
+.chap-num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); letter-spacing: .1em; }
+.chap-time { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+.chap-icon { font-size: 24px; line-height: 1; }
+.chap-title { font-size: 20px; font-weight: 600; letter-spacing: -.01em; margin-top: 4px; }
+.chap-desc { font-size: 14px; color: var(--ink-2); }
+.chap-can {
+  font-size: 14px; margin-top: 10px; padding-top: 12px;
+  border-top: 1px dashed var(--line-2); color: var(--ink);
+}
+.chap-can b { font-weight: 600; }
+
+/* ---------- 折叠解释卡（动效 6：高度过渡 + 箭头旋转 90°，240ms） ---------- */
+.fold { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; transition: border-color .18s ease; }
+.fold + .fold { margin-top: 12px; }
+.fold.open { border-color: var(--line-2); }
+.fold-head {
+  display: flex; align-items: center; gap: 14px; width: 100%;
+  padding: 18px 22px; background: none; border: 0; cursor: pointer; text-align: left;
+  font-size: 24px; font-weight: 600; letter-spacing: -.01em; color: var(--ink);
+}
+.fold-emoji { font-size: 24px; line-height: 1; }
+.fold-arrow { margin-left: auto; color: var(--ink-3); font-size: 16px; transition: transform .24s ease; }
+.fold.open .fold-arrow { transform: rotate(90deg); color: var(--ink); }
+.fold-body { max-height: 0; overflow: hidden; transition: max-height .24s ease; }
+.fold.open .fold-body { max-height: 220px; }
+.fold-text { padding: 0 22px 20px; font-size: 16px; color: var(--ink-2); max-width: 40em; }
+
+/* ---------- 选择器（动效 7：结果卡淡入 + 上移 8px，260ms） ---------- */
+.chooser { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.chip {
+  font-size: 14px; font-weight: 600; padding: 16px 12px; text-align: center;
+  border: 1px solid var(--line-2); border-radius: 12px; background: var(--surface);
+  color: var(--ink); cursor: pointer;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease, color .18s ease;
+}
+.chip:hover { transform: translateY(-4px); border-color: var(--ink); }
+.chip:active { transform: scale(.98); }
+.chip.is-on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.chooser-result { margin-top: 16px; }
+@keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.result-card {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: var(--surface); border: 1px solid var(--ink); border-radius: 14px;
+  padding: 22px; animation: pop .26s var(--ease) both;
+}
+.result-card[hidden] { display: none; }
+.chooser-result[hidden] { display: none; }
+.result-emoji { font-size: 24px; line-height: 1.4; }
+.result-tag {
+  display: inline-block; font-family: var(--mono); font-size: 12px; letter-spacing: .1em;
+  color: var(--ink-3); margin-bottom: 4px;
+}
+.result-name { font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
+.result-why { font-size: 14px; color: var(--ink-2); margin-top: 6px; max-width: 46em; }
+
+/* ---------- 步骤条（横向 5 格） ---------- */
+.stepbar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.stepbar .card { padding: 18px; }
+.step-num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); letter-spacing: .1em; }
+.step-act { font-size: 16px; font-weight: 600; margin: 8px 0 10px; letter-spacing: -.01em; }
+.step-who { display: inline-block; font-size: 12px; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--ink-2); }
+.step-who.bot { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+/* ---------- 工具卡（固定四行） ---------- */
+.tool-name { font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
+.tool-tag {
+  display: inline-block; font-size: 12px; font-weight: 600; margin-left: 8px;
+  background: var(--ink); color: var(--paper); border-radius: 999px; padding: 2px 10px;
+  vertical-align: 3px;
+}
+.tool-rows { margin-top: 14px; }
+.tool-row { display: flex; gap: 12px; padding: 7px 0; border-top: 1px dashed var(--line); font-size: 14px; }
+.tool-row .k { flex: 0 0 44px; font-size: 12px; color: var(--ink-3); padding-top: 2px; }
+.tool-row .v { color: var(--ink-2); }
+.tool-row .v b { color: var(--ink); font-weight: 600; }
+
+/* ---------- 决策路径卡 ---------- */
+.path-q { font-size: 16px; font-weight: 600; }
+.path-a { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+.path-a b { color: var(--ink); font-weight: 600; }
+.path-emoji { font-size: 24px; line-height: 1; margin-bottom: 10px; }
+
+/* ---------- 可复制提示词卡（动效 8：复制成功反馈） ---------- */
+.prompt-card {
+  position: relative; background: #F4F4EE;
+  border: 1px solid var(--line-2); border-radius: 14px;
+  padding: 20px 110px 18px 20px;
+}
+.prompt-tag { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--ink-3); margin-bottom: 10px; }
+.prompt-text {
+  font-family: var(--mono); font-size: 14px; line-height: 1.8;
+  color: var(--ink); white-space: pre-wrap; word-break: break-word;
+}
+.copy-btn {
+  position: absolute; top: 14px; right: 14px;
+  font-size: 12px; font-weight: 600; padding: 6px 14px;
+  border-radius: 8px; border: 1px solid var(--line-2);
+  background: var(--surface); color: var(--ink); cursor: pointer;
+  transition: transform .12s ease, border-color .18s ease, color .18s ease;
+}
+.copy-btn:hover { border-color: var(--ink); }
+.copy-btn:active { transform: scale(.98); }
+.copy-btn.done { border-color: var(--ok); color: var(--ok); }
+
+/* ---------- 三要素 A/B/C 卡 ---------- */
+.el-letter { font-family: var(--mono); font-size: 12px; color: var(--ink-3); letter-spacing: .1em; }
+.el-name { font-size: 20px; font-weight: 600; margin: 6px 0 8px; }
+.el-desc { font-size: 14px; color: var(--ink-2); }
+.el-eg { font-size: 14px; margin-top: 12px; padding: 10px 14px; background: #F4F4EE; border-radius: 10px; color: var(--ink-2); }
+.el-eg b { color: var(--ink); font-weight: 600; }
+
+/* ---------- 竖向步骤卡（你要做的 / Agent 做的） ---------- */
+.build-step { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.build-step + .build-step { margin-top: 16px; }
+.bs-head { display: flex; align-items: center; gap: 12px; padding: 16px 22px; border-bottom: 1px solid var(--line); }
+.bs-num {
+  font-family: var(--mono); font-size: 12px; color: var(--paper);
+  background: var(--ink); border-radius: 999px; padding: 2px 10px;
+}
+.bs-title { font-size: 16px; font-weight: 600; }
+.bs-cols { display: grid; grid-template-columns: 1fr 1fr; }
+.bs-col { padding: 16px 22px; }
+.bs-col + .bs-col { border-left: 1px dashed var(--line); }
+.bs-k { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-3); margin-bottom: 8px; }
+.bs-v { font-size: 14px; color: var(--ink-2); }
+.bs-v code { font-size: 12px; }
+
+/* ---------- 症状卡（2×2） ---------- */
+.sym-num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); letter-spacing: .1em; }
+.sym-title { font-size: 16px; font-weight: 600; margin: 8px 0 12px; }
+.sym-row { display: flex; gap: 12px; padding: 6px 0; border-top: 1px dashed var(--line); font-size: 14px; }
+.sym-row .k { flex: 0 0 32px; font-size: 12px; color: var(--ink-3); padding-top: 2px; }
+.sym-row .v { color: var(--ink-2); }
+.sym-row.fix .v { color: var(--ink); }
+
+/* ---------- 勾选清单 ---------- */
+.checklist { display: flex; flex-direction: column; gap: 12px; }
+.check-item {
+  display: flex; gap: 14px; align-items: flex-start;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 16px 18px; cursor: pointer; user-select: none;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+.check-item:hover { border-color: var(--line-2); transform: translateY(-2px); }
+.check-item:active { transform: scale(.98); }
+.check-box {
+  flex: 0 0 22px; width: 22px; height: 22px; margin-top: 1px;
+  border: 1.5px solid var(--line-2); border-radius: 7px;
+  display: grid; place-items: center; font-size: 14px; color: transparent;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+.check-item.done .check-box { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.check-text { font-size: 16px; }
+.check-text code { font-size: 12px; }
+.check-item.done .check-text { color: var(--ink-3); text-decoration: line-through; }
+.check-progress { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-3); margin-top: 14px; }
+
+/* ---------- 坑位警示条 ---------- */
+.warn {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 12px;
+  padding: 14px 18px; font-size: 14px; color: var(--warn-ink); line-height: 1.7;
+}
+.warn .w-ico { flex: 0 0 auto; font-size: 16px; line-height: 1.5; }
+.warn b { font-weight: 600; }
+
+/* ---------- 上下章翻页 ---------- */
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--line); }
+.pager a {
+  display: flex; flex-direction: column; gap: 4px; padding: 18px 20px;
+  border: 1px solid var(--line); border-radius: 14px; background: var(--surface);
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.pager a:hover { transform: translateY(-4px); border-color: var(--line-2); box-shadow: var(--shadow); }
+.pager a.next { text-align: right; }
+.pager .dir { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-3); }
+.pager .t { font-size: 16px; font-weight: 600; }
+
+/* ---------- 末页深色收尾卡 ---------- */
+.end-card {
+  background: var(--ink); color: var(--paper);
+  border-radius: 20px; padding: 56px 32px; text-align: center; margin-top: 48px;
+}
+.end-card .end-kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; color: #9C9C90; }
+.end-card h2 { font-size: 32px; font-weight: 700; letter-spacing: -.02em; margin: 14px 0 10px; color: var(--paper); }
+.end-card p { font-size: 16px; color: #B9B9AF; max-width: 30em; margin: 0 auto 28px; }
+.end-card .btn-primary { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.end-card .btn-primary:hover { background: #FFF; }
+
+/* ---------- 页脚 ---------- */
+.sitefoot { border-top: 1px solid var(--line); padding: 26px 0; margin-top: 64px; }
+.sitefoot .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--ink-3); }
+
+/* ---------- 正文补充 ---------- */
+.prose { font-size: 16px; color: var(--ink-2); max-width: 46em; }
+.prose b { color: var(--ink); font-weight: 600; }
+.mt { margin-top: 24px; }
+.stack > * + * { margin-top: 16px; }
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 900px) {
+  .stepbar { grid-template-columns: repeat(2, 1fr); }
+  .stepbar .card:last-child { grid-column: 1 / -1; }
+  .grid-3, .grid-a3 { grid-template-columns: repeat(2, 1fr); }
+  .tool-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .hero { padding: 56px 0 44px; }
+  .hero-title { font-size: 32px; }
+  .hero-sub { font-size: 16px; }
+  .bs-cols { grid-template-columns: 1fr; }
+  .bs-col + .bs-col { border-left: 0; border-top: 1px dashed var(--line); }
+  .chooser { grid-template-columns: repeat(2, 1fr); }
+  .prompt-card { padding: 20px 20px 18px; }
+  .copy-btn { position: static; margin-top: 14px; }
+  .topnav a { padding: 6px 8px; font-size: 12px; }
+  .brand { font-size: 14px; }
+}
+@media (max-width: 620px) {
+  .grid-2, .grid-3, .grid-a3, .tool-grid { grid-template-columns: 1fr; }
+  .pager { grid-template-columns: 1fr; }
+  .stepbar { grid-template-columns: 1fr; }
+  .stepbar .card:last-child { grid-column: auto; }
+}
+
+/* ---------- 无障碍降级 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+  .rv { opacity: 1; transform: none; }
+}
+</style>
 </head>
-<body class="page-docs">
-<div class="progress-track"><span class="progress-bar" id="progressBar"></span></div>
+<body>
+<div class="progress"><span id="progressBar"></span></div>
 <header class="topbar">
   <div class="topbar-inner">
     <a class="brand" href="index.html" aria-label="Agent 建站指南 首页">
-      <span class="brand-mark" aria-hidden="true">A</span>
-      <span>Agent 建站指南</span>
-      <span class="brand-sub">Beginner's Guide</span>
+      <span class="brand-mark" aria-hidden="true">A</span><span>Agent 建站指南</span>
     </a>
-    <nav class="topnav" aria-label="主导航"><a href="index.html">首页</a><a href="01-agent-tools.html">工具</a><a href="02-workflow.html">流程</a><a href="03-build.html">实战</a><a href="04-launch.html">上线</a></nav>
-    <button class="nav-toggle" id="navToggle" aria-label="打开章节导航" aria-expanded="false">
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-      </svg>
-    </button>
+    <nav class="topnav" aria-label="主导航"><a href="index.html">首页</a><a href="01-agent-tools.html">工具</a><a href="02-workflow.html" class="is-active">流程</a><a href="03-build.html">实战</a><a href="04-launch.html">上线</a></nav>
   </div>
 </header>
-<div class="shell">
-<aside class="sidebar" id="sidebar" aria-label="章节导航">
-  <div class="sidebar-group">
-    <div class="sidebar-title">Beginner's Guide</div>
-    <ul class="sidebar-list">
-      <li class=""><a href="index.html"><span class="idx">00</span><span>教程首页</span></a></li>
-    </ul>
+<main>
+<section class="hero">
+  <div class="wrap">
+    <span class="pill">第 02 章 · 3 分钟</span>
+    <h1 class="hero-title">五步流程，一句话需求</h1>
+    <p class="hero-sub">先看清全貌再动手；三要素让你把需求一次讲清楚。</p>
+    <div class="btn-row"><a class="btn btn-primary" href="03-build.html">下一章：动手做一个页面 →</a></div>
   </div>
-  <div class="sidebar-group">
-    <div class="sidebar-title">章节</div>
-    <ul class="sidebar-list"><li class=""><a href="01-agent-tools.html"><span class="idx">01</span><span>工具地图</span></a></li><li class="is-active"><a href="02-workflow.html"><span class="idx">02</span><span>流程与提示词</span></a></li><li class=""><a href="03-build.html"><span class="idx">03</span><span>动手做一个页面</span></a></li><li class=""><a href="04-launch.html"><span class="idx">04</span><span>上线与避坑</span></a></li></ul>
-  </div>
-</aside>
-<div class="sidebar-scrim" id="sidebarScrim" aria-hidden="true"></div>
-<main class="content">
-<header class="chapter-head">
-  <span class="eyebrow">第 02 章 · Beginner's Guide</span>
-  <h1 class="display">做网站的流程和怎么开口</h1>
-  <p class="lede">五步流程看清全貌；三要素需求法让你一句话就能讲清楚要什么。</p>
-  <div class="chapter-meta">
-    <span>预估阅读 3 分钟</span>
-    <span>难度：新手友好</span>
-  </div>
-</header>
-<article class="prose">
+</section>
 <section class="section">
   <div class="wrap">
     <div class="section-head">
@@ -125,16 +468,135 @@
     <p class="prose">把这三句粘给 Agent，就已经超过 80% 的新手提示词了。</p>
   </div>
 </section>
-</article>
-<nav class="pager" aria-label="章节翻页"><a class="pager-link prev" href="01-agent-tools.html"><span class="dir">← 上一章</span><span class="t">工具地图</span></a><a class="pager-link next" href="03-build.html"><span class="dir">下一章 →</span><span class="t">动手做一个页面</span></a></nav>
+<nav class="pager" aria-label="章节翻页"><a class="prev" href="01-agent-tools.html"><span class="dir">← 上一章</span><span class="t">工具</span></a><a class="next" href="03-build.html"><span class="dir">下一章 →</span><span class="t">实战</span></a></nav>
 </main>
-</div>
 <footer class="sitefoot">
-  <div class="sitefoot-inner">
-    <span class="small">Agent 建站指南 · 写给完全新手的 Agent 建站入门教程</span>
-    <span class="mono-label">使用 ← → 方向键翻章</span>
+  <div class="wrap">
+    <span>Agent 建站指南 · 写给完全新手的 Agent 建站入门教程</span>
+    <span>本站由 WorkBuddy 制作</span>
   </div>
 </footer>
-<script src="assets/site.js?v=20260916h"></script>
+<script>
+/* 教程站交互 v2：进度条 + 滚动进场 + 折叠卡 + 选择器 + 复制 + 勾选清单 */
+(function () {
+  'use strict';
+
+  /* --- 1. 阅读进度条（跟手，线性，无缓动） --- */
+  var bar = document.getElementById('progressBar');
+  if (bar) {
+    var tick = function () {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 100) + '%';
+    };
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick);
+    tick();
+  }
+
+  /* --- 2. 滚动进场：卡片淡入上移，只播一次 --- */
+  var rvs = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window && rvs.length) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    rvs.forEach(function (el) { io.observe(el); });
+  } else {
+    rvs.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* --- 3. 折叠解释卡：同一时间只展开一个 --- */
+  document.querySelectorAll('[data-fold]').forEach(function (head) {
+    head.addEventListener('click', function () {
+      var item = head.closest('.fold');
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.fold.open').forEach(function (f) {
+        f.classList.remove('open');
+        var h = f.querySelector('[data-fold]');
+        if (h) h.setAttribute('aria-expanded', 'false');
+      });
+      if (!wasOpen) {
+        item.classList.add('open');
+        head.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  /* --- 4. 选择器：点按钮出对应推荐卡 --- */
+  var resultBox = document.querySelector('[data-result]');
+  document.querySelectorAll('.chip[data-pick]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.getAttribute('data-pick');
+      document.querySelectorAll('.chip[data-pick].is-on').forEach(function (b) { b.classList.remove('is-on'); });
+      btn.classList.add('is-on');
+      if (!resultBox) return;
+      var hit = null;
+      resultBox.querySelectorAll('.result-card').forEach(function (c) {
+        var match = c.getAttribute('data-pick') === key;
+        c.hidden = !match;
+        if (match) hit = c;
+      });
+      resultBox.hidden = false;
+      if (hit) { /* 重触发入场动画 */
+        hit.style.animation = 'none';
+        void hit.offsetHeight;
+        hit.style.animation = '';
+      }
+    });
+  });
+
+  /* --- 5. 复制按钮：成功后变「已复制」，1.5s 复原 --- */
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var card = btn.closest('.prompt-card');
+      var src = btn.getAttribute('data-copy');
+      var el = (src && document.querySelector(src)) || (card && card.querySelector('.prompt-text'));
+      var text = el ? el.innerText : '';
+      if (!text) return;
+      var done = function () {
+        btn.textContent = '已复制 ✓';
+        btn.classList.add('done');
+        setTimeout(function () {
+          btn.textContent = '复制';
+          btn.classList.remove('done');
+        }, 1500);
+      };
+      var fallback = function () {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { /* 忽略 */ }
+        document.body.removeChild(ta);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else {
+        fallback();
+      }
+    });
+  });
+
+  /* --- 6. 勾选清单：点击打勾 + 进度提示 --- */
+  var items = document.querySelectorAll('.check-item');
+  var prog = document.querySelector('[data-check-progress]');
+  function updateProgress() {
+    if (!prog) return;
+    var n = document.querySelectorAll('.check-item.done').length;
+    prog.textContent = '已完成 ' + n + ' / ' + items.length + (n === items.length ? ' · 全部完成，去刷新你的网页吧' : '');
+  }
+  items.forEach(function (it) {
+    it.addEventListener('click', function () {
+      it.classList.toggle('done');
+      it.setAttribute('aria-checked', it.classList.contains('done') ? 'true' : 'false');
+      updateProgress();
+    });
+  });
+  updateProgress();
+})();
+</script>
 </body>
 </html>
