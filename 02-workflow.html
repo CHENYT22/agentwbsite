@@ -393,79 +393,93 @@ a.card { display: block; }
     <div class="btn-row"><a class="btn btn-primary" href="03-build.html">下一章：动手做一个页面 →</a></div>
   </div>
 </section>
-<section class="section">
+<!-- ============ 五步流程：步骤条 ============ -->
+<section class="sec">
   <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">五步流程</span>
-      <h2 class="h2">从想法到上线，只走这五步。</h2>
+    <div class="sec-head rv">
+      <span class="mono-label">Five Steps</span>
+      <h2 class="h2">从想法到上线，只走五步</h2>
+      <p class="sec-sub">黑色标签是 Agent 在干活，白底标签轮到你。</p>
     </div>
-
-    <div class="numlist">
-      <div class="numlist-item">
-        <div class="numlist-num">01</div>
-        <div class="numlist-body">
-          <p class="numlist-title">想清楚要什么</p>
-          <p class="numlist-desc">谁会看？解决什么问题？大概几页？你负责。</p>
-        </div>
+    <div class="stepbar rv">
+      <div class="card">
+        <div class="step-num">01</div>
+        <div class="step-act">想清楚要什么</div>
+        <span class="step-who">你</span>
       </div>
-      <div class="numlist-item">
-        <div class="numlist-num">02</div>
-        <div class="numlist-body">
-          <p class="numlist-title">讲给 Agent 听</p>
-          <p class="numlist-desc">用「目标 + 受众 + 风格」三句话描述，Agent 负责拆解和实现。</p>
-        </div>
+      <div class="card">
+        <div class="step-num">02</div>
+        <div class="step-act">讲给 Agent 听</div>
+        <span class="step-who">你</span>
       </div>
-      <div class="numlist-item">
-        <div class="numlist-num">03</div>
-        <div class="numlist-body">
-          <p class="numlist-title">Agent 生成页面</p>
-          <p class="numlist-desc">通常一轮给出完整 HTML + CSS，你负责复制到本地文件。</p>
-        </div>
+      <div class="card">
+        <div class="step-num">03</div>
+        <div class="step-act">生成页面</div>
+        <span class="step-who bot">Agent</span>
       </div>
-      <div class="numlist-item">
-        <div class="numlist-num">04</div>
-        <div class="numlist-body">
-          <p class="numlist-title">本地预览改稿</p>
-          <p class="numlist-desc">浏览器打开看效果，不满意就再回去讲一段「这个改大点、那里换个颜色」。</p>
-        </div>
+      <div class="card">
+        <div class="step-num">04</div>
+        <div class="step-act">预览改稿</div>
+        <span class="step-who">你</span>
       </div>
-      <div class="numlist-item">
-        <div class="numlist-num">05</div>
-        <div class="numlist-body">
-          <p class="numlist-title">部署上线</p>
-          <p class="numlist-desc">推到 GitHub → 开启 Pages → 拿到一个能发给别人的网址。</p>
-        </div>
+      <div class="card">
+        <div class="step-num">05</div>
+        <div class="step-act">部署上线</div>
+        <span class="step-who">你</span>
       </div>
     </div>
+    <p class="prose rv" style="margin-top:20px;">01 谁会看、解决什么问题、大概几页；02 用三要素描述；03 Agent 一轮给出完整 HTML + CSS；04 不满意就回去改；05 推到 GitHub、开启 Pages、拿到网址。</p>
+  </div>
+</section>
 
-    <h3 class="h3">讲清楚需求：三要素</h3>
-    <p class="prose">不需要写六要素模板——记住下面三句就够用：</p>
-
-    <div class="numlist">
-      <div class="numlist-item">
-        <div class="numlist-num">A</div>
-        <div class="numlist-body">
-          <p class="numlist-title">目标</p>
-          <p class="numlist-desc">这个页面是干嘛的。例：「咖啡店的课程报名落地页」。</p>
-        </div>
+<!-- ============ 三要素：A/B/C 卡 ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">Three Elements</span>
+      <h2 class="h2">讲清楚需求：三要素</h2>
+      <p class="sec-sub">不用背模板，记住 A、B、C 三句就够用。</p>
+    </div>
+    <div class="grid-3">
+      <div class="card rv">
+        <div class="el-letter">A / GOAL</div>
+        <div class="el-name">目标</div>
+        <p class="el-desc">这个页面是干嘛的。</p>
+        <p class="el-eg"><b>例：</b>「咖啡店的课程报名落地页」</p>
       </div>
-      <div class="numlist-item">
-        <div class="numlist-num">B</div>
-        <div class="numlist-body">
-          <p class="numlist-title">受众</p>
-          <p class="numlist-desc">谁会来看。例：「25–35 岁想学手冲的城市白领」。</p>
-        </div>
+      <div class="card rv">
+        <div class="el-letter">B / AUDIENCE</div>
+        <div class="el-name">受众</div>
+        <p class="el-desc">谁会来看。</p>
+        <p class="el-eg"><b>例：</b>「25–35 岁想学手冲的城市白领」</p>
       </div>
-      <div class="numlist-item">
-        <div class="numlist-num">C</div>
-        <div class="numlist-body">
-          <p class="numlist-title">风格</p>
-          <p class="numlist-desc">像什么。例：「极简黑白，大字标题，像 Apple 官网」。或贴一个参考链接。</p>
-        </div>
+      <div class="card rv">
+        <div class="el-letter">C / STYLE</div>
+        <div class="el-name">风格</div>
+        <p class="el-desc">像什么，或直接贴一个参考链接。</p>
+        <p class="el-eg"><b>例：</b>「极简黑白、大字标题，像 Apple 官网」</p>
       </div>
     </div>
+  </div>
+</section>
 
-    <p class="prose">把这三句粘给 Agent，就已经超过 80% 的新手提示词了。</p>
+<!-- ============ 提示词模板：可复制 ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">Prompt Template</span>
+      <h2 class="h2">拿走就能用的提示词模板</h2>
+      <p class="sec-sub">把方括号里的内容换成你的，点右上角复制，粘给任何 Agent。</p>
+    </div>
+    <div class="prompt-card rv">
+      <button class="copy-btn" type="button" data-copy>复制</button>
+      <div class="prompt-tag">PROMPT · 四句话</div>
+      <div class="prompt-text">我想做一个[目标：咖啡课程报名落地页]。
+受众是[受众：25–35 岁想学手冲的城市白领]。
+风格[风格：极简黑白、大字标题、留白多，像 Apple 官网]。
+结构：顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
+    </div>
+    <p class="prose rv mt">把这四句粘给 Agent，就已经超过 80% 的新手提示词了。</p>
   </div>
 </section>
 <nav class="pager" aria-label="章节翻页"><a class="prev" href="01-agent-tools.html"><span class="dir">← 上一章</span><span class="t">工具</span></a><a class="next" href="03-build.html"><span class="dir">下一章 →</span><span class="t">实战</span></a></nav>
@@ -554,7 +568,10 @@ a.card { display: block; }
       var el = (src && document.querySelector(src)) || (card && card.querySelector('.prompt-text'));
       var text = el ? el.innerText : '';
       if (!text) return;
+      var settled = false;
       var done = function () {
+        if (settled) return;
+        settled = true;
         btn.textContent = '已复制 ✓';
         btn.classList.add('done');
         setTimeout(function () {
@@ -563,6 +580,7 @@ a.card { display: block; }
         }, 1500);
       };
       var fallback = function () {
+        if (settled) return;
         var ta = document.createElement('textarea');
         ta.value = text;
         ta.setAttribute('readonly', '');
@@ -571,9 +589,11 @@ a.card { display: block; }
         ta.select();
         try { document.execCommand('copy'); done(); } catch (e) { /* 忽略 */ }
         document.body.removeChild(ta);
+        setTimeout(done, 60); /* 兜底：即使 execCommand 不可用也给出反馈 */
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(done, fallback);
+        setTimeout(fallback, 800); /* 某些环境 Promise 永不返回 */
       } else {
         fallback();
       }

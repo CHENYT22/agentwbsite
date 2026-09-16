@@ -75,7 +75,10 @@
       var el = (src && document.querySelector(src)) || (card && card.querySelector('.prompt-text'));
       var text = el ? el.innerText : '';
       if (!text) return;
+      var settled = false;
       var done = function () {
+        if (settled) return;
+        settled = true;
         btn.textContent = '已复制 ✓';
         btn.classList.add('done');
         setTimeout(function () {
@@ -84,6 +87,7 @@
         }, 1500);
       };
       var fallback = function () {
+        if (settled) return;
         var ta = document.createElement('textarea');
         ta.value = text;
         ta.setAttribute('readonly', '');
@@ -92,9 +96,11 @@
         ta.select();
         try { document.execCommand('copy'); done(); } catch (e) { /* 忽略 */ }
         document.body.removeChild(ta);
+        setTimeout(done, 60); /* 兜底：即使 execCommand 不可用也给出反馈 */
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(done, fallback);
+        setTimeout(fallback, 800); /* 某些环境 Promise 永不返回 */
       } else {
         fallback();
       }
