@@ -46,55 +46,18 @@
     if (e.key === 'Escape') close();
   });
 
-  /* --- 关键词入口卡：点击展开面板并跳到对应定义卡 --- */
-  function flash(el) {
-    if (!el) return;
-    el.classList.add('is-flashed');
-    setTimeout(function () { el.classList.remove('is-flashed'); }, 1400);
-  }
-  document.querySelectorAll('[data-reveal]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var id = btn.getAttribute('data-reveal');
-      var panel = document.getElementById(id + '-panel');
-      if (!panel) return;
-      var target = btn.getAttribute('data-target');
-      var targetEl = target ? document.querySelector(target) : null;
-      var willOpen = !panel.classList.contains('is-open');
-      panel.classList.add('is-open');
-      document.querySelectorAll('[data-reveal="' + id + '"]').forEach(function (b) {
-        b.classList.add('is-active');
-        b.setAttribute('aria-expanded', 'true');
+  /* --- 三词卡：点击在卡片内切换显示定义（手风琴，同时只开一张） --- */
+  document.querySelectorAll('[data-term]').forEach(function (card) {
+    card.addEventListener('click', function () {
+      var wasOpen = card.classList.contains('is-active');
+      document.querySelectorAll('[data-term].is-active').forEach(function (c) {
+        c.classList.remove('is-active');
+        c.setAttribute('aria-expanded', 'false');
       });
-      var done = false;
-      var go = function () {
-        if (done) return;
-        done = true;
-        (targetEl || panel).scrollIntoView({ behavior: 'smooth', block: 'start' });
-        flash(targetEl);
-      };
-      if (willOpen) {
-        panel.addEventListener('transitionend', function h(e) {
-          if (e.propertyName !== 'max-height') return;
-          panel.removeEventListener('transitionend', h);
-          setTimeout(go, 60);
-        });
-        setTimeout(go, 900);
-      } else if (targetEl) {
-        go();
+      if (!wasOpen) {
+        card.classList.add('is-active');
+        card.setAttribute('aria-expanded', 'true');
       }
-    });
-  });
-  document.querySelectorAll('[data-collapse]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var id = btn.getAttribute('data-collapse');
-      var panel = document.getElementById(id + '-panel');
-      if (panel) panel.classList.remove('is-open');
-      document.querySelectorAll('[data-reveal="' + id + '"]').forEach(function (b) {
-        b.classList.remove('is-active');
-        b.setAttribute('aria-expanded', 'false');
-      });
-      var cards = document.querySelector('.term-cards');
-      if (cards) cards.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
