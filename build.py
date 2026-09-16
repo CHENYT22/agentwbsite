@@ -22,46 +22,28 @@ PAGES = [
         kind="home", minutes="3 分钟",
     ),
     dict(
-        slug="tools", file="01-agent-tools.html", src="01-agent-tools.html", num="01", nav="先认识 Agent 工具",
+        slug="tools", file="01-agent-tools.html", src="01-agent-tools.html", num="01", nav="工具地图",
         title="市面上有哪些 Agent 工具",
-        lede="先把工具地图看一遍。知道每类工具擅长什么，你就不会拿着锤子找钉子。",
-        minutes="8 分钟",
+        lede="四类工具的边界与分工。看完这一章，你就知道该把任务交给谁。",
+        minutes="3 分钟",
     ),
     dict(
-        slug="workflow", file="02-workflow.html", src="02-workflow.html", num="02", nav="Agent 做网站的完整流程",
-        title="Agent 是怎么把网站做出来的",
-        lede="七个步骤，每一步谁负责、你该给什么、Agent 会产出什么——先看清全貌，再动手。",
-        minutes="7 分钟",
+        slug="workflow", file="02-workflow.html", src="02-workflow.html", num="02", nav="流程与提示词",
+        title="做网站的流程和怎么开口",
+        lede="五步流程看清全貌；三要素需求法让你一句话就能讲清楚要什么。",
+        minutes="3 分钟",
     ),
     dict(
-        slug="prompt", file="03-prompt.html", src="03-prompt.html", num="03", nav="把需求讲清楚",
-        title="提示词：把需求讲清楚",
-        lede="Agent 做得好不好，八成取决于你说得清不清楚。这一章给你一个能直接套用的需求模板。",
-        minutes="9 分钟",
+        slug="build", file="03-build.html", src="03-build.html", num="03", nav="动手做一个页面",
+        title="三步做出你的第一个页面",
+        lede="从空白文件到能打开的页面，最短路径。",
+        minutes="5 分钟",
     ),
     dict(
-        slug="design", file="04-design-system.html", src="04-design-system.html", num="04", nav="设计系统速成",
-        title="不懂设计，也能让它高级",
-        lede="色彩、字体、间距、圆角——四个变量决定了页面是「像样」还是「廉价」。新手也能掌握。",
-        minutes="10 分钟",
-    ),
-    dict(
-        slug="build", file="05-build.html", src="05-build.html", num="05", nav="动手做一个落地页",
-        title="实战：从零做一个落地页",
-        lede="跟着做一遍。从空文件到完整页面，六步走完，每一句提示词和关键代码都给你。",
-        minutes="15 分钟",
-    ),
-    dict(
-        slug="launch", file="06-launch.html", src="06-launch.html", num="06", nav="发布上线与迭代",
-        title="把网站挂到互联网上",
-        lede="本地看着好看不算数，能被别人打开才算完成。上线、分享、收集反馈、再改一版。",
-        minutes="8 分钟",
-    ),
-    dict(
-        slug="checklist", file="07-checklist.html", src="07-checklist.html", num="07", nav="检查清单与常见坑",
-        title="上线前的检查清单",
-        lede="十条清单过一遍，避开新手最常踩的六个坑。做完这章，你的页面就已经超过大多数人的第一版了。",
-        minutes="6 分钟",
+        slug="launch", file="04-launch.html", src="04-launch.html", num="04", nav="上线与避坑",
+        title="发布到公网 + 新手四个坑",
+        lede="GitHub Pages 一键部署；四条经验省你两小时踩坑时间。",
+        minutes="2 分钟",
     ),
 ]
 
@@ -73,8 +55,8 @@ DOC_PAGES = [p for p in PAGES if p.get("kind") != "home"]
 
 # ---------------- 页面外壳 ----------------
 def topbar(active_slug, prefix=""):
-    links = [("index", "首页"), ("tools", "工具地图"), ("workflow", "工作流"),
-             ("build", "实战"), ("checklist", "检查清单")]
+    links = [("index", "首页"), ("tools", "工具"), ("workflow", "流程"),
+             ("build", "实战"), ("launch", "上线")]
     by_slug = {p["slug"]: p for p in PAGES}
     items = "".join(
         f'<a href="{by_slug[s]["href"]}">{t}</a>' for s, t in links

@@ -1,165 +1,75 @@
-<div class="callout">
-  <div class="callout-title">本章要点</div>
-  <p>Agent 做网站是 <strong>七个来回</strong>，不是一句话搞定。理解这个节奏，你就不会在第一步就要它「给我一个完整的网站」——那是新手最贵的错误。</p>
-</div>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">五步流程</span>
+      <h2 class="h2">从想法到上线，只走这五步。</h2>
+    </div>
 
-<h2 id="overview">一、七个步骤的全貌</h2>
-
-<p>下面这条流程，无论是用建站生成型工具还是编程型 Agent，本质都一样。区别只是有些步骤被工具自动合并了。</p>
-
-<div class="flow">
-  <div class="flow-step">
-    <div class="flow-badge">01</div>
-    <div class="flow-body">
-      <p class="flow-title">澄清需求</p>
-      <p class="flow-desc">把「我想做个网站」变成「我要做一个面向 X 人群、包含 Y 内容的 Z 风格单页」。</p>
-      <div class="flow-split">
-        <div><div class="k">你负责</div><div class="v">说清楚目的与受众，给一个参考网站</div></div>
-        <div><div class="k">Agent 负责</div><div class="v">追问遗漏信息，复述你的需求让你确认</div></div>
+    <div class="numlist">
+      <div class="numlist-item">
+        <div class="numlist-num">01</div>
+        <div class="numlist-body">
+          <p class="numlist-title">想清楚要什么</p>
+          <p class="numlist-desc">谁会看？解决什么问题？大概几页？你负责。</p>
+        </div>
+      </div>
+      <div class="numlist-item">
+        <div class="numlist-num">02</div>
+        <div class="numlist-body">
+          <p class="numlist-title">讲给 Agent 听</p>
+          <p class="numlist-desc">用「目标 + 受众 + 风格」三句话描述，Agent 负责拆解和实现。</p>
+        </div>
+      </div>
+      <div class="numlist-item">
+        <div class="numlist-num">03</div>
+        <div class="numlist-body">
+          <p class="numlist-title">Agent 生成页面</p>
+          <p class="numlist-desc">通常一轮给出完整 HTML + CSS，你负责复制到本地文件。</p>
+        </div>
+      </div>
+      <div class="numlist-item">
+        <div class="numlist-num">04</div>
+        <div class="numlist-body">
+          <p class="numlist-title">本地预览改稿</p>
+          <p class="numlist-desc">浏览器打开看效果，不满意就再回去讲一段「这个改大点、那里换个颜色」。</p>
+        </div>
+      </div>
+      <div class="numlist-item">
+        <div class="numlist-num">05</div>
+        <div class="numlist-body">
+          <p class="numlist-title">部署上线</p>
+          <p class="numlist-desc">推到 GitHub → 开启 Pages → 拿到一个能发给别人的网址。</p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="flow-step">
-    <div class="flow-badge">02</div>
-    <div class="flow-body">
-      <p class="flow-title">定义信息结构</p>
-      <p class="flow-desc">确定页面从上到下有哪些区块，以及它们的先后顺序。这一步不涉及任何视觉，只谈「讲什么」。</p>
-      <div class="flow-split">
-        <div><div class="k">你负责</div><div class="v">确认区块顺序，删掉不需要的</div></div>
-        <div><div class="k">Agent 负责</div><div class="v">给出区块清单与每块的内容要点</div></div>
+    <h3 class="h3">讲清楚需求：三要素</h3>
+    <p class="prose">不需要写六要素模板——记住下面三句就够用：</p>
+
+    <div class="numlist">
+      <div class="numlist-item">
+        <div class="numlist-num">A</div>
+        <div class="numlist-body">
+          <p class="numlist-title">目标</p>
+          <p class="numlist-desc">这个页面是干嘛的。例：「咖啡店的课程报名落地页」。</p>
+        </div>
+      </div>
+      <div class="numlist-item">
+        <div class="numlist-num">B</div>
+        <div class="numlist-body">
+          <p class="numlist-title">受众</p>
+          <p class="numlist-desc">谁会来看。例：「25–35 岁想学手冲的城市白领」。</p>
+        </div>
+      </div>
+      <div class="numlist-item">
+        <div class="numlist-num">C</div>
+        <div class="numlist-body">
+          <p class="numlist-title">风格</p>
+          <p class="numlist-desc">像什么。例：「极简黑白，大字标题，像 Apple 官网」。或贴一个参考链接。</p>
+        </div>
       </div>
     </div>
+
+    <p class="prose">把这三句粘给 Agent，就已经超过 80% 的新手提示词了。</p>
   </div>
-
-  <div class="flow-step">
-    <div class="flow-badge">03</div>
-    <div class="flow-body">
-      <p class="flow-title">定下设计基调</p>
-      <p class="flow-desc">从参考站或设计系统里提炼出：主色、字体气质、圆角大小、疏密程度。这一步定了，后面不会来回漂。</p>
-      <div class="flow-split">
-        <div><div class="k">你负责</div><div class="v">给出 1–2 个参考网站，说明喜欢它哪里</div></div>
-        <div><div class="k">Agent 负责</div><div class="v">输出具体的色值与字体方案</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="flow-step">
-    <div class="flow-badge">04</div>
-    <div class="flow-body">
-      <p class="flow-title">生成页面骨架</p>
-      <p class="flow-desc">先只写结构：有哪些区块、每块放什么内容、标题层级是什么。此时页面是「没有装修的毛坯房」。</p>
-      <div class="flow-split">
-        <div><div class="k">你负责</div><div class="v">看结构是否讲清了你想讲的事</div></div>
-        <div><div class="k">Agent 负责</div><div class="v">写出语义化的 HTML 结构</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="flow-step">
-    <div class="flow-badge">05</div>
-    <div class="flow-body">
-      <p class="flow-title">套用样式</p>
-      <p class="flow-desc">把第 03 步定下的设计基调落到 CSS 上：颜色、字号阶、间距、圆角、悬停反馈。</p>
-      <div class="flow-split">
-        <div><div class="k">你负责</div><div class="v">看效果、指出「太挤 / 太花 / 不够稳重」</div></div>
-        <div><div class="k">Agent 负责</div><div class="v">写样式并保证全站统一</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="flow-step">
-    <div class="flow-badge">06</div>
-    <div class="flow-body">
-      <p class="flow-title">响应式与细节</p>
-      <p class="flow-desc">手机宽度下不溢出、不断行错乱；补上悬停态、加载态、空状态这些「小事」——它们决定专业度。</p>
-      <div class="flow-split">
-        <div><div class="k">你负责</div><div class="v">在手机上真机看一眼</div></div>
-        <div><div class="k">Agent 负责</div><div class="v">加断点、修溢出、补交互细节</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="flow-step">
-    <div class="flow-badge">07</div>
-    <div class="flow-body">
-      <p class="flow-title">部署与迭代</p>
-      <p class="flow-desc">发布到公网拿到链接，收集反馈，然后回到第 05 或 06 步继续改。网站没有「做完」，只有「这一版」。 </p>
-      <div class="flow-split">
-        <div><div class="k">你负责</div><div class="v">分享出去、收集具体意见</div></div>
-        <div><div class="k">Agent 负责</div><div class="v">执行部署、按反馈批量修改</div></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<h2 id="rhythm">二、关键在节奏：为什么不能一口气要全套</h2>
-
-<p>新手最典型的做法是打开工具，输入一句：「帮我做一个好看的网站」，然后期待奇迹。结果通常是：页面能看，但你不知道哪里不对，也不知道怎么改。</p>
-
-<p>原因是 Agent 在一次回答里同时决定了<strong>讲什么、怎么排、长什么样</strong>。三件事捆在一起，你只能笼统地评价「不好看」，而笼统的反馈无法执行。</p>
-
-<p>把它拆成七步之后，每一步的验收标准都变得具体：</p>
-
-<ul>
-  <li>第 02 步你只说：「第三块和第四块换位置。」</li>
-  <li>第 05 步你只说：「正文行高再松一点，标题和副标题的差距拉大。」</li>
-  <li>第 06 步你只说：「手机上这段文字溢出了，修一下。」</li>
-</ul>
-
-<p><strong>具体的小要求，Agent 一次就能改对；笼统的大要求，它能给你十个版本，你都不满意。</strong></p>
-
-<h2 id="failure">三、三种常见的失败模式</h2>
-
-<div class="numlist">
-  <div class="numlist-item">
-    <div class="numlist-body">
-      <p class="numlist-title">失败模式一：一句话要一个完整网站</p>
-      <p class="numlist-desc">结果：一次产出很大，但结构、视觉都不可控，你还得整段重写提示词重来。<br><strong>改法：</strong>把要求拆开，先只要结构，满意了再要样式。</p>
-    </div>
-  </div>
-  <div class="numlist-item">
-    <div class="numlist-body">
-      <p class="numlist-title">失败模式二：全程不给参考</p>
-      <p class="numlist-desc">「简约大气」这四个字，在 Agent 眼里有几十种解释。它只能猜。<br><strong>改法：</strong>丢一个参考网站链接，再说「照它的留白和字重关系，但换成我们自己的内容」。</p>
-    </div>
-  </div>
-  <div class="numlist-item">
-    <div class="numlist-body">
-      <p class="numlist-title">失败模式三：不验收就往下走</p>
-      <p class="numlist-desc">结构还没看就催样式，样式没看就催上线。最后问题叠在一起，无从下手。<br><strong>改法：</strong>每一步都真的看一眼。看效果花 30 秒，返工花 30 分钟。</p>
-    </div>
-  </div>
-</div>
-
-<h2 id="budget">四、一个真实的时间预算</h2>
-
-<p>以「一个单页产品介绍站」为例，用方案 B（对话型 + 编程型 Agent）走完七步，大致是这样：</p>
-
-<div class="table-wrap">
-  <table>
-    <thead>
-      <tr>
-        <th>步骤</th>
-        <th>预计耗时</th>
-        <th>最容易返工的地方</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>01 澄清需求</td><td>15–20 分钟</td><td>目标没说清楚，后面全歪</td></tr>
-      <tr><td>02 信息结构</td><td>10 分钟</td><td>区块贪多，页面变成堆料</td></tr>
-      <tr><td>03 设计基调</td><td>10 分钟</td><td>给不出参考，来回试风格</td></tr>
-      <tr><td>04 页面骨架</td><td>5 分钟</td><td>——</td></tr>
-      <tr><td>05 套用样式</td><td>20–30 分钟</td><td>用「不好看」这种模糊反馈</td></tr>
-      <tr><td>06 响应式与细节</td><td>15 分钟</td><td>忘了在手机上看</td></tr>
-      <tr><td>07 部署与迭代</td><td>15 分钟</td><td>首次配置环境</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<p>合计约 <strong>1.5 至 2 小时</strong>。其中真正「动手」的时间不到一半，其余都在想清楚和看效果——这就是正常的比例。</p>
-
-<div class="callout">
-  <div class="callout-title">记住这句话</div>
-  <p>Agent 让「写」变得几乎免费，所以瓶颈从「会不会写」变成了「<strong>说不说得清、看不看得出</strong>」。本教程后面两章分别训练这两种能力。</p>
-</div>
+</section>
