@@ -429,7 +429,6 @@ a.card { display: block; }
         <span class="step-who">你</span>
       </div>
     </div>
-    <p class="prose rv" style="margin-top:20px;">01 谁会看、解决什么问题、大概几页；02 用三要素描述；03 Agent 一轮给出完整 HTML + CSS；04 不满意就回去改；05 推到 GitHub、开启 Pages、拿到网址。</p>
   </div>
 </section>
 
@@ -622,7 +621,7 @@ a.card { display: block; }
     });
   });
 
-  /* --- 6. 勾选清单：点击打勾 + 进度提示 --- */
+  /* --- 6. 勾选清单：点击 / 键盘（Enter、Space）打勾 + 进度提示 --- */
   var items = document.querySelectorAll('.check-item');
   var prog = document.querySelector('[data-check-progress]');
   function updateProgress() {
@@ -630,11 +629,18 @@ a.card { display: block; }
     var n = document.querySelectorAll('.check-item.done').length;
     prog.textContent = '已完成 ' + n + ' / ' + items.length + (n === items.length ? ' · 全部完成，去刷新你的网页吧' : '');
   }
+  function toggle(it) {
+    it.classList.toggle('done');
+    it.setAttribute('aria-checked', it.classList.contains('done') ? 'true' : 'false');
+    updateProgress();
+  }
   items.forEach(function (it) {
-    it.addEventListener('click', function () {
-      it.classList.toggle('done');
-      it.setAttribute('aria-checked', it.classList.contains('done') ? 'true' : 'false');
-      updateProgress();
+    it.addEventListener('click', function () { toggle(it); });
+    it.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault(); /* 阻止空格滚动页面 */
+        toggle(it);
+      }
     });
   });
   updateProgress();

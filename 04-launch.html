@@ -484,7 +484,7 @@ a.card { display: block; }
     </div>
   </div>
 </section>
-<nav class="pager" aria-label="章节翻页"><a class="prev" href="03-build.html"><span class="dir">← 上一章</span><span class="t">实战</span></a><span></span></nav>
+<nav class="pager" aria-label="章节翻页" style="grid-template-columns:1fr"><a class="prev" href="03-build.html"><span class="dir">← 上一章</span><span class="t">实战</span></a></nav>
 </main>
 <footer class="sitefoot">
   <div class="wrap">
@@ -623,7 +623,7 @@ a.card { display: block; }
     });
   });
 
-  /* --- 6. 勾选清单：点击打勾 + 进度提示 --- */
+  /* --- 6. 勾选清单：点击 / 键盘（Enter、Space）打勾 + 进度提示 --- */
   var items = document.querySelectorAll('.check-item');
   var prog = document.querySelector('[data-check-progress]');
   function updateProgress() {
@@ -631,11 +631,18 @@ a.card { display: block; }
     var n = document.querySelectorAll('.check-item.done').length;
     prog.textContent = '已完成 ' + n + ' / ' + items.length + (n === items.length ? ' · 全部完成，去刷新你的网页吧' : '');
   }
+  function toggle(it) {
+    it.classList.toggle('done');
+    it.setAttribute('aria-checked', it.classList.contains('done') ? 'true' : 'false');
+    updateProgress();
+  }
   items.forEach(function (it) {
-    it.addEventListener('click', function () {
-      it.classList.toggle('done');
-      it.setAttribute('aria-checked', it.classList.contains('done') ? 'true' : 'false');
-      updateProgress();
+    it.addEventListener('click', function () { toggle(it); });
+    it.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault(); /* 阻止空格滚动页面 */
+        toggle(it);
+      }
     });
   });
   updateProgress();

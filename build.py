@@ -75,21 +75,22 @@ def topbar(active_slug):
 
 
 def pager(active_slug):
-    """章节页底部上一章 / 下一章；末章的下一站是首页。"""
+    """章节页底部上一章 / 下一章；末章无下一章，单列占满整行。"""
     idx = next(i for i, p in enumerate(PAGES) if p["slug"] == active_slug)
-    seq = PAGES  # 首页视为第 0 站，末章下一站回到首页
+    seq = PAGES
     prev_p = seq[idx - 1] if idx > 0 else None
     next_p = seq[idx + 1] if idx < len(seq) - 1 else None
 
     def link(p, direction):
-        if p is None:
-            return "<span></span>"
         if direction == "prev":
             return (f'<a class="prev" href="{p["file"]}">'
                     f'<span class="dir">← 上一章</span><span class="t">{p["nav"]}</span></a>')
         return (f'<a class="next" href="{p["file"]}">'
                 f'<span class="dir">下一章 →</span><span class="t">{p["nav"]}</span></a>')
 
+    if next_p is None:  # 末章：去掉空占位，上一章卡片占满整行
+        return (f'<nav class="pager" aria-label="章节翻页" style="grid-template-columns:1fr">'
+                f'{link(prev_p, "prev")}</nav>')
     return f'<nav class="pager" aria-label="章节翻页">{link(prev_p, "prev")}{link(next_p, "next")}</nav>'
 
 
