@@ -387,6 +387,19 @@ tbody tr:hover { background: rgba(12,12,11,.015); }
 .flow-split .k { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; color: var(--ink-4); text-transform: uppercase; }
 .flow-split .v { font-size: 13.5px; color: var(--ink-2); }
 
+/* 三词定义（Agent / Skill / 插件） */
+.def-card {
+  padding: var(--s3);
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-m);
+}
+.def-term {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px;
+}
+.def-line {
+  font-size: 14.5px; line-height: 1.55; color: var(--ink-2); margin: 0;
+}
+
 /* 步骤清单（实战章节） */
 .steps { counter-reset: st; margin: var(--s3) 0; }
 .step {

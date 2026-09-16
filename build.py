@@ -136,7 +136,7 @@ def render(page, body):
 <title>{page["title"]} · {SITE_NAME}</title>
 <meta name="description" content="{page["lede"]}">
 <meta name="theme-color" content="#FBFBF9">
-<link rel="stylesheet" href="assets/style.css?v=20260915b">
+<link rel="stylesheet" href="assets/style.css?v=20260916a">
 </head>
 <body class="page-docs">
 {topbar(page["slug"])}
@@ -159,7 +159,7 @@ def render(page, body):
 </main>
 </div>
 {footer()}
-<script src="assets/site.js?v=20260915b"></script>
+<script src="assets/site.js?v=20260916a"></script>
 </body>
 </html>
 """
@@ -174,7 +174,7 @@ def render_home(page, body):
 <title>{page["title"]} · {SITE_NAME}</title>
 <meta name="description" content="{page["lede"]}">
 <meta name="theme-color" content="#FBFBF9">
-<link rel="stylesheet" href="assets/style.css?v=20260915b">
+<link rel="stylesheet" href="assets/style.css?v=20260916a">
 </head>
 <body class="page-home">
 {topbar(page["slug"])}
@@ -182,7 +182,7 @@ def render_home(page, body):
 {body.strip()}
 </main>
 {footer()}
-<script src="assets/site.js?v=20260915b"></script>
+<script src="assets/site.js?v=20260916a"></script>
 </body>
 </html>
 """
