@@ -24,7 +24,7 @@ PAGES = [
     dict(
         slug="tools", file="01-agent-tools.html", src="01-agent-tools.html", num="01", nav="工具地图",
         title="市面上有哪些 Agent 工具",
-        lede="四类工具的边界与分工。看完这一章，你就知道该把任务交给谁。",
+        lede="五类工具的边界与分工。看完这一章，你就知道该把任务交给谁。",
         minutes="3 分钟",
     ),
     dict(
