@@ -1,21 +1,21 @@
 <!-- ============ 三步：竖向步骤卡 ============ -->
-<section class="sec" id="launch-steps">
+<section class="sec" id="make-steps">
   <div class="wrap">
     <div class="sec-head rv">
       <span class="mono-label">Step By Step</span>
-      <h2 class="h2">三步，做出第一个页面</h2>
-      <p class="sec-sub">左边是你做的，右边是 Agent 做的。照着走一遍。</p>
+      <h2 class="h2">三步，做出一个网站</h2>
+      <p class="sec-sub">每步分两栏：左边你做的，右边 Agent 做的。照着走一遍。</p>
     </div>
 
     <div class="build-step rv">
       <div class="bs-head">
         <span class="bs-num">STEP 1</span>
-        <span class="bs-title">把需求发给 Agent</span>
+        <span class="bs-title">把提示词给 Agent，让它生成</span>
       </div>
       <div class="bs-cols">
         <div class="bs-col">
           <div class="bs-k">你要做的</div>
-          <p class="bs-v">打开任意对话窗口，把第 2 章的四句话提示词发给它。下方有现成模板，可直接复制。</p>
+          <p class="bs-v">打开对话窗口，把第 2 章的四句话模板（或下方示例）发给它。</p>
         </div>
         <div class="bs-col">
           <div class="bs-k">Agent 做的</div>
@@ -27,33 +27,16 @@
     <div class="build-step rv">
       <div class="bs-head">
         <span class="bs-num">STEP 2</span>
-        <span class="bs-title">把代码存成<span class="term" tabindex="0" data-tip="存在你自己电脑上的文件，不是网页里的">本地文件</span></span>
+        <span class="bs-title">如何让 Agent 修改</span>
       </div>
       <div class="bs-cols">
         <div class="bs-col">
           <div class="bs-k">你要做的</div>
-          <p class="bs-v">桌面新建文件夹 <code>my-site</code>，新建文本文件，粘贴代码，保存为 <code>index.html</code>。</p>
+          <p class="bs-v">把不满意的点用一句话说清（能截图更好），一次只说一件事。收到新代码后，覆盖保存成 <code>index.html</code>，刷新浏览器看效果。</p>
         </div>
         <div class="bs-col">
           <div class="bs-k">Agent 做的</div>
-          <p class="bs-v">待命。你随时可以把报错或疑问丢回给它。</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="build-step rv">
-      <div class="bs-head">
-        <span class="bs-num">STEP 3</span>
-        <span class="bs-title">双击打开看效果</span>
-      </div>
-      <div class="bs-cols">
-        <div class="bs-col">
-          <div class="bs-k">你要做的</div>
-          <p class="bs-v">双击 <code>index.html</code>，页面就在浏览器里了。不满意就回去说一句，改完覆盖保存再看。</p>
-        </div>
-        <div class="bs-col">
-          <div class="bs-k">Agent 做的</div>
-          <p class="bs-v">按你的新要求改代码，比如「标题再大一点，配色换成奶咖色」。</p>
+          <p class="bs-v">只改你指的地方，回给你完整的新代码；需求含糊时它会反问你。</p>
         </div>
       </div>
     </div>
@@ -62,10 +45,42 @@
       <span class="w-ico" aria-hidden="true">⚠️</span>
       <span><b>最常见的坑：</b>文件名后缀必须是 <b>.html</b>。Windows 默认隐藏<span class="term" tabindex="0" data-tip="文件名最后那一小截，比如 .html、.txt，决定它是什么文件">扩展名</span>，小心存成了「index.html.txt」。</span>
     </div>
+
+    <div class="build-step rv" style="margin-top:24px;">
+      <div class="bs-head">
+        <span class="bs-num">STEP 3</span>
+        <span class="bs-title">上线五步，做完一步勾一步</span>
+      </div>
+      <div class="bs-col">
+        <div class="checklist" role="group" aria-label="上线步骤清单">
+          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+            <span class="check-box" aria-hidden="true">✓</span>
+            <span class="check-text">在 <code>github.com</code> 注册账号（如果还没有）。</span>
+          </div>
+          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+            <span class="check-box" aria-hidden="true">✓</span>
+            <span class="check-text">右上角「+」→「New repository」，名字随便起，<b>Public</b>，不勾任何初始化。</span>
+          </div>
+          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+            <span class="check-box" aria-hidden="true">✓</span>
+            <span class="check-text">按提示在本地 <code>my-site</code> 文件夹里运行三条 git 命令（页面自带复制按钮）。</span>
+          </div>
+          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+            <span class="check-box" aria-hidden="true">✓</span>
+            <span class="check-text">回到仓库 → <b>Settings</b> → 左侧 <b>Pages</b> → Source 选 <code>main</code> 分支根目录 → <b>Save</b>。</span>
+          </div>
+          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+            <span class="check-box" aria-hidden="true">✓</span>
+            <span class="check-text">等一分钟，页面顶部出现 <code>https://你的用户名.github.io/仓库名/</code>，发给任何人即可。</span>
+          </div>
+        </div>
+        <p class="check-progress" data-check-progress aria-live="polite">已完成 0 / 5</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ============ 示例提示词：可复制 ============ -->
+<!-- ============ 第 1 步示例提示词：可复制 ============ -->
 <section class="sec">
   <div class="wrap">
     <div class="sec-head rv">
@@ -80,5 +95,62 @@
     </div>
 
     <p class="prose rv mt">到这里你就掌握了核心循环：<b>写需求 → 看效果 → 改需求</b>。剩下的只是熟练度。</p>
+  </div>
+</section>
+
+<!-- ============ 新手最常踩的四个坑：症状卡 ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">Troubleshooting</span>
+      <h2 class="h2">新手最常踩的四个坑</h2>
+      <p class="sec-sub">对着症状找原因，一句解法就能救你两小时。</p>
+    </div>
+    <div class="grid-2">
+      <div class="card card-static rv">
+        <div class="sym-num">坑 01</div>
+        <div class="sym-title">双击打开全是源代码</div>
+        <div class="sym-rows">
+          <div class="sym-row"><span class="k">原因</span><span class="v">文件存成了 .txt（Windows 默认隐藏扩展名）</span></div>
+          <div class="sym-row fix"><span class="k">解法</span><span class="v">手动把文件名改成 <code>index.html</code> 再打开</span></div>
+        </div>
+      </div>
+      <div class="card card-static rv">
+        <div class="sym-num">坑 02</div>
+        <div class="sym-title">页面里的图片全打不开</div>
+        <div class="sym-rows">
+          <div class="sym-row"><span class="k">原因</span><span class="v">对话型 Agent 经常编造图片地址</span></div>
+          <div class="sym-row fix"><span class="k">解法</span><span class="v">图片先存到本地，<code>src</code> 改成<span class="term" tabindex="0" data-tip="跟当前网页放在一块儿的位置，换台电脑也不失效">相对路径</span>（如 <code>images/coffee.jpg</code>）</span></div>
+        </div>
+      </div>
+      <div class="card card-static rv">
+        <div class="sym-num">坑 03</div>
+        <div class="sym-title">改了文件但页面没变化</div>
+        <div class="sym-rows">
+          <div class="sym-row"><span class="k">原因</span><span class="v"><span class="term" tabindex="0" data-tip="浏览器偷偷存了一份旧页面，改完还拿旧的给你看">浏览器缓存</span>；GitHub Pages 也要 1–3 分钟重新部署</span></div>
+          <div class="sym-row fix"><span class="k">解法</span><span class="v">按 <b>Ctrl + F5</b> <span class="term" tabindex="0" data-tip="让浏览器丢掉旧缓存，重新下载一遍页面">强制刷新</span>，线上改动稍等再看</span></div>
+        </div>
+      </div>
+      <div class="card card-static rv">
+        <div class="sym-num">坑 04</div>
+        <div class="sym-title">一次提太多需求，Agent 改崩了</div>
+        <div class="sym-rows">
+          <div class="sym-row"><span class="k">原因</span><span class="v">改动累计越多，Agent 越容易丢上下文</span></div>
+          <div class="sym-row fix"><span class="k">解法</span><span class="v">每次只说一件事，改完满意再提下一条</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 深色收尾卡 ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="end-card rv">
+      <span class="end-kicker">That's It</span>
+      <h2>你的第一个网站，已经上线</h2>
+      <p>把网址发给一个朋友，听听真实反馈——然后用第 2 步的方法继续改，改到满意为止。剩下的交给 Agent。</p>
+      <a class="btn btn-primary" href="index.html">回到首页，再走一遍 →</a>
+    </div>
   </div>
 </section>
