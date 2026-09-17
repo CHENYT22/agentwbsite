@@ -27,7 +27,7 @@
     rvs.forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* --- 3. 选型选择器：点亮匹配的工具卡，其余变淡 --- */
+  /* --- 3. 选型选择器：按容器作用域，同页可有多组互不干扰 --- */
   var PICK_TOOL = { nocode: 'general', fast: 'gen', design: 'design', all: 'general', pro: 'code' };
   var PICK_NOTE = {
     nocode: '为你推荐：通用型 Agent · WorkBuddy —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
@@ -36,35 +36,65 @@
     all: '为你推荐：通用型 Agent · WorkBuddy / Manus / Devin —— 把对话、工具调用、浏览器、插件整合在一起，一个帮手全包了。',
     pro: '为你推荐：编程型 Agent · Cursor / Claude Code —— 已经跑通基础流程后，本地客户端效率最高：改动、调试都在自己电脑里完成，适合追求进阶的人。'
   };
-  var pickNote = document.querySelector('[data-chooser-note]');
-  var resetBtn = document.querySelector('.chip[data-pick="reset"]');
-  var toolCards = document.querySelectorAll('.tool-grid .card');
-  function clearPick() {
-    document.querySelectorAll('.chip[data-pick].is-on').forEach(function (b) {
-      b.classList.remove('is-on');
-      b.setAttribute('aria-pressed', 'false');
+  document.querySelectorAll('[data-picker]').forEach(function (root) {
+    var scope = root.getAttribute('data-picker');
+    var chips = root.querySelectorAll('.chip[data-pick]');
+    var note = root.querySelector('[data-result]');
+    var resetBtn = root.querySelector('.chip[data-pick="reset"]');
+    var cards = scope === 'tools' ? root.querySelectorAll('.tool-grid .card') : [];
+    function clearPick() {
+      chips.forEach(function (b) {
+        b.classList.remove('is-on');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      cards.forEach(function (c) { c.classList.remove('hl', 'dim'); });
+      if (note) note.hidden = true;
+      if (resetBtn) resetBtn.hidden = true;
+    }
+    chips.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.getAttribute('data-pick');
+        if (key === 'reset') { clearPick(); return; }
+        var tool = PICK_TOOL[key];
+        chips.forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('is-on', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        cards.forEach(function (c) {
+          var hit = c.getAttribute('data-tool') === tool;
+          c.classList.toggle('hl', hit);
+          c.classList.toggle('dim', !hit);
+        });
+        if (note) { note.textContent = PICK_NOTE[key] || ''; note.hidden = false; }
+        if (resetBtn) resetBtn.hidden = false;
+      });
     });
-    toolCards.forEach(function (c) { c.classList.remove('hl', 'dim'); });
-    if (pickNote) pickNote.hidden = true;
-    if (resetBtn) resetBtn.hidden = true;
-  }
-  document.querySelectorAll('.chip[data-pick]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var key = btn.getAttribute('data-pick');
-      if (key === 'reset') { clearPick(); return; }
-      var tool = PICK_TOOL[key];
-      document.querySelectorAll('.chip[data-pick]').forEach(function (b) {
-        var on = b === btn;
-        b.classList.toggle('is-on', on);
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+
+  /* --- 3b. 话术选择器：选中一句，下方出对应原话卡（每张自带复制） --- */
+  document.querySelectorAll('[data-talk-picker]').forEach(function (root) {
+    var chips = root.querySelectorAll('.chip[data-talk]');
+    var box = root.querySelector('[data-talk-result]');
+    var cards = box ? box.querySelectorAll('.result-card') : [];
+    if (!box) return;
+    chips.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.getAttribute('data-talk');
+        var on = !btn.classList.contains('is-on');
+        chips.forEach(function (b) {
+          b.classList.remove('is-on');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        cards.forEach(function (c) {
+          var hit = on && c.getAttribute('data-card') === key;
+          c.hidden = !hit;
+          if (hit) { c.style.animation = 'none'; void c.offsetWidth; c.style.animation = ''; }
+        });
+        btn.classList.toggle('is-on', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        box.hidden = !on;
       });
-      toolCards.forEach(function (c) {
-        var hit = c.getAttribute('data-tool') === tool;
-        c.classList.toggle('hl', hit);
-        c.classList.toggle('dim', !hit);
-      });
-      if (pickNote) { pickNote.textContent = PICK_NOTE[key] || ''; pickNote.hidden = false; }
-      if (resetBtn) resetBtn.hidden = false;
     });
   });
 
@@ -128,29 +158,87 @@
     });
   });
 
-  /* --- 6. 勾选清单：点击 / 键盘（Enter、Space）打勾 + 进度提示 --- */
-  var items = document.querySelectorAll('.check-item');
-  var prog = document.querySelector('[data-check-progress]');
-  function updateProgress() {
-    if (!prog) return;
-    var n = document.querySelectorAll('.check-item.done').length;
-    prog.textContent = '进度 ' + n + ' / ' + items.length + (n === items.length ? ' · 全部完成，去刷新你的网页吧' : '');
-  }
-  function toggle(it) {
-    it.classList.toggle('done');
-    it.setAttribute('aria-checked', it.classList.contains('done') ? 'true' : 'false');
+  /* --- 6. 勾选清单：每个 .checklist 各自算进度，键盘（Enter、Space）同样可用 --- */
+  document.querySelectorAll('.checklist').forEach(function (list) {
+    var items = list.querySelectorAll('.check-item');
+    var wrap = list.closest('.check-wrap') || list.parentElement;
+    var prog = wrap ? wrap.querySelector('[data-check-progress]') : null;
+    function updateProgress() {
+      if (!prog) return;
+      var n = list.querySelectorAll('.check-item.done').length;
+      prog.textContent = '进度 ' + n + ' / ' + items.length + (n === items.length ? ' · 全部完成，去下面看看四个坑' : '');
+    }
+    function toggle(it) {
+      it.classList.toggle('done');
+      it.setAttribute('aria-checked', it.classList.contains('done') ? 'true' : 'false');
+      updateProgress();
+    }
+    items.forEach(function (it) {
+      it.addEventListener('click', function () { toggle(it); });
+      it.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault(); /* 阻止空格滚动页面 */
+          toggle(it);
+        }
+      });
+    });
     updateProgress();
+  });
+
+  /* --- 6b. 三步节点树：点击开合，同一时间只展开一个（高度过渡复用折叠动效） --- */
+  var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-node]'));
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function setNode(node, open) {
+    var body = node.querySelector('.node-body');
+    var head = node.querySelector('[data-node-toggle]');
+    if (!body) return;
+    head && head.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      node.classList.add('is-open');
+      body.style.height = body.scrollHeight + 'px';
+      var settle = function (e) {
+        if (e && e.propertyName !== 'height') return;
+        if (node.classList.contains('is-open')) body.style.height = 'auto';
+        body.removeEventListener('transitionend', settle);
+      };
+      body.addEventListener('transitionend', settle);
+      setTimeout(settle, reduceMotion ? 0 : 400); /* 兜底：过渡事件偶发丢失时也能落到 auto */
+    } else {
+      body.style.height = body.scrollHeight + 'px';
+      node.classList.remove('is-open');
+      requestAnimationFrame(function () { body.style.height = '0px'; });
+    }
   }
-  items.forEach(function (it) {
-    it.addEventListener('click', function () { toggle(it); });
-    it.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
-        e.preventDefault(); /* 阻止空格滚动页面 */
-        toggle(it);
+  nodes.forEach(function (node) {
+    var head = node.querySelector('[data-node-toggle]');
+    var body = node.querySelector('.node-body');
+    if (!body) return;
+    var open = node.classList.contains('is-open');
+    body.style.height = open ? 'auto' : '0px';
+    if (head) head.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (!head) return;
+    head.addEventListener('click', function () {
+      var willOpen = !node.classList.contains('is-open');
+      if (willOpen) {
+        nodes.forEach(function (o) { if (o !== node && o.classList.contains('is-open')) setNode(o, false); });
       }
+      setNode(node, willOpen);
     });
   });
-  updateProgress();
+
+  /* --- 6c. 页内模板入口：平滑滚到目标卡，边框高亮 1.5s（只变 border-color） --- */
+  document.querySelectorAll('[data-scroll-to]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var sel = link.getAttribute('data-scroll-to');
+      var target = sel ? document.querySelector(sel) : null;
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+      target.classList.add('is-flash');
+      setTimeout(function () { target.classList.remove('is-flash'); }, 1500);
+    });
+  });
+
 
   /* --- 7. 术语气泡：绝对定位于词条内，坐标换算成视口钳制后的纯 px --- */
   var terms = document.querySelectorAll('.term');

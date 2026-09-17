@@ -1,80 +1,169 @@
-<!-- ============ 三步：竖向步骤卡 ============ -->
+<!-- ============ 三步：树状可折叠导图 ============ -->
 <section class="sec" id="make-steps">
   <div class="wrap">
     <div class="sec-head rv">
       <span class="mono-label">Step By Step</span>
       <h2 class="h2">三步，做出一个网站</h2>
-      <p class="sec-sub">三步走完：先生成，再修改，最后部署上线。</p>
+      <p class="sec-sub">点开每一步看细节，同一时间只展开一步。</p>
     </div>
 
-    <div class="build-step rv">
-      <div class="bs-head">
-        <span class="bs-num">STEP 1</span>
-        <span class="bs-title">如何生成</span>
-      </div>
-      <div class="bs-cols">
-        <div class="bs-col">
-          <div class="bs-k">已有详细需求和框架</div>
-          <p class="bs-v">把自己的详细需求与框架（目标、受众、风格）直接给到 Agent。</p>
+    <div class="tree rv">
+      <!-- STEP 1 -->
+      <div class="node is-open" data-node>
+        <button class="node-head" type="button" data-node-toggle aria-expanded="true">
+          <span class="bs-num">STEP 1</span>
+          <span class="node-title">如何生成</span>
+          <span class="node-hint">有需求直接说，没想法就聊着来</span>
+          <span class="node-arrow" aria-hidden="true">›</span>
+        </button>
+        <div class="node-body">
+          <div class="node-inner">
+            <div class="branches">
+              <div class="branch">
+                <div class="branch-k">A · 已有详细需求和框架</div>
+                <div class="leaf">
+                  <p>把这三件事直接说给 Agent：</p>
+                  <div class="tag-row">
+                    <span class="term tag" tabindex="0" data-tip="这个网站要达成什么，比如「让人看完就报名」">目标</span>
+                    <span class="term tag" tabindex="0" data-tip="给谁看，比如「25–35 岁想学手冲的城市白领」">受众</span>
+                    <span class="term tag" tabindex="0" data-tip="看起来是什么感觉，比如「极简黑白、大字标题、留白多」">风格</span>
+                  </div>
+                </div>
+              </div>
+              <div class="branch">
+                <div class="branch-k">B · 没有具体想法</div>
+                <div class="leaf prompt-card prompt-card--sm">
+                  <button class="copy-btn" type="button" data-copy>复制</button>
+                  <div class="prompt-tag">① 像聊天一样问它</div>
+                  <div class="prompt-text">我想做一个 xxxx 网站，我们可以怎样开始？</div>
+                </div>
+                <div class="leaf">
+                  <b>② 用现成模板</b>
+                  <p class="leaf-p"><a class="tpl-link" href="#prompt-card" data-scroll-to="#prompt-card">滚到本章「示例提示词」卡</a>，或 <a class="tpl-link" href="02-workflow.html#prompt-template">用第 2 章的四句话模板</a>。</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="bs-col">
-          <div class="bs-k">没有具体想法</div>
-          <p class="bs-v">像聊天一样和 Agent 对话：直接问它「我想做一个 xxxx 网站，我们可以怎样开始？」；也可以复制下方提示词模板卡，先开始尝试。</p>
-        </div>
       </div>
-      <div class="prompt-card rv" style="margin-top:20px;">
-        <button class="copy-btn" type="button" data-copy>复制</button>
-        <div class="prompt-tag">PROMPT · 咖啡课落地页 · 不想自己写？直接复制这条，先把流程跑通</div>
-        <div class="prompt-text">我想要一个咖啡课程报名落地页。受众是 25–35 岁想学手冲的城市白领。风格极简黑白、大字标题、像 Apple 官网那样留白多。单页，顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
-      </div>
-    </div>
 
-    <div class="build-step rv">
-      <div class="bs-head">
-        <span class="bs-num">STEP 2</span>
-        <span class="bs-title">如何修改</span>
-      </div>
-      <div class="bs-cols">
-        <div class="bs-col">
-          <div class="bs-k">你要做的</div>
-          <p class="bs-v">把不满意的点用一句话说清（能截图更好），一次只说一件事。收到新代码后，覆盖保存成 <span class="term" tabindex="0" data-tip="最常见的坑：文件名后缀必须是 .html。Windows 默认隐藏扩展名，小心存成了「index.html.txt」，浏览器打开就全是源代码">index.html</span>，刷新浏览器看效果。</p>
+      <!-- STEP 2 -->
+      <div class="node" data-node>
+        <button class="node-head" type="button" data-node-toggle aria-expanded="false">
+          <span class="bs-num">STEP 2</span>
+          <span class="node-title">如何修改</span>
+          <span class="node-hint">一次只说一件事</span>
+          <span class="node-arrow" aria-hidden="true">›</span>
+        </button>
+        <div class="node-body">
+          <div class="node-inner">
+            <div class="branches">
+              <div class="branch">
+                <div class="branch-k">A · 说清楚要改哪里</div>
+                <div class="leaf">
+                  <p>一次只说一件事。点一句现成话术，下面出现可直接发给 Agent 的原话：</p>
+                  <div class="talk-picker" data-talk-picker>
+                    <div class="chooser chooser--talk">
+                      <button class="chip" type="button" data-talk="title" aria-pressed="false">标题加大</button>
+                      <button class="chip" type="button" data-talk="color" aria-pressed="false">换配色</button>
+                      <button class="chip" type="button" data-talk="section" aria-pressed="false">加区块</button>
+                      <button class="chip" type="button" data-talk="mobile" aria-pressed="false">修手机端</button>
+                    </div>
+                    <div class="talk-result" data-talk-result hidden>
+                      <div class="prompt-card prompt-card--sm result-card" data-card="title" hidden>
+                        <button class="copy-btn" type="button" data-copy>复制</button>
+                        <div class="prompt-tag">可直接发给 Agent 的原话</div>
+                        <div class="prompt-text">首屏标题再大一点，和正文拉开层次。</div>
+                      </div>
+                      <div class="prompt-card prompt-card--sm result-card" data-card="color" hidden>
+                        <button class="copy-btn" type="button" data-copy>复制</button>
+                        <div class="prompt-tag">可直接发给 Agent 的原话</div>
+                        <div class="prompt-text">整体配色换成奶咖色系，别太冷。</div>
+                      </div>
+                      <div class="prompt-card prompt-card--sm result-card" data-card="section" hidden>
+                        <button class="copy-btn" type="button" data-copy>复制</button>
+                        <div class="prompt-tag">可直接发给 Agent 的原话</div>
+                        <div class="prompt-text">亮点下面加一屏用户评价，三张卡横排。</div>
+                      </div>
+                      <div class="prompt-card prompt-card--sm result-card" data-card="mobile" hidden>
+                        <button class="copy-btn" type="button" data-copy>复制</button>
+                        <div class="prompt-tag">可直接发给 Agent 的原话</div>
+                        <div class="prompt-text">手机上卡片竖排，字号别小于 14px。</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="branch">
+                <div class="branch-k">B · 改完没变化</div>
+                <div class="leaf">先按 <b>Ctrl + F5</b> 强制刷新，把旧缓存丢掉；还不行就等一下再看——线上部署本身也需要一点时间。</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="bs-col">
-          <div class="bs-k">Agent 做的</div>
-          <p class="bs-v">只改你指的地方，回给你完整的新代码；需求含糊时它会反问你。</p>
-        </div>
       </div>
-    </div>
 
-    <div class="build-step rv" style="margin-top:24px;">
-      <div class="bs-head">
-        <span class="bs-num">STEP 3</span>
-        <span class="bs-title">如何部署上线</span>
-      </div>
-      <div class="bs-col">
-        <div class="checklist" role="group" aria-label="上线步骤清单">
-          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
-            <span class="check-box" aria-hidden="true">✓</span>
-            <span class="check-text">在 <code>github.com</code> 注册账号（如果还没有）。</span>
-          </div>
-          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
-            <span class="check-box" aria-hidden="true">✓</span>
-            <span class="check-text">右上角「+」→「New repository」，名字随便起，<b>Public</b>，不勾任何初始化。</span>
-          </div>
-          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
-            <span class="check-box" aria-hidden="true">✓</span>
-            <span class="check-text">按提示在本地 <code>my-site</code> 文件夹里运行三条 git 命令（页面自带复制按钮）。</span>
-          </div>
-          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
-            <span class="check-box" aria-hidden="true">✓</span>
-            <span class="check-text">回到仓库 → <b>Settings</b> → 左侧 <b>Pages</b> → Source 选 <code>main</code> 分支根目录 → <b>Save</b>。</span>
-          </div>
-          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
-            <span class="check-box" aria-hidden="true">✓</span>
-            <span class="check-text">稍等片刻，页面顶部出现 <code>https://你的用户名.github.io/仓库名/</code>，发给任何人即可。</span>
+      <!-- STEP 3 -->
+      <div class="node" data-node>
+        <button class="node-head" type="button" data-node-toggle aria-expanded="false">
+          <span class="bs-num">STEP 3</span>
+          <span class="node-title">如何部署上线</span>
+          <span class="node-hint">存文件、推仓库、开 Pages</span>
+          <span class="node-arrow" aria-hidden="true">›</span>
+        </button>
+        <div class="node-body">
+          <div class="node-inner">
+            <div class="branches">
+              <div class="branch">
+                <div class="branch-k">A · 存成 index.html</div>
+                <div class="leaf">后缀必须是 <b>.html</b>；Windows 默认隐藏扩展名，小心存成了「index.html.txt」。</div>
+              </div>
+              <div class="branch">
+                <div class="branch-k">B · 推到 GitHub</div>
+                <div class="leaf">建一个仓库，把做好的文件传上去。</div>
+              </div>
+              <div class="branch">
+                <div class="branch-k">C · 开启 Pages</div>
+                <div class="leaf">在仓库 <b>Settings → Pages</b> 里开启，拿到你的网址。</div>
+              </div>
+            </div>
+
+            <div class="node-foot check-wrap">
+              <div class="branch-k">上线五步，做完一步勾一步</div>
+              <div class="checklist" role="group" aria-label="上线步骤清单">
+                <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+                  <span class="check-box" aria-hidden="true">✓</span>
+                  <span class="check-text">在 <code>github.com</code> 注册账号（如果还没有）。</span>
+                </div>
+                <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+                  <span class="check-box" aria-hidden="true">✓</span>
+                  <span class="check-text">右上角「+」→「New repository」，名字随便起，<b>Public</b>，不勾任何初始化。</span>
+                </div>
+                <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+                  <span class="check-box" aria-hidden="true">✓</span>
+                  <span class="check-text">按提示在本地 <code>my-site</code> 文件夹里运行三条 git 命令（页面自带复制按钮）。</span>
+                </div>
+                <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+                  <span class="check-box" aria-hidden="true">✓</span>
+                  <span class="check-text">回到仓库 → <b>Settings</b> → 左侧 <b>Pages</b> → Source 选 <code>main</code> 分支根目录 → <b>Save</b>。</span>
+                </div>
+                <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+                  <span class="check-box" aria-hidden="true">✓</span>
+                  <span class="check-text">稍等片刻，页面顶部出现 <code>https://你的用户名.github.io/仓库名/</code>，发给任何人即可。</span>
+                </div>
+              </div>
+              <p class="check-progress" data-check-progress aria-live="polite">进度 0 / 5</p>
+            </div>
+
+            <a class="card card-link jump-card" href="#troubleshoot">
+              <span class="jump-body">
+                <span class="jump-t">部署细节与四个新手坑</span>
+                <span class="jump-d">除了存文件、推仓库、开 Pages，最容易卡住的地方都在这儿。</span>
+              </span>
+              <span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"/></svg></span>
+            </a>
           </div>
         </div>
-        <p class="check-progress" data-check-progress aria-live="polite">进度 0 / 5</p>
       </div>
     </div>
 
@@ -82,8 +171,24 @@
   </div>
 </section>
 
+<!-- ============ 第 1 步的示例提示词：可复制 ============ -->
+<section class="sec" id="example-prompt">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">Example Prompt</span>
+      <h2 class="h2">示例提示词</h2>
+      <p class="sec-sub">不想自己写？直接复制这条发给 Agent，先把流程跑通。</p>
+    </div>
+    <div class="prompt-card rv" id="prompt-card">
+      <button class="copy-btn" type="button" data-copy>复制</button>
+      <div class="prompt-tag">PROMPT · 咖啡课落地页</div>
+      <div class="prompt-text">我想要一个咖啡课程报名落地页。受众是 25–35 岁想学手冲的城市白领。风格极简黑白、大字标题、像 Apple 官网那样留白多。单页，顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ 新手最常踩的四个坑：症状卡 ============ -->
-<section class="sec">
+<section class="sec" id="troubleshoot">
   <div class="wrap">
     <div class="sec-head rv">
       <span class="mono-label">Troubleshooting</span>

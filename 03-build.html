@@ -249,21 +249,61 @@ a.card { display: block; }
 .el-eg { font-size: 14px; margin-top: 12px; padding: 10px 14px; background: #F4F4EE; border-radius: 10px; color: var(--ink-2); }
 .el-eg b { color: var(--ink); font-weight: 600; }
 
-/* ---------- 竖向步骤卡（你要做的 / Agent 做的） ---------- */
-.build-step { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
-.build-step + .build-step { margin-top: 16px; }
-.bs-head { display: flex; align-items: center; gap: 12px; padding: 24px; border-bottom: 1px solid var(--line); }
+/* ---------- 三步：树状可折叠导图（折叠动效复用高度过渡 240ms） ---------- */
+.tree { display: flex; flex-direction: column; gap: 16px; }
 .bs-num {
   font-family: var(--mono); font-size: 12px; color: var(--paper);
   background: var(--ink); border-radius: 999px; padding: 2px 10px;
 }
-.bs-title { font-size: 20px; font-weight: 600; }
-.bs-cols { display: grid; grid-template-columns: 1fr 1fr; }
-.bs-col { padding: 24px; }
-.bs-col + .bs-col { border-left: 1px dashed var(--line); }
-.bs-k { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-3); margin-bottom: 8px; }
-.bs-v { font-size: 14px; color: var(--ink-2); }
-.bs-v code { font-size: 12px; }
+.node { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.node + .node::before {
+  content: ""; position: absolute; left: 50%; top: -16px; width: 1px; height: 16px; background: #D6D6CC;
+}
+.node-head {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  padding: 18px 22px; background: none; border: 0; cursor: pointer;
+  font: inherit; color: inherit; text-align: left;
+}
+.node-head:hover .node-title { color: var(--ink); }
+.node-title { font-size: 20px; font-weight: 600; }
+.node-hint { margin-left: auto; font-size: 12px; color: #8A8A80; }
+.node-arrow { flex: 0 0 auto; font-size: 16px; line-height: 1; color: #8A8A80; transition: transform .24s var(--ease); }
+.node.is-open .node-arrow { transform: rotate(90deg); }
+.node-body { height: 0; overflow: hidden; transition: height .24s var(--ease); }
+.node.is-open .node-body { overflow: visible; } /* 展开态放开裁剪，术语气泡可越出卡片 */
+.node-inner { padding: 0 22px 22px; }
+.branches { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.branch { min-width: 0; }
+.branch-k { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: #8A8A80; margin-bottom: 10px; }
+.leaf { background: #F4F4EE; border-radius: 10px; padding: 12px 14px; font-size: 14px; color: var(--ink-2); }
+.leaf + .leaf { margin-top: 10px; }
+.leaf b { color: var(--ink); font-weight: 600; }
+.leaf-p { margin-top: 8px; }
+.tpl-link { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.tpl-link:hover { color: var(--ok); }
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.term.tag {
+  display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 999px;
+  border: 1px solid var(--line-2); background: var(--surface); font-size: 14px; color: var(--ink);
+}
+.node-foot { margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--line); }
+/* 话术选择器：选中出原话卡（淡入上移复用 pop 260ms） */
+.chooser--talk { grid-template-columns: repeat(2, 1fr); }
+.talk-result { margin-top: 12px; }
+.talk-result .result-card + .result-card { margin-top: 0; }
+.talk-result .result-card[hidden] { display: none; }
+.talk-result .result-card { animation: pop .26s var(--ease) both; }
+.chooser--talk .chip { padding: 12px 10px; }
+/* 提示词卡紧凑变体（分支叶子内） */
+.prompt-card--sm { padding: 12px 84px 12px 14px; border-radius: 10px; border-color: var(--line); transition: border-color .2s ease; }
+.prompt-card--sm .prompt-tag { margin-bottom: 6px; }
+.prompt-card--sm .copy-btn { top: 10px; right: 10px; padding: 4px 12px; }
+.prompt-card.is-flash { border-color: #161613; }
+/* 跳转卡（整卡可点） */
+.jump-card { display: flex; align-items: center; gap: 16px; padding: 18px 22px; margin-top: 20px; }
+.jump-body { flex: 1; min-width: 0; }
+.jump-t { display: block; font-size: 20px; font-weight: 600; padding-right: 28px; }
+.jump-d { display: block; margin-top: 6px; font-size: 14px; color: var(--ink-2); }
 
 /* ---------- 症状卡（2×2） ---------- */
 .sym-num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); letter-spacing: .1em; }
@@ -406,16 +446,17 @@ a.card { display: block; }
   .grid-3, .grid-a3 { grid-template-columns: repeat(2, 1fr); }
   .tool-grid { grid-template-columns: repeat(2, 1fr); }
   .chooser { grid-template-columns: repeat(3, 1fr); }
+  .branches { grid-template-columns: 1fr; }
 }
 @media (max-width: 700px) {
   .hero { padding: 56px 0 44px; }
   .hero-title { font-size: 32px; }
   .hero-sub { font-size: 16px; }
-  .bs-cols { grid-template-columns: 1fr; }
-  .bs-col + .bs-col { border-left: 0; border-top: 1px dashed var(--line); }
   .chooser { grid-template-columns: repeat(2, 1fr); }
   .prompt-card { padding: 20px 20px 18px; }
   .copy-btn { position: static; margin-top: 14px; }
+  .prompt-card--sm { padding: 12px 84px 12px 14px; }
+  .prompt-card--sm .copy-btn { position: absolute; top: 10px; right: 10px; margin-top: 0; }
   .topnav a { padding: 6px 8px; font-size: 12px; }
   .brand { font-size: 14px; }
   .brand > span:last-child { display: none; }
@@ -431,6 +472,10 @@ a.card { display: block; }
   .grid-2, .grid-3, .grid-a3, .tool-grid { grid-template-columns: 1fr; }
   .chooser { grid-template-columns: repeat(2, 1fr); }
   .pager, .pager.is-single { grid-template-columns: 1fr; }
+  .node-hint { display: none; }
+  .node-head { padding: 16px 18px; }
+  .node-inner { padding: 0 18px 18px; }
+  .chooser--talk { grid-template-columns: 1fr; }
 }
 
 /* ---------- 无障碍降级 ---------- */
@@ -460,83 +505,172 @@ a.card { display: block; }
     <div class="btn-row"><a class="btn btn-primary" href="#make-steps">开始第 1 步 ↓</a></div>
   </div>
 </section>
-<!-- ============ 三步：竖向步骤卡 ============ -->
+<!-- ============ 三步：树状可折叠导图 ============ -->
 <section class="sec" id="make-steps">
   <div class="wrap">
     <div class="sec-head rv">
       <span class="mono-label">Step By Step</span>
       <h2 class="h2">三步，做出一个网站</h2>
-      <p class="sec-sub">三步走完：先生成，再修改，最后部署上线。</p>
+      <p class="sec-sub">点开每一步看细节，同一时间只展开一步。</p>
     </div>
 
-    <div class="build-step rv">
-      <div class="bs-head">
-        <span class="bs-num">STEP 1</span>
-        <span class="bs-title">如何生成</span>
-      </div>
-      <div class="bs-cols">
-        <div class="bs-col">
-          <div class="bs-k">已有详细需求和框架</div>
-          <p class="bs-v">把自己的详细需求与框架（目标、受众、风格）直接给到 Agent。</p>
+    <div class="tree rv">
+      <!-- STEP 1 -->
+      <div class="node is-open" data-node>
+        <button class="node-head" type="button" data-node-toggle aria-expanded="true">
+          <span class="bs-num">STEP 1</span>
+          <span class="node-title">如何生成</span>
+          <span class="node-hint">有需求直接说，没想法就聊着来</span>
+          <span class="node-arrow" aria-hidden="true">›</span>
+        </button>
+        <div class="node-body">
+          <div class="node-inner">
+            <div class="branches">
+              <div class="branch">
+                <div class="branch-k">A · 已有详细需求和框架</div>
+                <div class="leaf">
+                  <p>把这三件事直接说给 Agent：</p>
+                  <div class="tag-row">
+                    <span class="term tag" tabindex="0" data-tip="这个网站要达成什么，比如「让人看完就报名」">目标</span>
+                    <span class="term tag" tabindex="0" data-tip="给谁看，比如「25–35 岁想学手冲的城市白领」">受众</span>
+                    <span class="term tag" tabindex="0" data-tip="看起来是什么感觉，比如「极简黑白、大字标题、留白多」">风格</span>
+                  </div>
+                </div>
+              </div>
+              <div class="branch">
+                <div class="branch-k">B · 没有具体想法</div>
+                <div class="leaf prompt-card prompt-card--sm">
+                  <button class="copy-btn" type="button" data-copy>复制</button>
+                  <div class="prompt-tag">① 像聊天一样问它</div>
+                  <div class="prompt-text">我想做一个 xxxx 网站，我们可以怎样开始？</div>
+                </div>
+                <div class="leaf">
+                  <b>② 用现成模板</b>
+                  <p class="leaf-p"><a class="tpl-link" href="#prompt-card" data-scroll-to="#prompt-card">滚到本章「示例提示词」卡</a>，或 <a class="tpl-link" href="02-workflow.html#prompt-template">用第 2 章的四句话模板</a>。</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="bs-col">
-          <div class="bs-k">没有具体想法</div>
-          <p class="bs-v">像聊天一样和 Agent 对话：直接问它「我想做一个 xxxx 网站，我们可以怎样开始？」；也可以复制下方提示词模板卡，先开始尝试。</p>
-        </div>
       </div>
-      <div class="prompt-card rv" style="margin-top:20px;">
-        <button class="copy-btn" type="button" data-copy>复制</button>
-        <div class="prompt-tag">PROMPT · 咖啡课落地页 · 不想自己写？直接复制这条，先把流程跑通</div>
-        <div class="prompt-text">我想要一个咖啡课程报名落地页。受众是 25–35 岁想学手冲的城市白领。风格极简黑白、大字标题、像 Apple 官网那样留白多。单页，顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
-      </div>
-    </div>
 
-    <div class="build-step rv">
-      <div class="bs-head">
-        <span class="bs-num">STEP 2</span>
-        <span class="bs-title">如何修改</span>
-      </div>
-      <div class="bs-cols">
-        <div class="bs-col">
-          <div class="bs-k">你要做的</div>
-          <p class="bs-v">把不满意的点用一句话说清（能截图更好），一次只说一件事。收到新代码后，覆盖保存成 <span class="term" tabindex="0" data-tip="最常见的坑：文件名后缀必须是 .html。Windows 默认隐藏扩展名，小心存成了「index.html.txt」，浏览器打开就全是源代码">index.html</span>，刷新浏览器看效果。</p>
+      <!-- STEP 2 -->
+      <div class="node" data-node>
+        <button class="node-head" type="button" data-node-toggle aria-expanded="false">
+          <span class="bs-num">STEP 2</span>
+          <span class="node-title">如何修改</span>
+          <span class="node-hint">一次只说一件事</span>
+          <span class="node-arrow" aria-hidden="true">›</span>
+        </button>
+        <div class="node-body">
+          <div class="node-inner">
+            <div class="branches">
+              <div class="branch">
+                <div class="branch-k">A · 说清楚要改哪里</div>
+                <div class="leaf">
+                  <p>一次只说一件事。点一句现成话术，下面出现可直接发给 Agent 的原话：</p>
+                  <div class="talk-picker" data-talk-picker>
+                    <div class="chooser chooser--talk">
+                      <button class="chip" type="button" data-talk="title" aria-pressed="false">标题加大</button>
+                      <button class="chip" type="button" data-talk="color" aria-pressed="false">换配色</button>
+                      <button class="chip" type="button" data-talk="section" aria-pressed="false">加区块</button>
+                      <button class="chip" type="button" data-talk="mobile" aria-pressed="false">修手机端</button>
+                    </div>
+                    <div class="talk-result" data-talk-result hidden>
+                      <div class="prompt-card prompt-card--sm result-card" data-card="title" hidden>
+                        <button class="copy-btn" type="button" data-copy>复制</button>
+                        <div class="prompt-tag">可直接发给 Agent 的原话</div>
+                        <div class="prompt-text">首屏标题再大一点，和正文拉开层次。</div>
+                      </div>
+                      <div class="prompt-card prompt-card--sm result-card" data-card="color" hidden>
+                        <button class="copy-btn" type="button" data-copy>复制</button>
+                        <div class="prompt-tag">可直接发给 Agent 的原话</div>
+                        <div class="prompt-text">整体配色换成奶咖色系，别太冷。</div>
+                      </div>
+                      <div class="prompt-card prompt-card--sm result-card" data-card="section" hidden>
+                        <button class="copy-btn" type="button" data-copy>复制</button>
+                        <div class="prompt-tag">可直接发给 Agent 的原话</div>
+                        <div class="prompt-text">亮点下面加一屏用户评价，三张卡横排。</div>
+                      </div>
+                      <div class="prompt-card prompt-card--sm result-card" data-card="mobile" hidden>
+                        <button class="copy-btn" type="button" data-copy>复制</button>
+                        <div class="prompt-tag">可直接发给 Agent 的原话</div>
+                        <div class="prompt-text">手机上卡片竖排，字号别小于 14px。</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="branch">
+                <div class="branch-k">B · 改完没变化</div>
+                <div class="leaf">先按 <b>Ctrl + F5</b> 强制刷新，把旧缓存丢掉；还不行就等一下再看——线上部署本身也需要一点时间。</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="bs-col">
-          <div class="bs-k">Agent 做的</div>
-          <p class="bs-v">只改你指的地方，回给你完整的新代码；需求含糊时它会反问你。</p>
-        </div>
       </div>
-    </div>
 
-    <div class="build-step rv" style="margin-top:24px;">
-      <div class="bs-head">
-        <span class="bs-num">STEP 3</span>
-        <span class="bs-title">如何部署上线</span>
-      </div>
-      <div class="bs-col">
-        <div class="checklist" role="group" aria-label="上线步骤清单">
-          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
-            <span class="check-box" aria-hidden="true">✓</span>
-            <span class="check-text">在 <code>github.com</code> 注册账号（如果还没有）。</span>
-          </div>
-          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
-            <span class="check-box" aria-hidden="true">✓</span>
-            <span class="check-text">右上角「+」→「New repository」，名字随便起，<b>Public</b>，不勾任何初始化。</span>
-          </div>
-          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
-            <span class="check-box" aria-hidden="true">✓</span>
-            <span class="check-text">按提示在本地 <code>my-site</code> 文件夹里运行三条 git 命令（页面自带复制按钮）。</span>
-          </div>
-          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
-            <span class="check-box" aria-hidden="true">✓</span>
-            <span class="check-text">回到仓库 → <b>Settings</b> → 左侧 <b>Pages</b> → Source 选 <code>main</code> 分支根目录 → <b>Save</b>。</span>
-          </div>
-          <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
-            <span class="check-box" aria-hidden="true">✓</span>
-            <span class="check-text">稍等片刻，页面顶部出现 <code>https://你的用户名.github.io/仓库名/</code>，发给任何人即可。</span>
+      <!-- STEP 3 -->
+      <div class="node" data-node>
+        <button class="node-head" type="button" data-node-toggle aria-expanded="false">
+          <span class="bs-num">STEP 3</span>
+          <span class="node-title">如何部署上线</span>
+          <span class="node-hint">存文件、推仓库、开 Pages</span>
+          <span class="node-arrow" aria-hidden="true">›</span>
+        </button>
+        <div class="node-body">
+          <div class="node-inner">
+            <div class="branches">
+              <div class="branch">
+                <div class="branch-k">A · 存成 index.html</div>
+                <div class="leaf">后缀必须是 <b>.html</b>；Windows 默认隐藏扩展名，小心存成了「index.html.txt」。</div>
+              </div>
+              <div class="branch">
+                <div class="branch-k">B · 推到 GitHub</div>
+                <div class="leaf">建一个仓库，把做好的文件传上去。</div>
+              </div>
+              <div class="branch">
+                <div class="branch-k">C · 开启 Pages</div>
+                <div class="leaf">在仓库 <b>Settings → Pages</b> 里开启，拿到你的网址。</div>
+              </div>
+            </div>
+
+            <div class="node-foot check-wrap">
+              <div class="branch-k">上线五步，做完一步勾一步</div>
+              <div class="checklist" role="group" aria-label="上线步骤清单">
+                <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+                  <span class="check-box" aria-hidden="true">✓</span>
+                  <span class="check-text">在 <code>github.com</code> 注册账号（如果还没有）。</span>
+                </div>
+                <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+                  <span class="check-box" aria-hidden="true">✓</span>
+                  <span class="check-text">右上角「+」→「New repository」，名字随便起，<b>Public</b>，不勾任何初始化。</span>
+                </div>
+                <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+                  <span class="check-box" aria-hidden="true">✓</span>
+                  <span class="check-text">按提示在本地 <code>my-site</code> 文件夹里运行三条 git 命令（页面自带复制按钮）。</span>
+                </div>
+                <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+                  <span class="check-box" aria-hidden="true">✓</span>
+                  <span class="check-text">回到仓库 → <b>Settings</b> → 左侧 <b>Pages</b> → Source 选 <code>main</code> 分支根目录 → <b>Save</b>。</span>
+                </div>
+                <div class="check-item" role="checkbox" aria-checked="false" tabindex="0">
+                  <span class="check-box" aria-hidden="true">✓</span>
+                  <span class="check-text">稍等片刻，页面顶部出现 <code>https://你的用户名.github.io/仓库名/</code>，发给任何人即可。</span>
+                </div>
+              </div>
+              <p class="check-progress" data-check-progress aria-live="polite">进度 0 / 5</p>
+            </div>
+
+            <a class="card card-link jump-card" href="#troubleshoot">
+              <span class="jump-body">
+                <span class="jump-t">部署细节与四个新手坑</span>
+                <span class="jump-d">除了存文件、推仓库、开 Pages，最容易卡住的地方都在这儿。</span>
+              </span>
+              <span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"/></svg></span>
+            </a>
           </div>
         </div>
-        <p class="check-progress" data-check-progress aria-live="polite">进度 0 / 5</p>
       </div>
     </div>
 
@@ -544,8 +678,24 @@ a.card { display: block; }
   </div>
 </section>
 
+<!-- ============ 第 1 步的示例提示词：可复制 ============ -->
+<section class="sec" id="example-prompt">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">Example Prompt</span>
+      <h2 class="h2">示例提示词</h2>
+      <p class="sec-sub">不想自己写？直接复制这条发给 Agent，先把流程跑通。</p>
+    </div>
+    <div class="prompt-card rv" id="prompt-card">
+      <button class="copy-btn" type="button" data-copy>复制</button>
+      <div class="prompt-tag">PROMPT · 咖啡课落地页</div>
+      <div class="prompt-text">我想要一个咖啡课程报名落地页。受众是 25–35 岁想学手冲的城市白领。风格极简黑白、大字标题、像 Apple 官网那样留白多。单页，顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ 新手最常踩的四个坑：症状卡 ============ -->
-<section class="sec">
+<section class="sec" id="troubleshoot">
   <div class="wrap">
     <div class="sec-head rv">
       <span class="mono-label">Troubleshooting</span>
@@ -638,7 +788,7 @@ a.card { display: block; }
     rvs.forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* --- 3. 选型选择器：点亮匹配的工具卡，其余变淡 --- */
+  /* --- 3. 选型选择器：按容器作用域，同页可有多组互不干扰 --- */
   var PICK_TOOL = { nocode: 'general', fast: 'gen', design: 'design', all: 'general', pro: 'code' };
   var PICK_NOTE = {
     nocode: '为你推荐：通用型 Agent · WorkBuddy —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
@@ -647,35 +797,65 @@ a.card { display: block; }
     all: '为你推荐：通用型 Agent · WorkBuddy / Manus / Devin —— 把对话、工具调用、浏览器、插件整合在一起，一个帮手全包了。',
     pro: '为你推荐：编程型 Agent · Cursor / Claude Code —— 已经跑通基础流程后，本地客户端效率最高：改动、调试都在自己电脑里完成，适合追求进阶的人。'
   };
-  var pickNote = document.querySelector('[data-chooser-note]');
-  var resetBtn = document.querySelector('.chip[data-pick="reset"]');
-  var toolCards = document.querySelectorAll('.tool-grid .card');
-  function clearPick() {
-    document.querySelectorAll('.chip[data-pick].is-on').forEach(function (b) {
-      b.classList.remove('is-on');
-      b.setAttribute('aria-pressed', 'false');
+  document.querySelectorAll('[data-picker]').forEach(function (root) {
+    var scope = root.getAttribute('data-picker');
+    var chips = root.querySelectorAll('.chip[data-pick]');
+    var note = root.querySelector('[data-result]');
+    var resetBtn = root.querySelector('.chip[data-pick="reset"]');
+    var cards = scope === 'tools' ? root.querySelectorAll('.tool-grid .card') : [];
+    function clearPick() {
+      chips.forEach(function (b) {
+        b.classList.remove('is-on');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      cards.forEach(function (c) { c.classList.remove('hl', 'dim'); });
+      if (note) note.hidden = true;
+      if (resetBtn) resetBtn.hidden = true;
+    }
+    chips.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.getAttribute('data-pick');
+        if (key === 'reset') { clearPick(); return; }
+        var tool = PICK_TOOL[key];
+        chips.forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('is-on', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        cards.forEach(function (c) {
+          var hit = c.getAttribute('data-tool') === tool;
+          c.classList.toggle('hl', hit);
+          c.classList.toggle('dim', !hit);
+        });
+        if (note) { note.textContent = PICK_NOTE[key] || ''; note.hidden = false; }
+        if (resetBtn) resetBtn.hidden = false;
+      });
     });
-    toolCards.forEach(function (c) { c.classList.remove('hl', 'dim'); });
-    if (pickNote) pickNote.hidden = true;
-    if (resetBtn) resetBtn.hidden = true;
-  }
-  document.querySelectorAll('.chip[data-pick]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var key = btn.getAttribute('data-pick');
-      if (key === 'reset') { clearPick(); return; }
-      var tool = PICK_TOOL[key];
-      document.querySelectorAll('.chip[data-pick]').forEach(function (b) {
-        var on = b === btn;
-        b.classList.toggle('is-on', on);
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+
+  /* --- 3b. 话术选择器：选中一句，下方出对应原话卡（每张自带复制） --- */
+  document.querySelectorAll('[data-talk-picker]').forEach(function (root) {
+    var chips = root.querySelectorAll('.chip[data-talk]');
+    var box = root.querySelector('[data-talk-result]');
+    var cards = box ? box.querySelectorAll('.result-card') : [];
+    if (!box) return;
+    chips.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.getAttribute('data-talk');
+        var on = !btn.classList.contains('is-on');
+        chips.forEach(function (b) {
+          b.classList.remove('is-on');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        cards.forEach(function (c) {
+          var hit = on && c.getAttribute('data-card') === key;
+          c.hidden = !hit;
+          if (hit) { c.style.animation = 'none'; void c.offsetWidth; c.style.animation = ''; }
+        });
+        btn.classList.toggle('is-on', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        box.hidden = !on;
       });
-      toolCards.forEach(function (c) {
-        var hit = c.getAttribute('data-tool') === tool;
-        c.classList.toggle('hl', hit);
-        c.classList.toggle('dim', !hit);
-      });
-      if (pickNote) { pickNote.textContent = PICK_NOTE[key] || ''; pickNote.hidden = false; }
-      if (resetBtn) resetBtn.hidden = false;
     });
   });
 
@@ -739,29 +919,87 @@ a.card { display: block; }
     });
   });
 
-  /* --- 6. 勾选清单：点击 / 键盘（Enter、Space）打勾 + 进度提示 --- */
-  var items = document.querySelectorAll('.check-item');
-  var prog = document.querySelector('[data-check-progress]');
-  function updateProgress() {
-    if (!prog) return;
-    var n = document.querySelectorAll('.check-item.done').length;
-    prog.textContent = '进度 ' + n + ' / ' + items.length + (n === items.length ? ' · 全部完成，去刷新你的网页吧' : '');
-  }
-  function toggle(it) {
-    it.classList.toggle('done');
-    it.setAttribute('aria-checked', it.classList.contains('done') ? 'true' : 'false');
+  /* --- 6. 勾选清单：每个 .checklist 各自算进度，键盘（Enter、Space）同样可用 --- */
+  document.querySelectorAll('.checklist').forEach(function (list) {
+    var items = list.querySelectorAll('.check-item');
+    var wrap = list.closest('.check-wrap') || list.parentElement;
+    var prog = wrap ? wrap.querySelector('[data-check-progress]') : null;
+    function updateProgress() {
+      if (!prog) return;
+      var n = list.querySelectorAll('.check-item.done').length;
+      prog.textContent = '进度 ' + n + ' / ' + items.length + (n === items.length ? ' · 全部完成，去下面看看四个坑' : '');
+    }
+    function toggle(it) {
+      it.classList.toggle('done');
+      it.setAttribute('aria-checked', it.classList.contains('done') ? 'true' : 'false');
+      updateProgress();
+    }
+    items.forEach(function (it) {
+      it.addEventListener('click', function () { toggle(it); });
+      it.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault(); /* 阻止空格滚动页面 */
+          toggle(it);
+        }
+      });
+    });
     updateProgress();
+  });
+
+  /* --- 6b. 三步节点树：点击开合，同一时间只展开一个（高度过渡复用折叠动效） --- */
+  var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-node]'));
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function setNode(node, open) {
+    var body = node.querySelector('.node-body');
+    var head = node.querySelector('[data-node-toggle]');
+    if (!body) return;
+    head && head.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      node.classList.add('is-open');
+      body.style.height = body.scrollHeight + 'px';
+      var settle = function (e) {
+        if (e && e.propertyName !== 'height') return;
+        if (node.classList.contains('is-open')) body.style.height = 'auto';
+        body.removeEventListener('transitionend', settle);
+      };
+      body.addEventListener('transitionend', settle);
+      setTimeout(settle, reduceMotion ? 0 : 400); /* 兜底：过渡事件偶发丢失时也能落到 auto */
+    } else {
+      body.style.height = body.scrollHeight + 'px';
+      node.classList.remove('is-open');
+      requestAnimationFrame(function () { body.style.height = '0px'; });
+    }
   }
-  items.forEach(function (it) {
-    it.addEventListener('click', function () { toggle(it); });
-    it.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
-        e.preventDefault(); /* 阻止空格滚动页面 */
-        toggle(it);
+  nodes.forEach(function (node) {
+    var head = node.querySelector('[data-node-toggle]');
+    var body = node.querySelector('.node-body');
+    if (!body) return;
+    var open = node.classList.contains('is-open');
+    body.style.height = open ? 'auto' : '0px';
+    if (head) head.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (!head) return;
+    head.addEventListener('click', function () {
+      var willOpen = !node.classList.contains('is-open');
+      if (willOpen) {
+        nodes.forEach(function (o) { if (o !== node && o.classList.contains('is-open')) setNode(o, false); });
       }
+      setNode(node, willOpen);
     });
   });
-  updateProgress();
+
+  /* --- 6c. 页内模板入口：平滑滚到目标卡，边框高亮 1.5s（只变 border-color） --- */
+  document.querySelectorAll('[data-scroll-to]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var sel = link.getAttribute('data-scroll-to');
+      var target = sel ? document.querySelector(sel) : null;
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+      target.classList.add('is-flash');
+      setTimeout(function () { target.classList.remove('is-flash'); }, 1500);
+    });
+  });
+
 
   /* --- 7. 术语气泡：绝对定位于词条内，坐标换算成视口钳制后的纯 px --- */
   var terms = document.querySelectorAll('.term');
