@@ -159,7 +159,7 @@ a.card { display: block; }
 .chap-can b { font-weight: 600; }
 
 /* ---------- 选择器 + 工具网格联动（动效 6：推荐卡点亮，其余变淡） ---------- */
-.chooser { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.chooser { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 .chip {
   font-size: 14px; font-weight: 600; padding: 16px 12px; text-align: center;
   border: 1px solid var(--line-2); border-radius: 12px; background: var(--surface);
@@ -200,6 +200,7 @@ a.card { display: block; }
 .tool-grid .card { position: relative; }
 .tool-grid .card.dim { opacity: .35; }
 .tool-grid .card.hl { border-color: var(--ink); box-shadow: var(--shadow); }
+.tool-grid .card.hl .tool-tag { visibility: hidden; }
 .tool-grid .card.hl::after {
   content: "为你推荐"; position: absolute; top: 14px; right: 14px;
   font-family: var(--mono); font-size: 12px;
@@ -216,6 +217,10 @@ a.card { display: block; }
 .tool-row .k { flex: 0 0 44px; font-size: 12px; color: var(--ink-3); padding-top: 2px; }
 .tool-row .v { color: var(--ink-2); }
 .tool-row .v b { color: var(--ink); font-weight: 600; }
+.tool-alt {
+  margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line);
+  font-size: 12px; color: var(--ink-3); line-height: 1.7;
+}
 
 /* ---------- 决策路径卡 ---------- */
 .path-emoji { font-size: 24px; line-height: 1; margin-bottom: 10px; }
@@ -446,7 +451,7 @@ a.card { display: block; }
 @media (max-width: 900px) {
   .grid-3, .grid-a3 { grid-template-columns: repeat(2, 1fr); }
   .tool-grid { grid-template-columns: repeat(2, 1fr); }
-  .chooser { grid-template-columns: repeat(3, 1fr); }
+  .chooser { grid-template-columns: repeat(2, 1fr); }
   .branches { grid-template-columns: 1fr; }
 }
 @media (max-width: 700px) {
@@ -560,18 +565,9 @@ a.card { display: block; }
       <button class="chip" type="button" data-pick="nocode" aria-pressed="false">我完全不会代码</button>
       <button class="chip" type="button" data-pick="fast" aria-pressed="false">我要最快出图</button>
       <button class="chip" type="button" data-pick="design" aria-pressed="false">我有设计稿</button>
-      <button class="chip" type="button" data-pick="all" aria-pressed="false">我想要万能帮手</button>
       <button class="chip" type="button" data-pick="pro" aria-pressed="false">我已熟知基础操作</button>
     </div>
     <div class="tool-grid rv" style="margin-top:24px;">
-      <div class="card card-static" data-tool="chat">
-        <div class="tool-name">对话型 <span class="term" tabindex="0" data-tip="一个能听懂你说话、并代替你动手干活的 AI 员工">Agent</span></div>
-        <div class="tool-rows">
-          <div class="tool-row"><span class="k">代表</span><span class="v">ChatGPT、Claude、文心一言</span></div>
-          <div class="tool-row"><span class="k">适合</span><span class="v">不会写代码、想完全可控的人</span></div>
-          <div class="tool-row"><span class="k">缺点</span><span class="v">输出要自己复制粘贴到本地</span></div>
-        </div>
-      </div>
       <div class="card card-static" data-tool="code">
         <div class="tool-name">编程型 Agent</div>
         <div class="tool-rows">
@@ -603,6 +599,7 @@ a.card { display: block; }
           <div class="tool-row"><span class="k">适合</span><span class="v">新手、懒得选的人</span></div>
           <div class="tool-row"><span class="k">缺点</span><span class="v">覆盖广，单项深度略逊专精工具</span></div>
         </div>
+        <div class="tool-alt">更轻的代替：纯对话型（ChatGPT / Claude / 文心一言）能聊但代码要自己复制粘贴，新手不推荐。</div>
       </div>
     </div>
     <p class="chooser-note" data-result hidden></p>
@@ -655,12 +652,11 @@ a.card { display: block; }
   }
 
   /* --- 3. 选型选择器：按容器作用域，同页可有多组互不干扰 --- */
-  var PICK_TOOL = { nocode: 'general', fast: 'gen', design: 'design', all: 'general', pro: 'code' };
+  var PICK_TOOL = { nocode: 'general', fast: 'gen', design: 'design', pro: 'code' };
   var PICK_NOTE = {
     nocode: '为你推荐：通用型 Agent · WorkBuddy —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
     fast: '为你推荐：建站生成型 · v0 / Lovable / Bolt —— 一句话直接生成可发布站点，出图最快；注意样式固定，二次改动受限。',
     design: '为你推荐：设计型 Agent · MasterGo 莫高 / Figma Make —— 从设计稿或截图直接出页面，还原度最高；前提是你已经有稿子。',
-    all: '为你推荐：通用型 Agent · WorkBuddy / Manus / Devin —— 把对话、工具调用、浏览器、插件整合在一起，一个帮手全包了。',
     pro: '为你推荐：编程型 Agent · Cursor / Claude Code —— 已经跑通基础流程后，本地客户端效率最高：改动、调试都在自己电脑里完成，适合追求进阶的人。'
   };
   document.querySelectorAll('[data-picker]').forEach(function (root) {
