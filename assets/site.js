@@ -105,6 +105,7 @@
     var setFab = function (open) {
       fabCard.hidden = !open;
       fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+      fab.classList.toggle('is-on', open);
     };
     fab.addEventListener('click', function (e) {
       e.stopPropagation();
