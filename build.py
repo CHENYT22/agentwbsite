@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """
 Agent 建站教程站 — 静态站点构建脚本 v2（重构版）
 用法：python build.py
@@ -36,21 +36,21 @@ PAGES = [
         hero_center=True,    ),
     dict(
         slug="tools", file="01-agent-tools.html", src="01-agent-tools.html", nav="工具", num="01",
-        pill="第 01 章 · 3 分钟",
+        pill="第 01 章",
         title="先认识 Agent 工具",
         sub="五类工具，各有分工。看完就知道该把任务交给谁。",
         cta_text="下一章：流程与提示词 →", cta_href="02-workflow.html",
     ),
     dict(
         slug="workflow", file="02-workflow.html", src="02-workflow.html", nav="流程", num="02",
-        pill="第 02 章 · 3 分钟",
+        pill="第 02 章",
         title="五步流程，一句话需求",
         sub="先看清全貌再动手；三要素让你把需求一次讲清楚。",
         cta_text="下一章：动手做一个页面 →", cta_href="03-build.html",
     ),
     dict(
         slug="build", file="03-build.html", src="03-build.html", nav="实战", num="03",
-        pill="第 03 章 · 7 分钟",
+        pill="第 03 章",
         title="三步做出一个网站",
         sub="从一句提示词到上线网址，都在这一章走完。",
         cta_text="开始第 1 步 ↓", cta_href="#make-steps",

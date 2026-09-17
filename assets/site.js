@@ -28,12 +28,13 @@
   }
 
   /* --- 3. 选型选择器：点亮匹配的工具卡，其余变淡 --- */
-  var PICK_TOOL = { nocode: 'general', fast: 'gen', design: 'design', all: 'general' };
+  var PICK_TOOL = { nocode: 'general', fast: 'gen', design: 'design', all: 'general', pro: 'code' };
   var PICK_NOTE = {
     nocode: '为你推荐：通用型 Agent · WorkBuddy —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
     fast: '为你推荐：建站生成型 · v0 / Lovable / Bolt —— 一句话直接生成可发布站点，出图最快；注意样式固定，二次改动受限。',
     design: '为你推荐：设计型 Agent · MasterGo 莫高 / Figma Make —— 从设计稿或截图直接出页面，还原度最高；前提是你已经有稿子。',
-    all: '为你推荐：通用型 Agent · WorkBuddy / Manus / Devin —— 把对话、工具调用、浏览器、插件整合在一起，一个帮手全包了。'
+    all: '为你推荐：通用型 Agent · WorkBuddy / Manus / Devin —— 把对话、工具调用、浏览器、插件整合在一起，一个帮手全包了。',
+    pro: '为你推荐：编程型 Agent · Cursor / Claude Code —— 已经跑通基础流程后，本地客户端效率最高：改动、调试都在自己电脑里完成，适合追求进阶的人。'
   };
   var pickNote = document.querySelector('[data-chooser-note]');
   var resetBtn = document.querySelector('.chip[data-pick="reset"]');

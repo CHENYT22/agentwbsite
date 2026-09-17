@@ -149,7 +149,6 @@ a.card { display: block; }
 .chap-card { display: flex; flex-direction: column; gap: 8px; }
 .chap-top { display: flex; align-items: center; justify-content: space-between; padding-right: 28px; }
 .chap-num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); letter-spacing: .1em; }
-.chap-time { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
 .chap-icon { font-size: 24px; line-height: 1; }
 .chap-title { font-size: 20px; font-weight: 600; letter-spacing: -.01em; margin-top: 4px; }
 .chap-desc { font-size: 14px; color: var(--ink-2); }
@@ -160,7 +159,7 @@ a.card { display: block; }
 .chap-can b { font-weight: 600; }
 
 /* ---------- 选择器 + 工具网格联动（动效 6：推荐卡点亮，其余变淡） ---------- */
-.chooser { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.chooser { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
 .chip {
   font-size: 14px; font-weight: 600; padding: 16px 12px; text-align: center;
   border: 1px solid var(--line-2); border-radius: 12px; background: var(--surface);
@@ -402,6 +401,7 @@ a.card { display: block; }
 @media (max-width: 900px) {
   .grid-3, .grid-a3 { grid-template-columns: repeat(2, 1fr); }
   .tool-grid { grid-template-columns: repeat(2, 1fr); }
+  .chooser { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 700px) {
   .hero { padding: 56px 0 44px; }
@@ -425,6 +425,7 @@ a.card { display: block; }
 }
 @media (max-width: 620px) {
   .grid-2, .grid-3, .grid-a3, .tool-grid { grid-template-columns: 1fr; }
+  .chooser { grid-template-columns: repeat(2, 1fr); }
   .pager, .pager.is-single { grid-template-columns: 1fr; }
 }
 
@@ -449,7 +450,7 @@ a.card { display: block; }
 <main>
 <section class="hero">
   <div class="wrap">
-    <span class="pill">第 01 章 · 3 分钟</span>
+    <span class="pill">第 01 章</span>
     <h1 class="hero-title">先认识 Agent 工具</h1>
     <p class="hero-sub">五类工具，各有分工。看完就知道该把任务交给谁。</p>
     <div class="btn-row"><a class="btn btn-primary" href="02-workflow.html">下一章：流程与提示词 →</a></div>
@@ -496,6 +497,7 @@ a.card { display: block; }
       <button class="chip" type="button" data-pick="fast" aria-pressed="false">我要最快出图</button>
       <button class="chip" type="button" data-pick="design" aria-pressed="false">我有设计稿</button>
       <button class="chip" type="button" data-pick="all" aria-pressed="false">我想要万能帮手</button>
+      <button class="chip" type="button" data-pick="pro" aria-pressed="false">我已熟知基础操作</button>
     </div>
     <div class="tool-grid rv" style="margin-top:24px;">
       <div class="card card-static" data-tool="chat">
@@ -601,12 +603,13 @@ a.card { display: block; }
   }
 
   /* --- 3. 选型选择器：点亮匹配的工具卡，其余变淡 --- */
-  var PICK_TOOL = { nocode: 'general', fast: 'gen', design: 'design', all: 'general' };
+  var PICK_TOOL = { nocode: 'general', fast: 'gen', design: 'design', all: 'general', pro: 'code' };
   var PICK_NOTE = {
     nocode: '为你推荐：通用型 Agent · WorkBuddy —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
     fast: '为你推荐：建站生成型 · v0 / Lovable / Bolt —— 一句话直接生成可发布站点，出图最快；注意样式固定，二次改动受限。',
     design: '为你推荐：设计型 Agent · MasterGo 莫高 / Figma Make —— 从设计稿或截图直接出页面，还原度最高；前提是你已经有稿子。',
-    all: '为你推荐：通用型 Agent · WorkBuddy / Manus / Devin —— 把对话、工具调用、浏览器、插件整合在一起，一个帮手全包了。'
+    all: '为你推荐：通用型 Agent · WorkBuddy / Manus / Devin —— 把对话、工具调用、浏览器、插件整合在一起，一个帮手全包了。',
+    pro: '为你推荐：编程型 Agent · Cursor / Claude Code —— 已经跑通基础流程后，本地客户端效率最高：改动、调试都在自己电脑里完成，适合追求进阶的人。'
   };
   var pickNote = document.querySelector('[data-chooser-note]');
   var resetBtn = document.querySelector('.chip[data-pick="reset"]');
