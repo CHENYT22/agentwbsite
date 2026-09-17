@@ -29,7 +29,7 @@ def plain(html: str) -> str:
 PAGES = [
     dict(
         slug="index", file="index.html", src="index.html", nav="首页", num="00",
-        pill="写给完全新手 · 3 章 · 约 13 分钟",
+        pill="",
         title="不会代码，也能让 Agent 帮你做出网站",
         sub='说清楚你想要什么，剩下的交给 <span class="term term--down" tabindex="0" data-tip="一个能听懂你说话、并代替你动手干活的 AI 员工">Agent</span> 做。',
         cta_text="开始第 1 章 →", cta_href="01-agent-tools.html",
@@ -101,9 +101,10 @@ def hero(page):
     center = ' style="text-align:center"' if page.get("hero_center") else ""
     sub_style = ' style="margin-inline:auto"' if page.get("hero_center") else ""
     cta = f'<div class="btn-row"><a class="btn btn-primary" href="{page["cta_href"]}">{page["cta_text"]}</a></div>'
+    pill_html = f'<span class="pill">{page["pill"]}</span>' if page.get("pill") else ""
     return f"""<section class="hero"{center}>
   <div class="wrap">
-    <span class="pill">{page["pill"]}</span>
+    {pill_html}
     <h1 class="hero-title"{sub_style}>{page["title"]}</h1>
     <p class="hero-sub"{sub_style}>{page["sub"]}</p>
     {cta}
