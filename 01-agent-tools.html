@@ -369,8 +369,12 @@ a.card { display: block; }
   border-top-color: transparent; border-bottom-color: var(--ink);
 }
 
-/* ---------- 01 章：Tips 悬浮按钮（动效 7：卡片 pop 展开，260ms） ---------- */
+/* ---------- 01 章：Tips 按钮（标题旁内联版，点击卡片 pop 展开，260ms） ---------- */
 .fab-wrap { position: fixed; right: 20px; bottom: 20px; z-index: 40; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.tips-head { display: flex; align-items: center; gap: 14px; }
+.fab-wrap--inline { position: relative; right: auto; bottom: auto; z-index: 20; }
+.fab-wrap--inline .fab-card { position: absolute; top: calc(100% + 12px); left: 0; z-index: 30; }
+.fab--sm { width: 36px; height: 36px; font-size: 15px; }
 .fab-card {
   width: min(340px, calc(100vw - 40px));
   background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 14px;
@@ -461,7 +465,20 @@ a.card { display: block; }
   <div class="wrap">
     <div class="sec-head rv">
       <span class="mono-label">Three Words</span>
-      <h2 class="h2">先懂三个词</h2>
+      <div class="tips-head">
+        <h2 class="h2">先懂三个词</h2>
+        <span class="fab-wrap fab-wrap--inline">
+          <span class="fab-card" data-tips-pop hidden role="dialog" aria-label="怎么装 Skill 和插件">
+            <h3 class="tip-title">Tips · 怎么装 Skill 和插件</h3>
+            <div class="tip-list">
+              <div class="tip-item"><span class="tip-n">01</span><span>直接说需求就行：「帮我装一个能读 PDF 的技能」，它会告诉你在哪点。</span></div>
+              <div class="tip-item"><span class="tip-n">02</span><span>多数工具在「设置 → 技能 / 插件市场」里搜名字，一键就能装。</span></div>
+              <div class="tip-item"><span class="tip-n">03</span><span>装完通常先要权限（读文件、发邮件），不同意就不给。</span></div>
+            </div>
+          </span>
+          <button class="fab fab--sm" type="button" data-tips-toggle aria-expanded="false" aria-label="怎么装 Skill 和插件">T</button>
+        </span>
+      </div>
       <p class="sec-sub">聊工具之前，先把这三个词弄清楚。</p>
     </div>
     <div class="grid-3">
@@ -551,19 +568,6 @@ a.card { display: block; }
     </div>
   </div>
 </section>
-
-<!-- ============ 1.2 Tips：圆形悬浮图标，点击展开 ============ -->
-<div class="fab-wrap">
-  <div class="fab-card" data-tips-pop hidden role="dialog" aria-label="怎么装 Skill 和插件">
-    <h3 class="tip-title">Tips · 怎么装 Skill 和插件</h3>
-    <div class="tip-list">
-      <div class="tip-item"><span class="tip-n">01</span><span>直接说需求就行：「帮我装一个能读 PDF 的技能」，它会告诉你在哪点。</span></div>
-      <div class="tip-item"><span class="tip-n">02</span><span>多数工具在「设置 → 技能 / 插件市场」里搜名字，一键就能装。</span></div>
-      <div class="tip-item"><span class="tip-n">03</span><span>装完通常先要权限（读文件、发邮件），不同意就不给。</span></div>
-    </div>
-  </div>
-  <button class="fab" type="button" data-tips-toggle aria-expanded="false" aria-label="怎么装 Skill 和插件">T</button>
-</div>
 <nav class="pager" aria-label="章节翻页"><a class="prev" href="index.html"><span class="dir">← 上一章</span><span class="t">首页</span><span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"/></svg></span></a><a class="next" href="02-workflow.html"><span class="dir">下一章 →</span><span class="t">流程</span><span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"/></svg></span></a></nav>
 </main>
 <footer class="sitefoot">

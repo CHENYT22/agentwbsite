@@ -3,7 +3,20 @@
   <div class="wrap">
     <div class="sec-head rv">
       <span class="mono-label">Three Words</span>
-      <h2 class="h2">先懂三个词</h2>
+      <div class="tips-head">
+        <h2 class="h2">先懂三个词</h2>
+        <span class="fab-wrap fab-wrap--inline">
+          <span class="fab-card" data-tips-pop hidden role="dialog" aria-label="怎么装 Skill 和插件">
+            <h3 class="tip-title">Tips · 怎么装 Skill 和插件</h3>
+            <div class="tip-list">
+              <div class="tip-item"><span class="tip-n">01</span><span>直接说需求就行：「帮我装一个能读 PDF 的技能」，它会告诉你在哪点。</span></div>
+              <div class="tip-item"><span class="tip-n">02</span><span>多数工具在「设置 → 技能 / 插件市场」里搜名字，一键就能装。</span></div>
+              <div class="tip-item"><span class="tip-n">03</span><span>装完通常先要权限（读文件、发邮件），不同意就不给。</span></div>
+            </div>
+          </span>
+          <button class="fab fab--sm" type="button" data-tips-toggle aria-expanded="false" aria-label="怎么装 Skill 和插件">T</button>
+        </span>
+      </div>
       <p class="sec-sub">聊工具之前，先把这三个词弄清楚。</p>
     </div>
     <div class="grid-3">
@@ -94,15 +107,4 @@
   </div>
 </section>
 
-<!-- ============ 1.2 Tips：圆形悬浮图标，点击展开 ============ -->
-<div class="fab-wrap">
-  <div class="fab-card" data-tips-pop hidden role="dialog" aria-label="怎么装 Skill 和插件">
-    <h3 class="tip-title">Tips · 怎么装 Skill 和插件</h3>
-    <div class="tip-list">
-      <div class="tip-item"><span class="tip-n">01</span><span>直接说需求就行：「帮我装一个能读 PDF 的技能」，它会告诉你在哪点。</span></div>
-      <div class="tip-item"><span class="tip-n">02</span><span>多数工具在「设置 → 技能 / 插件市场」里搜名字，一键就能装。</span></div>
-      <div class="tip-item"><span class="tip-n">03</span><span>装完通常先要权限（读文件、发邮件），不同意就不给。</span></div>
-    </div>
-  </div>
-  <button class="fab" type="button" data-tips-toggle aria-expanded="false" aria-label="怎么装 Skill 和插件">T</button>
-</div>
+

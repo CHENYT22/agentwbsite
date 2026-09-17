@@ -360,8 +360,12 @@ a.card { display: block; }
   border-top-color: transparent; border-bottom-color: var(--ink);
 }
 
-/* ---------- 01 章：Tips 悬浮按钮（动效 7：卡片 pop 展开，260ms） ---------- */
+/* ---------- 01 章：Tips 按钮（标题旁内联版，点击卡片 pop 展开，260ms） ---------- */
 .fab-wrap { position: fixed; right: 20px; bottom: 20px; z-index: 40; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.tips-head { display: flex; align-items: center; gap: 14px; }
+.fab-wrap--inline { position: relative; right: auto; bottom: auto; z-index: 20; }
+.fab-wrap--inline .fab-card { position: absolute; top: calc(100% + 12px); left: 0; z-index: 30; }
+.fab--sm { width: 36px; height: 36px; font-size: 15px; }
 .fab-card {
   width: min(340px, calc(100vw - 40px));
   background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 14px;
