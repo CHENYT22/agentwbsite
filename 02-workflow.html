@@ -685,7 +685,7 @@ a.card { display: block; }
   function updateProgress() {
     if (!prog) return;
     var n = document.querySelectorAll('.check-item.done').length;
-    prog.textContent = '已完成 ' + n + ' / ' + items.length + (n === items.length ? ' · 全部完成，去刷新你的网页吧' : '');
+    prog.textContent = '进度 ' + n + ' / ' + items.length + (n === items.length ? ' · 全部完成，去刷新你的网页吧' : '');
   }
   function toggle(it) {
     it.classList.toggle('done');

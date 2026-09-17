@@ -462,22 +462,22 @@ a.card { display: block; }
     <div class="sec-head rv">
       <span class="mono-label">Step By Step</span>
       <h2 class="h2">三步，做出一个网站</h2>
-      <p class="sec-sub">每步分两栏：左边你做的，右边 Agent 做的。照着走一遍。</p>
+      <p class="sec-sub">三步走完：先生成，再修改，最后部署上线。</p>
     </div>
 
     <div class="build-step rv">
       <div class="bs-head">
         <span class="bs-num">STEP 1</span>
-        <span class="bs-title">把提示词给 Agent，让它生成</span>
+        <span class="bs-title">如何生成</span>
       </div>
       <div class="bs-cols">
         <div class="bs-col">
-          <div class="bs-k">你要做的</div>
-          <p class="bs-v">打开对话窗口，把第 2 章的四句话模板（或下方示例）发给它。</p>
+          <div class="bs-k">已有详细需求和框架</div>
+          <p class="bs-v">把自己的详细需求与框架（目标、受众、风格）直接给到 Agent。</p>
         </div>
         <div class="bs-col">
-          <div class="bs-k">Agent 做的</div>
-          <p class="bs-v">拆解需求，一轮生成完整的 <span class="term" tabindex="0" data-tip="网页的骨架，用标签告诉浏览器哪里是标题、哪里是图">HTML</span> + <span class="term" tabindex="0" data-tip="网页的衣服，管颜色、字号和排版">CSS</span> 代码。</p>
+          <div class="bs-k">没有具体想法</div>
+          <p class="bs-v">像聊天一样和 Agent 对话：直接问它「我想做一个 xxxx 网站，我们可以怎样开始？」；也可以复制下方提示词模板卡，先开始尝试。</p>
         </div>
       </div>
       <div class="prompt-card rv" style="margin-top:20px;">
@@ -490,7 +490,7 @@ a.card { display: block; }
     <div class="build-step rv">
       <div class="bs-head">
         <span class="bs-num">STEP 2</span>
-        <span class="bs-title">如何让 Agent 修改</span>
+        <span class="bs-title">如何修改</span>
       </div>
       <div class="bs-cols">
         <div class="bs-col">
@@ -507,7 +507,7 @@ a.card { display: block; }
     <div class="build-step rv" style="margin-top:24px;">
       <div class="bs-head">
         <span class="bs-num">STEP 3</span>
-        <span class="bs-title">上线五步，做完一步勾一步</span>
+        <span class="bs-title">如何部署上线</span>
       </div>
       <div class="bs-col">
         <div class="checklist" role="group" aria-label="上线步骤清单">
@@ -532,7 +532,7 @@ a.card { display: block; }
             <span class="check-text">稍等片刻，页面顶部出现 <code>https://你的用户名.github.io/仓库名/</code>，发给任何人即可。</span>
           </div>
         </div>
-        <p class="check-progress" data-check-progress aria-live="polite">已完成 0 / 5</p>
+        <p class="check-progress" data-check-progress aria-live="polite">进度 0 / 5</p>
       </div>
     </div>
 
@@ -741,7 +741,7 @@ a.card { display: block; }
   function updateProgress() {
     if (!prog) return;
     var n = document.querySelectorAll('.check-item.done').length;
-    prog.textContent = '已完成 ' + n + ' / ' + items.length + (n === items.length ? ' · 全部完成，去刷新你的网页吧' : '');
+    prog.textContent = '进度 ' + n + ' / ' + items.length + (n === items.length ? ' · 全部完成，去刷新你的网页吧' : '');
   }
   function toggle(it) {
     it.classList.toggle('done');
