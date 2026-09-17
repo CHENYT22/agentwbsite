@@ -159,23 +159,7 @@ a.card { display: block; }
 }
 .chap-can b { font-weight: 600; }
 
-/* ---------- 折叠解释卡（动效 6：高度过渡 + 箭头旋转 90°，240ms） ---------- */
-.fold { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; transition: border-color .18s ease; }
-.fold + .fold { margin-top: 12px; }
-.fold.open { border-color: var(--line-2); }
-.fold-head {
-  display: flex; align-items: center; gap: 14px; width: 100%;
-  padding: 24px; background: none; border: 0; cursor: pointer; text-align: left;
-  font-size: 20px; font-weight: 600; letter-spacing: -.01em; color: var(--ink);
-}
-.fold-emoji { font-size: 24px; line-height: 1; }
-.fold-arrow { margin-left: auto; color: var(--ink-3); font-size: 16px; transition: transform .24s ease; }
-.fold.open .fold-arrow { transform: rotate(90deg); color: var(--ink); }
-.fold-body { max-height: 0; overflow: hidden; transition: max-height .24s ease; }
-/* 展开高度由 JS 读取 scrollHeight 动态赋值，不设固定值，避免长文案窄屏被裁切 */
-.fold-text { padding: 0 24px 24px; font-size: 14px; color: var(--ink-2); max-width: 40em; }
-
-/* ---------- 选择器（动效 7：结果卡淡入 + 上移 8px，260ms） ---------- */
+/* ---------- 选择器 + 工具网格联动（动效 6：推荐卡点亮，其余变淡） ---------- */
 .chooser { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 .chip {
   font-size: 14px; font-weight: 600; padding: 16px 12px; text-align: center;
@@ -186,33 +170,42 @@ a.card { display: block; }
 .chip:hover { transform: translateY(-4px); border-color: var(--ink); }
 .chip:active { transform: scale(.98); }
 .chip.is-on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.chooser-result { margin-top: 16px; }
+.chip.chip-ghost { border-style: dashed; color: var(--ink-3); }
+.chip.chip-ghost:hover { color: var(--ink); }
 @keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-.result-card {
-  display: flex; gap: 16px; align-items: flex-start;
-  background: var(--surface); border: 1px solid var(--ink); border-radius: 14px;
-  padding: 24px; animation: pop .26s var(--ease) both;
+.chooser-note {
+  margin-top: 20px; font-size: 14px; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--ink); border-radius: 12px;
+  padding: 14px 18px; animation: pop .26s var(--ease) both;
 }
-.result-card[hidden] { display: none; }
-.chooser-result[hidden] { display: none; }
-.result-emoji { font-size: 24px; line-height: 1.4; }
-.result-tag {
-  display: inline-block; font-family: var(--mono); font-size: 12px; letter-spacing: .1em;
-  color: var(--ink-3); margin-bottom: 4px;
-}
-.result-name { font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
-.result-why { font-size: 14px; color: var(--ink-2); margin-top: 6px; max-width: 46em; }
+.chooser-note[hidden] { display: none; }
 
-/* ---------- 步骤条（横向 5 格） ---------- */
-.stepbar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-.stepbar .card { padding: 18px; }
+/* ---------- 流程条：箭头串联 ---------- */
+.flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+.flow-step {
+  position: relative; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 14px; padding: 18px; text-align: center;
+  transition: border-color .18s ease;
+}
+.flow-step:hover { border-color: var(--line-2); }
 .step-num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); letter-spacing: .1em; }
-.step-act { font-size: 20px; font-weight: 600; margin: 8px 0 10px; letter-spacing: -.01em; }
-.step-who { display: inline-block; font-size: 12px; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--ink-2); }
-.step-go { font-size: 12px; color: var(--ink-3); margin-top: 12px; }
-.step-who.bot { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.flow-step .step-num { display: block; }
+.flow-act { display: block; font-size: 16px; font-weight: 600; margin-top: 8px; letter-spacing: -.01em; }
+.flow-note { display: block; font-size: 12px; color: var(--ink-3); margin-top: 4px; }
+.flow-step:not(:last-child)::after {
+  content: "→"; position: absolute; right: -19px; top: 50%; transform: translateY(-50%);
+  color: var(--ink-3); font-size: 16px; z-index: 1;
+}
 
-/* ---------- 工具卡（固定四行） ---------- */
+/* ---------- 工具卡（固定四行）+ 选型高亮 ---------- */
+.tool-grid .card { position: relative; }
+.tool-grid .card.dim { opacity: .35; }
+.tool-grid .card.hl { border-color: var(--ink); box-shadow: var(--shadow); }
+.tool-grid .card.hl::after {
+  content: "为你推荐"; position: absolute; top: 14px; right: 14px;
+  font-family: var(--mono); font-size: 12px;
+  background: var(--ink); color: var(--paper); border-radius: 999px; padding: 3px 10px;
+}
 .tool-name { font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
 .tool-tag {
   display: inline-block; font-size: 12px; font-weight: 600; margin-left: 8px;
@@ -226,9 +219,6 @@ a.card { display: block; }
 .tool-row .v b { color: var(--ink); font-weight: 600; }
 
 /* ---------- 决策路径卡 ---------- */
-.path-q { font-size: 20px; font-weight: 600; }
-.path-a { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
-.path-a b { color: var(--ink); font-weight: 600; }
 .path-emoji { font-size: 24px; line-height: 1; margin-bottom: 10px; }
 
 /* ---------- 可复制提示词卡（动效 8：复制成功反馈） ---------- */
@@ -380,9 +370,23 @@ a.card { display: block; }
   border-top-color: transparent; border-bottom-color: var(--ink);
 }
 
-/* ---------- 01 章：折叠卡 + Tips 卡（桌面两列，≤900px 堆叠） ---------- */
-.terms-split { display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; align-items: start; }
-.tip-card { background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 14px; padding: 24px; }
+/* ---------- 01 章：Tips 悬浮按钮（动效 7：卡片 pop 展开，260ms） ---------- */
+.fab-wrap { position: fixed; right: 20px; bottom: 20px; z-index: 40; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.fab-card {
+  width: min(340px, calc(100vw - 40px));
+  background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 14px;
+  padding: 24px; box-shadow: var(--shadow); animation: pop .26s var(--ease) both;
+}
+.fab-card[hidden] { display: none; }
+.fab {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--ink); color: var(--paper); border: 0; cursor: pointer;
+  font-size: 20px; font-weight: 600; line-height: 1;
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, background .18s ease;
+}
+.fab:hover { background: #000; }
+.fab:active { transform: scale(.98); }
 .tip-title { font-size: 20px; font-weight: 600; letter-spacing: -.01em; line-height: 1.4; }
 .tip-list { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
 .tip-item { display: flex; gap: 10px; font-size: 14px; color: var(--warn-ink); line-height: 1.7; }
@@ -396,11 +400,8 @@ a.card { display: block; }
 
 /* ---------- 响应式 ---------- */
 @media (max-width: 900px) {
-  .stepbar { grid-template-columns: repeat(2, 1fr); }
-  .stepbar .card:last-child { grid-column: 1 / -1; }
   .grid-3, .grid-a3 { grid-template-columns: repeat(2, 1fr); }
   .tool-grid { grid-template-columns: repeat(2, 1fr); }
-  .terms-split { grid-template-columns: 1fr; }
 }
 @media (max-width: 700px) {
   .hero { padding: 56px 0 44px; }
@@ -415,11 +416,16 @@ a.card { display: block; }
   .brand { font-size: 14px; }
   .brand > span:last-child { display: none; }
 }
+@media (max-width: 860px) {
+  .flow { grid-template-columns: 1fr; row-gap: 30px; }
+  .flow-step:not(:last-child)::after {
+    content: "↓"; right: auto; left: 50%; transform: translateX(-50%);
+    top: auto; bottom: -26px;
+  }
+}
 @media (max-width: 620px) {
   .grid-2, .grid-3, .grid-a3, .tool-grid { grid-template-columns: 1fr; }
   .pager, .pager.is-single { grid-template-columns: 1fr; }
-  .stepbar { grid-template-columns: 1fr; }
-  .stepbar .card:last-child { grid-column: auto; }
 }
 
 /* ---------- 无障碍降级 ---------- */
@@ -493,7 +499,7 @@ a.card { display: block; }
   </div>
 </footer>
 <script>
-/* 教程站交互 v2：进度条 + 滚动进场 + 折叠卡 + 选择器 + 复制 + 勾选清单 */
+/* 教程站交互 v3：进度条 + 滚动进场 + 选型高亮 + Tips 悬浮按钮 + 复制 + 勾选清单 */
 (function () {
   'use strict';
 
@@ -522,66 +528,65 @@ a.card { display: block; }
     rvs.forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* --- 3. 折叠解释卡：同一时间只展开一个（高度 JS 动态计算） --- */
-  function pinFoldOpen(e) {
-    if (e.propertyName !== 'max-height') return;
-    var body = e.target;
-    if (body.parentElement && body.parentElement.classList.contains('open')) {
-      body.style.maxHeight = 'none'; /* 展开完成后解除上限，防窄屏/改字号后裁切 */
-    }
-  }
-  document.querySelectorAll('[data-fold]').forEach(function (head) {
-    head.addEventListener('click', function () {
-      var item = head.closest('.fold');
-      var wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.fold.open').forEach(function (f) {
-        var body = f.querySelector('.fold-body');
-        if (body) {
-          body.removeEventListener('transitionend', pinFoldOpen);
-          if (body.style.maxHeight === 'none') {
-            body.style.maxHeight = body.scrollHeight + 'px';
-            void body.offsetHeight; /* 从实际高度回收，避免瞬间跳变 */
-          }
-          body.style.maxHeight = '0px';
-        }
-        f.classList.remove('open');
-        var h = f.querySelector('[data-fold]');
-        if (h) h.setAttribute('aria-expanded', 'false');
-      });
-      if (!wasOpen) {
-        item.classList.add('open');
-        head.setAttribute('aria-expanded', 'true');
-        var body = item.querySelector('.fold-body');
-        if (body) {
-          body.style.maxHeight = body.scrollHeight + 'px';
-          body.addEventListener('transitionend', pinFoldOpen);
-        }
-      }
+  /* --- 3. 选型选择器：点亮匹配的工具卡，其余变淡 --- */
+  var PICK_TOOL = { nocode: 'general', fast: 'gen', design: 'design', all: 'general' };
+  var PICK_NOTE = {
+    nocode: '为你推荐：通用型 Agent · WorkBuddy —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
+    fast: '为你推荐：建站生成型 · v0 / Lovable / Bolt —— 一句话直接生成可发布站点，出图最快；注意样式固定，二次改动受限。',
+    design: '为你推荐：设计型 Agent · MasterGo 莫高 / Figma Make —— 从设计稿或截图直接出页面，还原度最高；前提是你已经有稿子。',
+    all: '为你推荐：通用型 Agent · WorkBuddy / Manus / Devin —— 把对话、工具调用、浏览器、插件整合在一起，一个帮手全包了。'
+  };
+  var pickNote = document.querySelector('[data-chooser-note]');
+  var resetBtn = document.querySelector('.chip[data-pick="reset"]');
+  var toolCards = document.querySelectorAll('.tool-grid .card');
+  function clearPick() {
+    document.querySelectorAll('.chip[data-pick].is-on').forEach(function (b) {
+      b.classList.remove('is-on');
+      b.setAttribute('aria-pressed', 'false');
     });
-  });
-
-  /* --- 4. 选择器：点按钮出对应推荐卡 --- */
-  var resultBox = document.querySelector('[data-result]');
+    toolCards.forEach(function (c) { c.classList.remove('hl', 'dim'); });
+    if (pickNote) pickNote.hidden = true;
+    if (resetBtn) resetBtn.hidden = true;
+  }
   document.querySelectorAll('.chip[data-pick]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var key = btn.getAttribute('data-pick');
-      document.querySelectorAll('.chip[data-pick].is-on').forEach(function (b) { b.classList.remove('is-on'); });
-      btn.classList.add('is-on');
-      if (!resultBox) return;
-      var hit = null;
-      resultBox.querySelectorAll('.result-card').forEach(function (c) {
-        var match = c.getAttribute('data-pick') === key;
-        c.hidden = !match;
-        if (match) hit = c;
+      if (key === 'reset') { clearPick(); return; }
+      var tool = PICK_TOOL[key];
+      document.querySelectorAll('.chip[data-pick]').forEach(function (b) {
+        var on = b === btn;
+        b.classList.toggle('is-on', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
-      resultBox.hidden = false;
-      if (hit) { /* 重触发入场动画 */
-        hit.style.animation = 'none';
-        void hit.offsetHeight;
-        hit.style.animation = '';
-      }
+      toolCards.forEach(function (c) {
+        var hit = c.getAttribute('data-tool') === tool;
+        c.classList.toggle('hl', hit);
+        c.classList.toggle('dim', !hit);
+      });
+      if (pickNote) { pickNote.textContent = PICK_NOTE[key] || ''; pickNote.hidden = false; }
+      if (resetBtn) resetBtn.hidden = false;
     });
   });
+
+  /* --- 4. Tips 悬浮按钮：点击展开 / 收起小贴士卡 --- */
+  var fab = document.querySelector('[data-tips-toggle]');
+  if (fab) {
+    var fabCard = document.querySelector('[data-tips-pop]');
+    var setFab = function (open) {
+      fabCard.hidden = !open;
+      fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    fab.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setFab(fabCard.hidden);
+    });
+    document.addEventListener('click', function (e) {
+      if (!fabCard.hidden && !fabCard.contains(e.target) && e.target !== fab) setFab(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !fabCard.hidden) { setFab(false); fab.focus(); }
+    });
+  }
 
   /* --- 5. 复制按钮：成功后变「已复制」，1.5s 复原 --- */
   document.querySelectorAll('[data-copy]').forEach(function (btn) {

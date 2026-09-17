@@ -1,66 +1,47 @@
-<!-- ============ 三个词：折叠解释卡 ============ -->
+<!-- ============ 1.1 先懂三个词：直接展示 ============ -->
 <section class="sec" id="terms">
   <div class="wrap">
     <div class="sec-head rv">
       <span class="mono-label">Three Words</span>
       <h2 class="h2">先懂三个词</h2>
-      <p class="sec-sub">聊工具之前，先把这三个词弄清楚。点开看一句话解释。</p>
+      <p class="sec-sub">聊工具之前，先把这三个词弄清楚。</p>
     </div>
-    <div class="terms-split">
-      <div class="rv">
-        <div class="fold">
-          <button class="fold-head" type="button" data-fold aria-expanded="false">
-            <span class="fold-emoji" aria-hidden="true">🤖</span>
-            <span>Agent</span>
-            <span class="fold-arrow" aria-hidden="true">›</span>
-          </button>
-          <div class="fold-body">
-            <p class="fold-text">一个能听懂你说话、并代替你动手干活的 AI 员工。</p>
-          </div>
-        </div>
-        <div class="fold">
-          <button class="fold-head" type="button" data-fold aria-expanded="false">
-            <span class="fold-emoji" aria-hidden="true">🎓</span>
-            <span>Skill</span>
-            <span class="fold-arrow" aria-hidden="true">›</span>
-          </button>
-          <div class="fold-body">
-            <p class="fold-text">给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」。</p>
-          </div>
-        </div>
-        <div class="fold">
-          <button class="fold-head" type="button" data-fold aria-expanded="false">
-            <span class="fold-emoji" aria-hidden="true">🔌</span>
-            <span>插件</span>
-            <span class="fold-arrow" aria-hidden="true">›</span>
-          </button>
-          <div class="fold-body">
-            <p class="fold-text">让 Agent 能直接连上外部 App 的钥匙，比如直接收发邮件。</p>
-          </div>
-        </div>
+    <div class="grid-3">
+      <div class="card card-static rv">
+        <div class="path-emoji" aria-hidden="true">🤖</div>
+        <div class="el-name">Agent</div>
+        <p class="el-desc">一个能听懂你说话、并代替你动手干活的 AI 员工。</p>
       </div>
-      <aside class="tip-card">
-        <h3 class="tip-title">Tips · 怎么让 Agent 装上 Skill 和插件</h3>
-        <div class="tip-list">
-          <div class="tip-item"><span class="tip-n">01</span><span>直接说需求就行：「帮我装一个能读 PDF 的技能」，它会告诉你在哪点。</span></div>
-          <div class="tip-item"><span class="tip-n">02</span><span>多数工具在「设置 → 技能 / 插件市场」里搜名字，一键就能装。</span></div>
-          <div class="tip-item"><span class="tip-n">03</span><span>装完通常先要权限（读文件、发邮件），不同意就不给。</span></div>
-        </div>
-      </aside>
+      <div class="card card-static rv">
+        <div class="path-emoji" aria-hidden="true">🎓</div>
+        <div class="el-name">Skill</div>
+        <p class="el-desc">给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」。</p>
+      </div>
+      <div class="card card-static rv">
+        <div class="path-emoji" aria-hidden="true">🔌</div>
+        <div class="el-name">插件</div>
+        <p class="el-desc">让 Agent 能直接连上外部 App 的钥匙，比如直接收发邮件。</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 五类工具：卡片网格 ============ -->
-<section class="sec">
+<!-- ============ 1.3 三秒选工具 + 五类工具网格 ============ -->
+<section class="sec" id="chooser">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="mono-label">Five Types</span>
-      <h2 class="h2">五类工具，分工明确</h2>
-      <p class="sec-sub">选错类别，再贵的产品也做不出你想要的东西。</p>
+      <span class="mono-label">Three-Second Pick</span>
+      <h2 class="h2">三秒选工具</h2>
+      <p class="sec-sub">你更像哪一种？点一下，下面网格会亮起推荐。</p>
     </div>
-    <div class="tool-grid">
-      <div class="card card-static rv">
+    <div class="chooser rv">
+      <button class="chip" type="button" data-pick="nocode" aria-pressed="false">我完全不会代码</button>
+      <button class="chip" type="button" data-pick="fast" aria-pressed="false">我要最快出图</button>
+      <button class="chip" type="button" data-pick="design" aria-pressed="false">我有设计稿</button>
+      <button class="chip" type="button" data-pick="all" aria-pressed="false">我想要万能帮手</button>
+    </div>
+    <div class="tool-grid rv" style="margin-top:24px;">
+      <div class="card card-static" data-tool="chat">
         <div class="tool-name">对话型 <span class="term" tabindex="0" data-tip="一个能听懂你说话、并代替你动手干活的 AI 员工">Agent</span></div>
         <div class="tool-rows">
           <div class="tool-row"><span class="k">代表</span><span class="v">ChatGPT、Claude、文心一言</span></div>
@@ -68,7 +49,7 @@
           <div class="tool-row"><span class="k">缺点</span><span class="v">输出要自己复制粘贴到本地</span></div>
         </div>
       </div>
-      <div class="card card-static rv">
+      <div class="card card-static" data-tool="code">
         <div class="tool-name">编程型 Agent</div>
         <div class="tool-rows">
           <div class="tool-row"><span class="k">代表</span><span class="v">Cursor、Claude Code、Codex、Trae、Cline</span></div>
@@ -76,7 +57,7 @@
           <div class="tool-row"><span class="k">缺点</span><span class="v">需要安装<span class="term" tabindex="0" data-tip="要先下载安装到电脑上的软件，比如 Cursor、Trae">客户端</span>，门槛最高</span></div>
         </div>
       </div>
-      <div class="card card-static rv">
+      <div class="card card-static" data-tool="gen">
         <div class="tool-name">建站生成型</div>
         <div class="tool-rows">
           <div class="tool-row"><span class="k">代表</span><span class="v">v0、Lovable、Bolt</span></div>
@@ -84,7 +65,7 @@
           <div class="tool-row"><span class="k">缺点</span><span class="v">样式固定、二次改动受限</span></div>
         </div>
       </div>
-      <div class="card card-static rv">
+      <div class="card card-static" data-tool="design">
         <div class="tool-name">设计型 Agent</div>
         <div class="tool-rows">
           <div class="tool-row"><span class="k">代表</span><span class="v">MasterGo 莫高、Figma Make</span></div>
@@ -92,7 +73,7 @@
           <div class="tool-row"><span class="k">缺点</span><span class="v">没有设计稿就没有用武之地</span></div>
         </div>
       </div>
-      <div class="card card-static rv">
+      <div class="card card-static" data-tool="general">
         <div class="tool-name">通用型 Agent<span class="tool-tag">本教程用的就是它</span></div>
         <div class="tool-rows">
           <div class="tool-row"><span class="k">代表</span><span class="v"><b>WorkBuddy</b>、Manus、Devin</span></div>
@@ -101,43 +82,26 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ============ 新手怎么选：四条决策路径 ============ -->
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <span class="mono-label">How To Choose</span>
-      <h2 class="h2">新手怎么选</h2>
-      <p class="sec-sub">和首页「三秒选工具」是同一套结论，选哪种都不会错。</p>
+    <p class="chooser-note" data-chooser-note hidden></p>
+    <div class="chooser rv" style="margin-top:16px;">
+      <button class="chip chip-ghost" type="button" data-pick="reset" hidden>显示全部</button>
     </div>
-    <div class="grid-2">
-      <div class="card card-static rv">
-        <div class="path-emoji" aria-hidden="true">🌱</div>
-        <div class="path-q">我完全不会<span class="term" tabindex="0" data-tip="告诉电脑做什么的指令，看不懂也不影响你用 Agent 做网站">代码</span></div>
-        <p class="path-a">选<b>通用型 Agent（WorkBuddy）</b>——网页里聊着就把事办了，不用安装。</p>
-      </div>
-      <div class="card card-static rv">
-        <div class="path-emoji" aria-hidden="true">⚡</div>
-        <div class="path-q">我要最快出图</div>
-        <p class="path-a">选<b>建站生成型（v0 / Lovable / Bolt）</b>——一句话生成可发布站点。</p>
-      </div>
-      <div class="card card-static rv">
-        <div class="path-emoji" aria-hidden="true">🎨</div>
-        <div class="path-q">我有设计稿</div>
-        <p class="path-a">选<b>设计型 Agent（MasterGo 莫高 / Figma Make）</b>——从稿子直接出页面。</p>
-      </div>
-      <div class="card card-static rv">
-        <div class="path-emoji" aria-hidden="true">🧰</div>
-        <div class="path-q">我想要万能帮手</div>
-        <p class="path-a">选<b>通用型 Agent（WorkBuddy / Manus / Devin）</b>——覆盖前几类的大部分场景。</p>
-      </div>
-    </div>
-
     <div class="warn rv" style="margin-top:24px;">
       <span class="w-ico" aria-hidden="true">⚠️</span>
       <span><b>新手提醒：</b>别一上来就装编程型客户端——先用网页版工具跑通全流程，再考虑升级。</span>
     </div>
   </div>
 </section>
+
+<!-- ============ 1.2 Tips：圆形悬浮图标，点击展开 ============ -->
+<div class="fab-wrap">
+  <div class="fab-card" data-tips-pop hidden role="dialog" aria-label="怎么装 Skill 和插件">
+    <h3 class="tip-title">Tips · 怎么装 Skill 和插件</h3>
+    <div class="tip-list">
+      <div class="tip-item"><span class="tip-n">01</span><span>直接说需求就行：「帮我装一个能读 PDF 的技能」，它会告诉你在哪点。</span></div>
+      <div class="tip-item"><span class="tip-n">02</span><span>多数工具在「设置 → 技能 / 插件市场」里搜名字，一键就能装。</span></div>
+      <div class="tip-item"><span class="tip-n">03</span><span>装完通常先要权限（读文件、发邮件），不同意就不给。</span></div>
+    </div>
+  </div>
+  <button class="fab" type="button" data-tips-toggle aria-expanded="false" aria-label="怎么装 Skill 和插件">T</button>
+</div>

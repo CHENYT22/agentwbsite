@@ -1,4 +1,4 @@
-/* 教程站交互 v2：进度条 + 滚动进场 + 折叠卡 + 选择器 + 复制 + 勾选清单 */
+/* 教程站交互 v3：进度条 + 滚动进场 + 选型高亮 + Tips 悬浮按钮 + 复制 + 勾选清单 */
 (function () {
   'use strict';
 
@@ -27,66 +27,65 @@
     rvs.forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* --- 3. 折叠解释卡：同一时间只展开一个（高度 JS 动态计算） --- */
-  function pinFoldOpen(e) {
-    if (e.propertyName !== 'max-height') return;
-    var body = e.target;
-    if (body.parentElement && body.parentElement.classList.contains('open')) {
-      body.style.maxHeight = 'none'; /* 展开完成后解除上限，防窄屏/改字号后裁切 */
-    }
-  }
-  document.querySelectorAll('[data-fold]').forEach(function (head) {
-    head.addEventListener('click', function () {
-      var item = head.closest('.fold');
-      var wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.fold.open').forEach(function (f) {
-        var body = f.querySelector('.fold-body');
-        if (body) {
-          body.removeEventListener('transitionend', pinFoldOpen);
-          if (body.style.maxHeight === 'none') {
-            body.style.maxHeight = body.scrollHeight + 'px';
-            void body.offsetHeight; /* 从实际高度回收，避免瞬间跳变 */
-          }
-          body.style.maxHeight = '0px';
-        }
-        f.classList.remove('open');
-        var h = f.querySelector('[data-fold]');
-        if (h) h.setAttribute('aria-expanded', 'false');
-      });
-      if (!wasOpen) {
-        item.classList.add('open');
-        head.setAttribute('aria-expanded', 'true');
-        var body = item.querySelector('.fold-body');
-        if (body) {
-          body.style.maxHeight = body.scrollHeight + 'px';
-          body.addEventListener('transitionend', pinFoldOpen);
-        }
-      }
+  /* --- 3. 选型选择器：点亮匹配的工具卡，其余变淡 --- */
+  var PICK_TOOL = { nocode: 'general', fast: 'gen', design: 'design', all: 'general' };
+  var PICK_NOTE = {
+    nocode: '为你推荐：通用型 Agent · WorkBuddy —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
+    fast: '为你推荐：建站生成型 · v0 / Lovable / Bolt —— 一句话直接生成可发布站点，出图最快；注意样式固定，二次改动受限。',
+    design: '为你推荐：设计型 Agent · MasterGo 莫高 / Figma Make —— 从设计稿或截图直接出页面，还原度最高；前提是你已经有稿子。',
+    all: '为你推荐：通用型 Agent · WorkBuddy / Manus / Devin —— 把对话、工具调用、浏览器、插件整合在一起，一个帮手全包了。'
+  };
+  var pickNote = document.querySelector('[data-chooser-note]');
+  var resetBtn = document.querySelector('.chip[data-pick="reset"]');
+  var toolCards = document.querySelectorAll('.tool-grid .card');
+  function clearPick() {
+    document.querySelectorAll('.chip[data-pick].is-on').forEach(function (b) {
+      b.classList.remove('is-on');
+      b.setAttribute('aria-pressed', 'false');
     });
-  });
-
-  /* --- 4. 选择器：点按钮出对应推荐卡 --- */
-  var resultBox = document.querySelector('[data-result]');
+    toolCards.forEach(function (c) { c.classList.remove('hl', 'dim'); });
+    if (pickNote) pickNote.hidden = true;
+    if (resetBtn) resetBtn.hidden = true;
+  }
   document.querySelectorAll('.chip[data-pick]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var key = btn.getAttribute('data-pick');
-      document.querySelectorAll('.chip[data-pick].is-on').forEach(function (b) { b.classList.remove('is-on'); });
-      btn.classList.add('is-on');
-      if (!resultBox) return;
-      var hit = null;
-      resultBox.querySelectorAll('.result-card').forEach(function (c) {
-        var match = c.getAttribute('data-pick') === key;
-        c.hidden = !match;
-        if (match) hit = c;
+      if (key === 'reset') { clearPick(); return; }
+      var tool = PICK_TOOL[key];
+      document.querySelectorAll('.chip[data-pick]').forEach(function (b) {
+        var on = b === btn;
+        b.classList.toggle('is-on', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
-      resultBox.hidden = false;
-      if (hit) { /* 重触发入场动画 */
-        hit.style.animation = 'none';
-        void hit.offsetHeight;
-        hit.style.animation = '';
-      }
+      toolCards.forEach(function (c) {
+        var hit = c.getAttribute('data-tool') === tool;
+        c.classList.toggle('hl', hit);
+        c.classList.toggle('dim', !hit);
+      });
+      if (pickNote) { pickNote.textContent = PICK_NOTE[key] || ''; pickNote.hidden = false; }
+      if (resetBtn) resetBtn.hidden = false;
     });
   });
+
+  /* --- 4. Tips 悬浮按钮：点击展开 / 收起小贴士卡 --- */
+  var fab = document.querySelector('[data-tips-toggle]');
+  if (fab) {
+    var fabCard = document.querySelector('[data-tips-pop]');
+    var setFab = function (open) {
+      fabCard.hidden = !open;
+      fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    fab.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setFab(fabCard.hidden);
+    });
+    document.addEventListener('click', function (e) {
+      if (!fabCard.hidden && !fabCard.contains(e.target) && e.target !== fab) setFab(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !fabCard.hidden) { setFab(false); fab.focus(); }
+    });
+  }
 
   /* --- 5. 复制按钮：成功后变「已复制」，1.5s 复原 --- */
   document.querySelectorAll('[data-copy]').forEach(function (btn) {
