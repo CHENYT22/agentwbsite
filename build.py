@@ -29,7 +29,7 @@ def plain(html: str) -> str:
 PAGES = [
     dict(
         slug="index", file="index.html", src="index.html", nav="首页", num="00",
-        pill="写给完全新手 · 4 章 · 约 15 分钟",
+        pill="写给完全新手 · 3 章 · 约 13 分钟",
         title="不会代码，也能让 Agent 帮你做出网站",
         sub='说清楚你想要什么，剩下的交给 <span class="term term--down" tabindex="0" data-tip="一个能听懂你说话、并代替你动手干活的 AI 员工">Agent</span> 做。',
         cta_text="开始第 1 章 →", cta_href="01-agent-tools.html",
@@ -50,21 +50,14 @@ PAGES = [
     ),
     dict(
         slug="build", file="03-build.html", src="03-build.html", nav="实战", num="03",
-        pill="第 03 章 · 5 分钟",
-        title="三步做出第一个页面",
-        sub="从空白文件到浏览器里打开，走最短路径。",
-        cta_text="下一章：上线与避坑 →", cta_href="04-launch.html",
-    ),
-    dict(
-        slug="launch", file="04-launch.html", src="04-launch.html", nav="上线", num="04",
-        pill="第 04 章 · 2 分钟",
-        title="五步上线，四个坑避开",
-        sub='GitHub Pages 免费<span class="term term--down" tabindex="0" data-tip="把文件传到网上，变成一个别人打开就能看的网址">部署</span>，拿到能发给别人的网址。',
-        cta_text="开始上线五步 ↓", cta_href="#launch-steps",
+        pill="第 03 章 · 7 分钟",
+        title="三步做出一个网站",
+        sub="从一句提示词到上线网址，都在这一章走完。",
+        cta_text="开始第 1 步 ↓", cta_href="#make-steps",
     ),
 ]
 
-NAV = [("index", "首页"), ("tools", "工具"), ("workflow", "流程"), ("build", "实战"), ("launch", "上线")]
+NAV = [("index", "首页"), ("tools", "工具"), ("workflow", "流程"), ("build", "实战")]
 BY_SLUG = {p["slug"]: p for p in PAGES}
 CHAPTERS = [p for p in PAGES if p["slug"] != "index"]
 
