@@ -151,4 +151,54 @@
     });
   });
   updateProgress();
+
+  /* --- 7. 术语气泡：绝对定位于词条内，坐标换算成视口钳制后的纯 px --- */
+  var terms = document.querySelectorAll('.term');
+  var tipStyle = document.createElement('style');
+  document.head.appendChild(tipStyle);
+  var probe = document.createElement('div');
+  probe.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;left:0;top:0;'
+    + 'width:max-content;box-sizing:border-box;font-size:12px;line-height:1.6;padding:8px 12px;'
+    + 'border-radius:8px;text-align:left;';
+  probe.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(probe);
+  var active = null;
+  function placeTip(t) {
+    var vw = document.documentElement.clientWidth;
+    var maxW = Math.min(260, Math.round(vw * 0.92));
+    probe.style.maxWidth = maxW + 'px';
+    probe.style.width = 'max-content';
+    probe.textContent = t.getAttribute('data-tip') || '';
+    var w = Math.min(probe.offsetWidth, maxW);
+    probe.style.width = w + 'px';
+    var h = probe.offsetHeight;
+    var r = t.getBoundingClientRect();
+    /* 目标视口横坐标 → 相对词条左缘的偏移 */
+    var vx = Math.min(Math.max(r.left + r.width / 2 - w / 2, 8), vw - 8 - w);
+    var x = Math.round(vx - r.left);
+    var y = -h - 8;
+    var below = r.top - h - 8 < 64; /* 56px 吸顶导航 + 8px 间距，顶上放不下就翻到下方 */
+    if (below) y = Math.round(r.height) + 8;
+    var caretX = Math.round(Math.min(Math.max(r.width / 2 - 5, 8), Math.max(w - 18, 8)));
+    var css = '.term.tip-on::after{top:' + y + 'px;left:' + x + 'px}'
+            + '.term.tip-on::before{top:' + (below ? y - 13 : y + h + 3) + 'px;left:' + (x + caretX) + 'px;}';
+    if (below) css += '.term.tip-on::before{border-top-color:transparent;border-bottom-color:var(--ink)}';
+    tipStyle.textContent = css;
+  }
+  function activate(t) {
+    if (active && active !== t) active.classList.remove('tip-on');
+    active = t;
+    placeTip(t);
+    t.classList.add('tip-on');
+  }
+  function deactivate(t) {
+    if (active === t) { active = null; t.classList.remove('tip-on'); }
+  }
+  terms.forEach(function (t) {
+    t.addEventListener('mouseenter', function () { activate(t); });
+    t.addEventListener('focus', function () { activate(t); });
+    t.addEventListener('mouseleave', function () { deactivate(t); });
+    t.addEventListener('blur', function () { deactivate(t); });
+  });
+  window.addEventListener('resize', function () { if (active) placeTip(active); });
 })();

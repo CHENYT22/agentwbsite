@@ -31,7 +31,8 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+body { overflow-x: clip; }
 body {
   font-family: var(--sans); font-size: 14px; line-height: 1.7;
   color: var(--ink); background: var(--paper);
@@ -124,13 +125,19 @@ code {
 .rv { opacity: 0; transform: translateY(12px); }
 .rv.in { opacity: 1; transform: none; transition: opacity .4s ease-out, transform .4s ease-out; }
 
-/* ---------- 卡片基类（动效 4：悬停上移 4px + 阴影） ---------- */
+/* ---------- 卡片基类：圆角 14 / 内边距 24 / 边框 1px #E7E7DF ---------- */
 .card {
   background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
   padding: 24px;
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
-.card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--line-2); }
+/* 不可点卡片：绝不位移，hover 只让边框变深一点 */
+.card-static:hover { border-color: var(--line-2); }
+/* 可点卡片（动效 4：悬停上移 4px + 阴影）+ 右上角 → 箭头 */
+.card-link { position: relative; cursor: pointer; }
+.card-link:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--line-2); }
+.card-arrow { position: absolute; top: 20px; right: 20px; color: var(--ink-3); line-height: 1; }
+.card-arrow svg { display: block; width: 14px; height: 14px; }
 a.card { display: block; }
 
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -140,7 +147,7 @@ a.card { display: block; }
 
 /* ---------- 章节卡 ---------- */
 .chap-card { display: flex; flex-direction: column; gap: 8px; }
-.chap-top { display: flex; align-items: center; justify-content: space-between; }
+.chap-top { display: flex; align-items: center; justify-content: space-between; padding-right: 28px; }
 .chap-num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); letter-spacing: .1em; }
 .chap-time { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
 .chap-icon { font-size: 24px; line-height: 1; }
@@ -158,15 +165,15 @@ a.card { display: block; }
 .fold.open { border-color: var(--line-2); }
 .fold-head {
   display: flex; align-items: center; gap: 14px; width: 100%;
-  padding: 18px 22px; background: none; border: 0; cursor: pointer; text-align: left;
-  font-size: 24px; font-weight: 600; letter-spacing: -.01em; color: var(--ink);
+  padding: 24px; background: none; border: 0; cursor: pointer; text-align: left;
+  font-size: 20px; font-weight: 600; letter-spacing: -.01em; color: var(--ink);
 }
 .fold-emoji { font-size: 24px; line-height: 1; }
 .fold-arrow { margin-left: auto; color: var(--ink-3); font-size: 16px; transition: transform .24s ease; }
 .fold.open .fold-arrow { transform: rotate(90deg); color: var(--ink); }
 .fold-body { max-height: 0; overflow: hidden; transition: max-height .24s ease; }
 /* 展开高度由 JS 读取 scrollHeight 动态赋值，不设固定值，避免长文案窄屏被裁切 */
-.fold-text { padding: 0 22px 20px; font-size: 16px; color: var(--ink-2); max-width: 40em; }
+.fold-text { padding: 0 24px 24px; font-size: 14px; color: var(--ink-2); max-width: 40em; }
 
 /* ---------- 选择器（动效 7：结果卡淡入 + 上移 8px，260ms） ---------- */
 .chooser { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
@@ -184,7 +191,7 @@ a.card { display: block; }
 .result-card {
   display: flex; gap: 16px; align-items: flex-start;
   background: var(--surface); border: 1px solid var(--ink); border-radius: 14px;
-  padding: 22px; animation: pop .26s var(--ease) both;
+  padding: 24px; animation: pop .26s var(--ease) both;
 }
 .result-card[hidden] { display: none; }
 .chooser-result[hidden] { display: none; }
@@ -200,8 +207,9 @@ a.card { display: block; }
 .stepbar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
 .stepbar .card { padding: 18px; }
 .step-num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); letter-spacing: .1em; }
-.step-act { font-size: 16px; font-weight: 600; margin: 8px 0 10px; letter-spacing: -.01em; }
+.step-act { font-size: 20px; font-weight: 600; margin: 8px 0 10px; letter-spacing: -.01em; }
 .step-who { display: inline-block; font-size: 12px; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--ink-2); }
+.step-go { font-size: 12px; color: var(--ink-3); margin-top: 12px; }
 .step-who.bot { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 
 /* ---------- 工具卡（固定四行） ---------- */
@@ -218,7 +226,7 @@ a.card { display: block; }
 .tool-row .v b { color: var(--ink); font-weight: 600; }
 
 /* ---------- 决策路径卡 ---------- */
-.path-q { font-size: 16px; font-weight: 600; }
+.path-q { font-size: 20px; font-weight: 600; }
 .path-a { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
 .path-a b { color: var(--ink); font-weight: 600; }
 .path-emoji { font-size: 24px; line-height: 1; margin-bottom: 10px; }
@@ -227,7 +235,7 @@ a.card { display: block; }
 .prompt-card {
   position: relative; background: #F4F4EE;
   border: 1px solid var(--line-2); border-radius: 14px;
-  padding: 20px 110px 18px 20px;
+  padding: 24px 110px 24px 24px;
 }
 .prompt-tag { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--ink-3); margin-bottom: 10px; }
 .prompt-text {
@@ -255,14 +263,14 @@ a.card { display: block; }
 /* ---------- 竖向步骤卡（你要做的 / Agent 做的） ---------- */
 .build-step { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
 .build-step + .build-step { margin-top: 16px; }
-.bs-head { display: flex; align-items: center; gap: 12px; padding: 16px 22px; border-bottom: 1px solid var(--line); }
+.bs-head { display: flex; align-items: center; gap: 12px; padding: 24px; border-bottom: 1px solid var(--line); }
 .bs-num {
   font-family: var(--mono); font-size: 12px; color: var(--paper);
   background: var(--ink); border-radius: 999px; padding: 2px 10px;
 }
-.bs-title { font-size: 16px; font-weight: 600; }
+.bs-title { font-size: 20px; font-weight: 600; }
 .bs-cols { display: grid; grid-template-columns: 1fr 1fr; }
-.bs-col { padding: 16px 22px; }
+.bs-col { padding: 24px; }
 .bs-col + .bs-col { border-left: 1px dashed var(--line); }
 .bs-k { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-3); margin-bottom: 8px; }
 .bs-v { font-size: 14px; color: var(--ink-2); }
@@ -270,7 +278,7 @@ a.card { display: block; }
 
 /* ---------- 症状卡（2×2） ---------- */
 .sym-num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); letter-spacing: .1em; }
-.sym-title { font-size: 16px; font-weight: 600; margin: 8px 0 12px; }
+.sym-title { font-size: 20px; font-weight: 600; margin: 8px 0 12px; }
 .sym-row { display: flex; gap: 12px; padding: 6px 0; border-top: 1px dashed var(--line); font-size: 14px; }
 .sym-row .k { flex: 0 0 32px; font-size: 12px; color: var(--ink-3); padding-top: 2px; }
 .sym-row .v { color: var(--ink-2); }
@@ -280,8 +288,8 @@ a.card { display: block; }
 .checklist { display: flex; flex-direction: column; gap: 12px; }
 .check-item {
   display: flex; gap: 14px; align-items: flex-start;
-  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
-  padding: 16px 18px; cursor: pointer; user-select: none;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 18px; cursor: pointer; user-select: none;
   transition: border-color .18s ease, background .18s ease, transform .18s ease;
 }
 .check-item:hover { border-color: var(--line-2); transform: translateY(-2px); }
@@ -293,7 +301,7 @@ a.card { display: block; }
   transition: background .18s ease, border-color .18s ease, color .18s ease;
 }
 .check-item.done .check-box { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-.check-text { font-size: 16px; }
+.check-text { font-size: 14px; }
 .check-text code { font-size: 12px; }
 .check-item.done .check-text { color: var(--ink-3); text-decoration: line-through; }
 .check-progress { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-3); margin-top: 14px; }
@@ -307,17 +315,25 @@ a.card { display: block; }
 .warn .w-ico { flex: 0 0 auto; font-size: 16px; line-height: 1.5; }
 .warn b { font-weight: 600; }
 
-/* ---------- 上下章翻页 ---------- */
-.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--line); }
+/* ---------- 上下章翻页：两卡居中等宽，封顶 320px ---------- */
+.pager {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 320px));
+  justify-content: center; gap: 16px;
+  margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--line);
+}
+.pager.is-single { grid-template-columns: minmax(0, 320px); }
 .pager a {
-  display: flex; flex-direction: column; gap: 4px; padding: 18px 20px;
+  position: relative; display: flex; flex-direction: column; gap: 4px; padding: 24px;
   border: 1px solid var(--line); border-radius: 14px; background: var(--surface);
   transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
 }
 .pager a:hover { transform: translateY(-4px); border-color: var(--line-2); box-shadow: var(--shadow); }
-.pager a.next { text-align: right; }
+.pager a.next { text-align: right; background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.pager a.next:hover { border-color: var(--ink); }
 .pager .dir { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-3); }
-.pager .t { font-size: 16px; font-weight: 600; }
+.pager a.next .dir { color: #B9B9AF; }
+.pager .t { font-size: 20px; font-weight: 600; }
+.pager a.next .card-arrow { color: #B9B9AF; }
 
 /* ---------- 末页深色收尾卡 ---------- */
 .end-card {
@@ -334,6 +350,44 @@ a.card { display: block; }
 .sitefoot { border-top: 1px solid var(--line); padding: 26px 0; margin-top: 64px; }
 .sitefoot .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--ink-3); }
 
+/* ---------- 术语气泡（纯 CSS，无库；hover / 键盘 focus / 手机点击 focus 都显示） ---------- */
+.term { position: relative; cursor: help; border-bottom: 1px dashed var(--line-2); }
+/* 无 JS 时的兜底：跟随词条上方、左对齐（脚本可用时走下方 fixed 模型，由 JS 精确定位） */
+.term::after, .term::before { position: absolute; box-sizing: border-box; left: 0; z-index: 30; opacity: 0; visibility: hidden; pointer-events: none; }
+.term::after {
+  content: attr(data-tip);
+  bottom: calc(100% + 8px); margin-left: var(--tip-shift, 0px);
+  width: max-content; max-width: min(260px, 92vw);
+  background: var(--ink); color: #FFFFFF;
+  font-family: var(--sans); font-size: 12px; font-weight: 400; line-height: 1.6;
+  text-align: left; border-radius: 8px; padding: 8px 12px;
+}
+.term::before {
+  content: ""; bottom: calc(100% + 3px); margin-left: var(--tip-caret, 8px);
+  border: 5px solid transparent; border-top-color: var(--ink);
+}
+/* JS 可用：坐标由 site.js 注入规则指定（相对词条的纯 px，随词条滚动自然跟随） */
+@media (scripting: enabled) {
+  .term.tip-on::after, .term.tip-on::before { opacity: 1; visibility: visible; }
+}
+.term:hover::after, .term:hover::before,
+.term:focus::after, .term:focus::before,
+.term:focus-visible::after, .term:focus-visible::before { opacity: 1; visibility: visible; }
+/* 靠近顶部（或会被吸顶导航遮住）时改到下方（仅无 JS 兜底模型用；JS 模型自动翻转） */
+.term--down::after { bottom: auto; top: calc(100% + 8px); }
+.term--down::before {
+  bottom: auto; top: calc(100% + 3px);
+  border-top-color: transparent; border-bottom-color: var(--ink);
+}
+
+/* ---------- 01 章：折叠卡 + Tips 卡（桌面两列，≤900px 堆叠） ---------- */
+.terms-split { display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; align-items: start; }
+.tip-card { background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 14px; padding: 24px; }
+.tip-title { font-size: 20px; font-weight: 600; letter-spacing: -.01em; line-height: 1.4; }
+.tip-list { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+.tip-item { display: flex; gap: 10px; font-size: 14px; color: var(--warn-ink); line-height: 1.7; }
+.tip-item .tip-n { flex: 0 0 auto; font-family: var(--mono); font-size: 12px; padding-top: 3px; }
+
 /* ---------- 正文补充 ---------- */
 .prose { font-size: 16px; color: var(--ink-2); max-width: 46em; }
 .prose b { color: var(--ink); font-weight: 600; }
@@ -346,6 +400,7 @@ a.card { display: block; }
   .stepbar .card:last-child { grid-column: 1 / -1; }
   .grid-3, .grid-a3 { grid-template-columns: repeat(2, 1fr); }
   .tool-grid { grid-template-columns: repeat(2, 1fr); }
+  .terms-split { grid-template-columns: 1fr; }
 }
 @media (max-width: 700px) {
   .hero { padding: 56px 0 44px; }
@@ -362,7 +417,7 @@ a.card { display: block; }
 }
 @media (max-width: 620px) {
   .grid-2, .grid-3, .grid-a3, .tool-grid { grid-template-columns: 1fr; }
-  .pager { grid-template-columns: 1fr; }
+  .pager, .pager.is-single { grid-template-columns: 1fr; }
   .stepbar { grid-template-columns: 1fr; }
   .stepbar .card:last-child { grid-column: auto; }
 }
@@ -415,7 +470,7 @@ a.card { display: block; }
         </div>
         <div class="bs-col">
           <div class="bs-k">Agent 做的</div>
-          <p class="bs-v">拆解需求，一轮生成完整的 HTML + CSS 代码。</p>
+          <p class="bs-v">拆解需求，一轮生成完整的 <span class="term" tabindex="0" data-tip="网页的骨架，用标签告诉浏览器哪里是标题、哪里是图">HTML</span> + <span class="term" tabindex="0" data-tip="网页的衣服，管颜色、字号和排版">CSS</span> 代码。</p>
         </div>
       </div>
     </div>
@@ -423,7 +478,7 @@ a.card { display: block; }
     <div class="build-step rv">
       <div class="bs-head">
         <span class="bs-num">STEP 2</span>
-        <span class="bs-title">把代码存成本地文件</span>
+        <span class="bs-title">把代码存成<span class="term" tabindex="0" data-tip="存在你自己电脑上的文件，不是网页里的">本地文件</span></span>
       </div>
       <div class="bs-cols">
         <div class="bs-col">
@@ -456,7 +511,7 @@ a.card { display: block; }
 
     <div class="warn rv" style="margin-top:24px;">
       <span class="w-ico" aria-hidden="true">⚠️</span>
-      <span><b>最常见的坑：</b>文件名后缀必须是 <b>.html</b>。Windows 默认隐藏扩展名，小心存成了「index.html.txt」。</span>
+      <span><b>最常见的坑：</b>文件名后缀必须是 <b>.html</b>。Windows 默认隐藏<span class="term" tabindex="0" data-tip="文件名最后那一小截，比如 .html、.txt，决定它是什么文件">扩展名</span>，小心存成了「index.html.txt」。</span>
     </div>
   </div>
 </section>
@@ -478,7 +533,7 @@ a.card { display: block; }
     <p class="prose rv mt">到这里你就掌握了核心循环：<b>写需求 → 看效果 → 改需求</b>。剩下的只是熟练度。</p>
   </div>
 </section>
-<nav class="pager" aria-label="章节翻页"><a class="prev" href="02-workflow.html"><span class="dir">← 上一章</span><span class="t">流程</span></a><a class="next" href="04-launch.html"><span class="dir">下一章 →</span><span class="t">上线</span></a></nav>
+<nav class="pager" aria-label="章节翻页"><a class="prev" href="02-workflow.html"><span class="dir">← 上一章</span><span class="t">流程</span><span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"/></svg></span></a><a class="next" href="04-launch.html"><span class="dir">下一章 →</span><span class="t">上线</span><span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"/></svg></span></a></nav>
 </main>
 <footer class="sitefoot">
   <div class="wrap">
@@ -640,6 +695,56 @@ a.card { display: block; }
     });
   });
   updateProgress();
+
+  /* --- 7. 术语气泡：绝对定位于词条内，坐标换算成视口钳制后的纯 px --- */
+  var terms = document.querySelectorAll('.term');
+  var tipStyle = document.createElement('style');
+  document.head.appendChild(tipStyle);
+  var probe = document.createElement('div');
+  probe.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;left:0;top:0;'
+    + 'width:max-content;box-sizing:border-box;font-size:12px;line-height:1.6;padding:8px 12px;'
+    + 'border-radius:8px;text-align:left;';
+  probe.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(probe);
+  var active = null;
+  function placeTip(t) {
+    var vw = document.documentElement.clientWidth;
+    var maxW = Math.min(260, Math.round(vw * 0.92));
+    probe.style.maxWidth = maxW + 'px';
+    probe.style.width = 'max-content';
+    probe.textContent = t.getAttribute('data-tip') || '';
+    var w = Math.min(probe.offsetWidth, maxW);
+    probe.style.width = w + 'px';
+    var h = probe.offsetHeight;
+    var r = t.getBoundingClientRect();
+    /* 目标视口横坐标 → 相对词条左缘的偏移 */
+    var vx = Math.min(Math.max(r.left + r.width / 2 - w / 2, 8), vw - 8 - w);
+    var x = Math.round(vx - r.left);
+    var y = -h - 8;
+    var below = r.top - h - 8 < 64; /* 56px 吸顶导航 + 8px 间距，顶上放不下就翻到下方 */
+    if (below) y = Math.round(r.height) + 8;
+    var caretX = Math.round(Math.min(Math.max(r.width / 2 - 5, 8), Math.max(w - 18, 8)));
+    var css = '.term.tip-on::after{top:' + y + 'px;left:' + x + 'px}'
+            + '.term.tip-on::before{top:' + (below ? y - 13 : y + h + 3) + 'px;left:' + (x + caretX) + 'px;}';
+    if (below) css += '.term.tip-on::before{border-top-color:transparent;border-bottom-color:var(--ink)}';
+    tipStyle.textContent = css;
+  }
+  function activate(t) {
+    if (active && active !== t) active.classList.remove('tip-on');
+    active = t;
+    placeTip(t);
+    t.classList.add('tip-on');
+  }
+  function deactivate(t) {
+    if (active === t) { active = null; t.classList.remove('tip-on'); }
+  }
+  terms.forEach(function (t) {
+    t.addEventListener('mouseenter', function () { activate(t); });
+    t.addEventListener('focus', function () { activate(t); });
+    t.addEventListener('mouseleave', function () { deactivate(t); });
+    t.addEventListener('blur', function () { deactivate(t); });
+  });
+  window.addEventListener('resize', function () { if (active) placeTip(active); });
 })();
 </script>
 </body>

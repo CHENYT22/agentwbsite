@@ -6,6 +6,7 @@ Agent 建站教程站 — 静态站点构建脚本 v2（重构版）
       上下章翻页），CSS/JS 直接内联进 HTML，输出零外部请求的单文件页面。
 """
 from pathlib import Path
+import re
 
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
@@ -13,16 +14,26 @@ SITE_NAME = "Agent 建站指南"
 CSS = (ROOT / "assets" / "style.css").read_text(encoding="utf-8")
 JS = (ROOT / "assets" / "site.js").read_text(encoding="utf-8")
 
+# 可点卡片右上角箭头（内联 SVG，14px，跟随文字颜色）
+ARROW = ('<span class="card-arrow" aria-hidden="true">'
+         '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" '
+         'stroke-linecap="round" stroke-linejoin="round">'
+         '<path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"/></svg></span>')
+
+
+def plain(html: str) -> str:
+    """去掉标签，供 meta description 使用。"""
+    return re.sub(r"<[^>]+>", "", html)
+
 # ---------------- 页面清单（顺序即导航顺序） ----------------
 PAGES = [
     dict(
         slug="index", file="index.html", src="index.html", nav="首页", num="00",
         pill="写给完全新手 · 4 章 · 约 15 分钟",
         title="不会代码，也能让 Agent 帮你做出网站",
-        sub="说清楚你想要什么，剩下的交给 Agent 做。",
+        sub='说清楚你想要什么，剩下的交给 <span class="term term--down" tabindex="0" data-tip="一个能听懂你说话、并代替你动手干活的 AI 员工">Agent</span> 做。',
         cta_text="开始第 1 章 →", cta_href="01-agent-tools.html",
-        hero_center=True,
-    ),
+        hero_center=True,    ),
     dict(
         slug="tools", file="01-agent-tools.html", src="01-agent-tools.html", nav="工具", num="01",
         pill="第 01 章 · 3 分钟",
@@ -48,7 +59,7 @@ PAGES = [
         slug="launch", file="04-launch.html", src="04-launch.html", nav="上线", num="04",
         pill="第 04 章 · 2 分钟",
         title="五步上线，四个坑避开",
-        sub="GitHub Pages 免费部署，拿到能发给别人的网址。",
+        sub='GitHub Pages 免费<span class="term term--down" tabindex="0" data-tip="把文件传到网上，变成一个别人打开就能看的网址">部署</span>，拿到能发给别人的网址。',
         cta_text="开始上线五步 ↓", cta_href="#launch-steps",
     ),
 ]
@@ -75,7 +86,7 @@ def topbar(active_slug):
 
 
 def pager(active_slug):
-    """章节页底部上一章 / 下一章；末章无下一章，单列占满整行。"""
+    """章节页底部上一章 / 下一章：两卡居中等宽（≤320px）；末章只有上一章时单卡居中。"""
     idx = next(i for i, p in enumerate(PAGES) if p["slug"] == active_slug)
     seq = PAGES
     prev_p = seq[idx - 1] if idx > 0 else None
@@ -83,14 +94,13 @@ def pager(active_slug):
 
     def link(p, direction):
         if direction == "prev":
-            return (f'<a class="prev" href="{p["file"]}">'
-                    f'<span class="dir">← 上一章</span><span class="t">{p["nav"]}</span></a>')
-        return (f'<a class="next" href="{p["file"]}">'
-                f'<span class="dir">下一章 →</span><span class="t">{p["nav"]}</span></a>')
+            inner = f'<span class="dir">← 上一章</span><span class="t">{p["nav"]}</span>'
+        else:
+            inner = f'<span class="dir">下一章 →</span><span class="t">{p["nav"]}</span>'
+        return f'<a class="{direction}" href="{p["file"]}">{inner}{ARROW}</a>'
 
-    if next_p is None:  # 末章：去掉空占位，上一章卡片占满整行
-        return (f'<nav class="pager" aria-label="章节翻页" style="grid-template-columns:1fr">'
-                f'{link(prev_p, "prev")}</nav>')
+    if next_p is None:  # 末章：只有上一章，单卡居中，不留空位
+        return f'<nav class="pager is-single" aria-label="章节翻页">{link(prev_p, "prev")}</nav>'
     return f'<nav class="pager" aria-label="章节翻页">{link(prev_p, "prev")}{link(next_p, "next")}</nav>'
 
 
@@ -115,7 +125,7 @@ def render(page, body):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{page["title"]} · {SITE_NAME}</title>
-<meta name="description" content="{page["sub"]}">
+<meta name="description" content="{plain(page["sub"])}">
 <meta name="theme-color" content="#FAFAF7">
 <style>
 {CSS}</style>

@@ -41,7 +41,7 @@
       <p class="sec-sub">对着症状找原因，一句解法就能救你两小时。</p>
     </div>
     <div class="grid-2">
-      <div class="card rv">
+      <div class="card card-static rv">
         <div class="sym-num">坑 01</div>
         <div class="sym-title">双击打开全是源代码</div>
         <div class="sym-rows">
@@ -49,23 +49,23 @@
           <div class="sym-row fix"><span class="k">解法</span><span class="v">手动把文件名改成 <code>index.html</code> 再打开</span></div>
         </div>
       </div>
-      <div class="card rv">
+      <div class="card card-static rv">
         <div class="sym-num">坑 02</div>
         <div class="sym-title">页面里的图片全打不开</div>
         <div class="sym-rows">
           <div class="sym-row"><span class="k">原因</span><span class="v">对话型 Agent 经常编造图片地址</span></div>
-          <div class="sym-row fix"><span class="k">解法</span><span class="v">图片先存到本地，<code>src</code> 改成相对路径（如 <code>images/coffee.jpg</code>）</span></div>
+          <div class="sym-row fix"><span class="k">解法</span><span class="v">图片先存到本地，<code>src</code> 改成<span class="term" tabindex="0" data-tip="跟当前网页放在一块儿的位置，换台电脑也不失效">相对路径</span>（如 <code>images/coffee.jpg</code>）</span></div>
         </div>
       </div>
-      <div class="card rv">
+      <div class="card card-static rv">
         <div class="sym-num">坑 03</div>
         <div class="sym-title">改了文件但页面没变化</div>
         <div class="sym-rows">
-          <div class="sym-row"><span class="k">原因</span><span class="v">浏览器缓存；GitHub Pages 也要 1–3 分钟重新部署</span></div>
-          <div class="sym-row fix"><span class="k">解法</span><span class="v">按 <b>Ctrl + F5</b> 强制刷新，线上改动稍等再看</span></div>
+          <div class="sym-row"><span class="k">原因</span><span class="v"><span class="term" tabindex="0" data-tip="浏览器偷偷存了一份旧页面，改完还拿旧的给你看">浏览器缓存</span>；GitHub Pages 也要 1–3 分钟重新部署</span></div>
+          <div class="sym-row fix"><span class="k">解法</span><span class="v">按 <b>Ctrl + F5</b> <span class="term" tabindex="0" data-tip="让浏览器丢掉旧缓存，重新下载一遍页面">强制刷新</span>，线上改动稍等再看</span></div>
         </div>
       </div>
-      <div class="card rv">
+      <div class="card card-static rv">
         <div class="sym-num">坑 04</div>
         <div class="sym-title">一次提太多需求，Agent 改崩了</div>
         <div class="sym-rows">
