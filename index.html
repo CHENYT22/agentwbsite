@@ -681,9 +681,9 @@ a.card { display: block; }
     var y = -h - 8;
     var below = r.top - h - 8 < 64; /* 56px 吸顶导航 + 8px 间距，顶上放不下就翻到下方 */
     if (below) y = Math.round(r.height) + 8;
-    var caretX = Math.round(Math.min(Math.max(r.width / 2 - 5, 8), Math.max(w - 18, 8)));
+    var caretX = Math.round(Math.min(Math.max(w / 2 - 5, 8), Math.max(w - 18, 8)));
     var css = '.term.tip-on::after{top:' + y + 'px;left:' + x + 'px}'
-            + '.term.tip-on::before{top:' + (below ? y - 13 : y + h + 3) + 'px;left:' + (x + caretX) + 'px;}';
+            + '.term.tip-on::before{top:' + (below ? y - 13 : y + h + 3) + 'px;left:' + (x + caretX) + 'px;margin-left:0;}';
     if (below) css += '.term.tip-on::before{border-top-color:transparent;border-bottom-color:var(--ink)}';
     tipStyle.textContent = css;
   }

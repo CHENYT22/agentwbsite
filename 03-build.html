@@ -480,6 +480,11 @@ a.card { display: block; }
           <p class="bs-v">拆解需求，一轮生成完整的 <span class="term" tabindex="0" data-tip="网页的骨架，用标签告诉浏览器哪里是标题、哪里是图">HTML</span> + <span class="term" tabindex="0" data-tip="网页的衣服，管颜色、字号和排版">CSS</span> 代码。</p>
         </div>
       </div>
+      <div class="prompt-card rv" style="margin-top:20px;">
+        <button class="copy-btn" type="button" data-copy>复制</button>
+        <div class="prompt-tag">PROMPT · 咖啡课落地页 · 不想自己写？直接复制这条，先把流程跑通</div>
+        <div class="prompt-text">我想要一个咖啡课程报名落地页。受众是 25–35 岁想学手冲的城市白领。风格极简黑白、大字标题、像 Apple 官网那样留白多。单页，顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
+      </div>
     </div>
 
     <div class="build-step rv">
@@ -490,18 +495,13 @@ a.card { display: block; }
       <div class="bs-cols">
         <div class="bs-col">
           <div class="bs-k">你要做的</div>
-          <p class="bs-v">把不满意的点用一句话说清（能截图更好），一次只说一件事。收到新代码后，覆盖保存成 <code>index.html</code>，刷新浏览器看效果。</p>
+          <p class="bs-v">把不满意的点用一句话说清（能截图更好），一次只说一件事。收到新代码后，覆盖保存成 <span class="term" tabindex="0" data-tip="最常见的坑：文件名后缀必须是 .html。Windows 默认隐藏扩展名，小心存成了「index.html.txt」，浏览器打开就全是源代码">index.html</span>，刷新浏览器看效果。</p>
         </div>
         <div class="bs-col">
           <div class="bs-k">Agent 做的</div>
           <p class="bs-v">只改你指的地方，回给你完整的新代码；需求含糊时它会反问你。</p>
         </div>
       </div>
-    </div>
-
-    <div class="warn rv" style="margin-top:24px;">
-      <span class="w-ico" aria-hidden="true">⚠️</span>
-      <span><b>最常见的坑：</b>文件名后缀必须是 <b>.html</b>。Windows 默认隐藏<span class="term" tabindex="0" data-tip="文件名最后那一小截，比如 .html、.txt，决定它是什么文件">扩展名</span>，小心存成了「index.html.txt」。</span>
     </div>
 
     <div class="build-step rv" style="margin-top:24px;">
@@ -535,24 +535,8 @@ a.card { display: block; }
         <p class="check-progress" data-check-progress aria-live="polite">已完成 0 / 5</p>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ============ 第 1 步示例提示词：可复制 ============ -->
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <span class="mono-label">Example Prompt</span>
-      <h2 class="h2">第 1 步的示例提示词</h2>
-      <p class="sec-sub">不想自己写？直接复制这条发给 Agent，先把流程跑通。</p>
-    </div>
-    <div class="prompt-card rv">
-      <button class="copy-btn" type="button" data-copy>复制</button>
-      <div class="prompt-tag">PROMPT · 咖啡课落地页</div>
-      <div class="prompt-text">我想要一个咖啡课程报名落地页。受众是 25–35 岁想学手冲的城市白领。风格极简黑白、大字标题、像 Apple 官网那样留白多。单页，顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
-    </div>
-
-    <p class="prose rv mt">到这里你就掌握了核心循环：<b>写需求 → 看效果 → 改需求</b>。剩下的只是熟练度。</p>
+    <p class="prose rv" style="margin-top:28px;">到这里你就掌握了核心循环：<b>写需求 → 看效果 → 改需求</b>。剩下的只是熟练度。</p>
   </div>
 </section>
 
@@ -802,9 +786,9 @@ a.card { display: block; }
     var y = -h - 8;
     var below = r.top - h - 8 < 64; /* 56px 吸顶导航 + 8px 间距，顶上放不下就翻到下方 */
     if (below) y = Math.round(r.height) + 8;
-    var caretX = Math.round(Math.min(Math.max(r.width / 2 - 5, 8), Math.max(w - 18, 8)));
+    var caretX = Math.round(Math.min(Math.max(w / 2 - 5, 8), Math.max(w - 18, 8)));
     var css = '.term.tip-on::after{top:' + y + 'px;left:' + x + 'px}'
-            + '.term.tip-on::before{top:' + (below ? y - 13 : y + h + 3) + 'px;left:' + (x + caretX) + 'px;}';
+            + '.term.tip-on::before{top:' + (below ? y - 13 : y + h + 3) + 'px;left:' + (x + caretX) + 'px;margin-left:0;}';
     if (below) css += '.term.tip-on::before{border-top-color:transparent;border-bottom-color:var(--ink)}';
     tipStyle.textContent = css;
   }
