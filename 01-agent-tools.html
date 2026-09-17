@@ -299,6 +299,22 @@ a.card { display: block; }
 .talk-result .result-card[hidden] { display: none; }
 .talk-result .result-card { animation: pop .26s var(--ease) both; }
 .chooser--talk .chip { padding: 12px 10px; }
+/* 生成选择器（STEP 1 级联：先选 A/B，B 再选 ①/②） */
+.gen-choices { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.gen-choice {
+  text-align: left; cursor: pointer; background: var(--surface);
+  border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.gen-choice:hover { border-color: var(--ink); }
+.gen-choice.is-on { border-color: var(--ink); box-shadow: var(--shadow); }
+.gen-k { display: block; font-size: 14px; font-weight: 600; }
+.gen-d { display: block; margin-top: 6px; font-size: 12px; color: var(--ink-3); line-height: 1.6; }
+.gen-panel { margin-top: 16px; animation: pop .26s var(--ease) both; }
+.gen-panel[hidden] { display: none; }
+.gen-choices--sm { margin-top: 16px; }
+.gen-choice--sm { padding: 12px 14px; }
+.gen-foot { margin-top: 14px; }
 /* 提示词卡紧凑变体（分支叶子内） */
 .prompt-card--sm { padding: 12px 84px 12px 14px; border-radius: 10px; border-color: var(--line); transition: border-color .2s ease; }
 .prompt-card--sm .prompt-tag { margin-bottom: 6px; }
@@ -482,6 +498,7 @@ a.card { display: block; }
   .node-head { padding: 16px 18px; }
   .node-inner { padding: 0 18px 18px; }
   .chooser--talk { grid-template-columns: 1fr; }
+  .gen-choices { grid-template-columns: 1fr; }
 }
 
 /* ---------- 无障碍降级 ---------- */
@@ -719,6 +736,46 @@ a.card { display: block; }
         box.hidden = !on;
       });
     });
+  });
+
+  /* --- 3c. 生成选择器（STEP 1 级联）：A/B 两卡 → A 出结果或 B 再选 ①/② --- */
+  document.querySelectorAll('[data-gen-picker]').forEach(function (root) {
+    var topBtns = root.querySelectorAll(':scope > .gen-choices .gen-choice[data-gen]');
+    var panelA = root.querySelector('[data-gen-panel="a"]');
+    var panelB = root.querySelector('[data-gen-panel="b"]');
+    var subBtns = root.querySelectorAll('[data-gen-sub]');
+    var subPanels = root.querySelectorAll('[data-gen-sub-panel]');
+    var back = root.querySelector('[data-gen-back]');
+    function resetSub() {
+      subBtns.forEach(function (b) { b.classList.remove('is-on'); b.setAttribute('aria-pressed', 'false'); });
+      subPanels.forEach(function (p) { p.hidden = true; });
+    }
+    function resetAll() {
+      topBtns.forEach(function (b) { b.classList.remove('is-on'); b.setAttribute('aria-pressed', 'false'); });
+      panelA.hidden = true; panelB.hidden = true;
+      resetSub();
+      if (back) back.hidden = true;
+    }
+    topBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        resetAll();
+        btn.classList.add('is-on');
+        btn.setAttribute('aria-pressed', 'true');
+        if (btn.getAttribute('data-gen') === 'a') { panelA.hidden = false; }
+        else { panelB.hidden = false; }
+        if (back) back.hidden = false;
+      });
+    });
+    subBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        resetSub();
+        btn.classList.add('is-on');
+        btn.setAttribute('aria-pressed', 'true');
+        var target = root.querySelector('[data-gen-sub-panel="' + btn.getAttribute('data-gen-sub') + '"]');
+        if (target) target.hidden = false;
+      });
+    });
+    if (back) back.addEventListener('click', resetAll);
   });
 
   /* --- 4. Tips 悬浮按钮：点击展开 / 收起小贴士卡 --- */

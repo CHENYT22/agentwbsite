@@ -299,6 +299,22 @@ a.card { display: block; }
 .talk-result .result-card[hidden] { display: none; }
 .talk-result .result-card { animation: pop .26s var(--ease) both; }
 .chooser--talk .chip { padding: 12px 10px; }
+/* 生成选择器（STEP 1 级联：先选 A/B，B 再选 ①/②） */
+.gen-choices { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.gen-choice {
+  text-align: left; cursor: pointer; background: var(--surface);
+  border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.gen-choice:hover { border-color: var(--ink); }
+.gen-choice.is-on { border-color: var(--ink); box-shadow: var(--shadow); }
+.gen-k { display: block; font-size: 14px; font-weight: 600; }
+.gen-d { display: block; margin-top: 6px; font-size: 12px; color: var(--ink-3); line-height: 1.6; }
+.gen-panel { margin-top: 16px; animation: pop .26s var(--ease) both; }
+.gen-panel[hidden] { display: none; }
+.gen-choices--sm { margin-top: 16px; }
+.gen-choice--sm { padding: 12px 14px; }
+.gen-foot { margin-top: 14px; }
 /* 提示词卡紧凑变体（分支叶子内） */
 .prompt-card--sm { padding: 12px 84px 12px 14px; border-radius: 10px; border-color: var(--line); transition: border-color .2s ease; }
 .prompt-card--sm .prompt-tag { margin-bottom: 6px; }
@@ -482,6 +498,7 @@ a.card { display: block; }
   .node-head { padding: 16px 18px; }
   .node-inner { padding: 0 18px 18px; }
   .chooser--talk { grid-template-columns: 1fr; }
+  .gen-choices { grid-template-columns: 1fr; }
 }
 
 /* ---------- 无障碍降级 ---------- */
@@ -525,15 +542,27 @@ a.card { display: block; }
       <div class="node is-open" data-node>
         <button class="node-head" type="button" data-node-toggle aria-expanded="true">
           <span class="bs-num">STEP 1</span>
-          <span class="node-title">如何生成</span>
+          <span class="node-title">生成</span>
           <span class="node-hint">有需求直接说，没想法就聊着来</span>
           <span class="node-arrow" aria-hidden="true">›</span>
         </button>
         <div class="node-body">
           <div class="node-inner">
-            <div class="branches">
-              <div class="branch">
-                <div class="branch-k">A · 已有详细需求和框架</div>
+            <div class="gen-picker" data-gen-picker>
+              <!-- 第一层：先选 A 还是 B -->
+              <div class="gen-choices">
+                <button class="gen-choice" type="button" data-gen="a" aria-pressed="false">
+                  <span class="gen-k">A · 我已有详细需求和框架</span>
+                  <span class="gen-d">目标、受众、风格都想清楚了，直接开说</span>
+                </button>
+                <button class="gen-choice" type="button" data-gen="b" aria-pressed="false">
+                  <span class="gen-k">B · 我还没有具体想法</span>
+                  <span class="gen-d">只有一个模糊念头，先聊起来也行</span>
+                </button>
+              </div>
+
+              <!-- A 的结果 -->
+              <div class="gen-panel" data-gen-panel="a" hidden>
                 <div class="leaf">
                   <p>把这三件事直接说给 Agent：</p>
                   <div class="tag-row">
@@ -543,17 +572,33 @@ a.card { display: block; }
                   </div>
                 </div>
               </div>
-              <div class="branch">
-                <div class="branch-k">B · 没有具体想法</div>
-                <div class="leaf prompt-card prompt-card--sm">
-                  <button class="copy-btn" type="button" data-copy>复制</button>
-                  <div class="prompt-tag">① 像聊天一样问它</div>
-                  <div class="prompt-text">我想做一个 xxxx 网站，我们可以怎样开始？</div>
+
+              <!-- B：再选 ① 还是 ② -->
+              <div class="gen-panel" data-gen-panel="b" hidden>
+                <div class="gen-choices gen-choices--sm">
+                  <button class="gen-choice gen-choice--sm" type="button" data-gen-sub="1" aria-pressed="false">
+                    <span class="gen-k">① 像聊天一样问它</span>
+                    <span class="gen-d">用一句话开场，让 Agent 帮你把想法问出来</span>
+                  </button>
+                  <button class="gen-choice gen-choice--sm" type="button" data-gen-sub="2" aria-pressed="false">
+                    <span class="gen-k">② 用现成模板</span>
+                    <span class="gen-d">拿现成提示词改一改，最快</span>
+                  </button>
                 </div>
-                <div class="leaf">
-                  <b>② 用现成模板</b>
-                  <p class="leaf-p"><a class="tpl-link" href="#prompt-card" data-scroll-to="#prompt-card">滚到本章「示例提示词」卡</a>，或 <a class="tpl-link" href="02-workflow.html#prompt-template">用第 2 章的四句话模板</a>。</p>
+                <div class="gen-panel" data-gen-sub-panel="1" hidden>
+                  <div class="leaf prompt-card prompt-card--sm">
+                    <button class="copy-btn" type="button" data-copy>复制</button>
+                    <div class="prompt-tag">可直接发给 Agent 的原话</div>
+                    <div class="prompt-text">我想做一个 xxxx 网站，我们可以怎样开始？</div>
+                  </div>
                 </div>
+                <div class="gen-panel" data-gen-sub-panel="2" hidden>
+                  <div class="leaf"><p class="leaf-p"><a class="tpl-link" href="#prompt-card" data-scroll-to="#prompt-card">滚到本章「示例提示词」卡</a>，或 <a class="tpl-link" href="02-workflow.html#prompt-template">用第 2 章的四句话模板</a>。</p></div>
+                </div>
+              </div>
+
+              <div class="gen-foot">
+                <button class="chip chip-ghost" type="button" data-gen-back hidden>重新选择</button>
               </div>
             </div>
           </div>
@@ -564,7 +609,7 @@ a.card { display: block; }
       <div class="node" data-node>
         <button class="node-head" type="button" data-node-toggle aria-expanded="false">
           <span class="bs-num">STEP 2</span>
-          <span class="node-title">如何修改</span>
+          <span class="node-title">修改</span>
           <span class="node-hint">一次只说一件事</span>
           <span class="node-arrow" aria-hidden="true">›</span>
         </button>
@@ -620,7 +665,7 @@ a.card { display: block; }
       <div class="node" data-node>
         <button class="node-head" type="button" data-node-toggle aria-expanded="false">
           <span class="bs-num">STEP 3</span>
-          <span class="node-title">如何部署上线</span>
+          <span class="node-title">部署上线</span>
           <span class="node-hint">存文件、推仓库、开 Pages</span>
           <span class="node-arrow" aria-hidden="true">›</span>
         </button>
@@ -862,6 +907,46 @@ a.card { display: block; }
         box.hidden = !on;
       });
     });
+  });
+
+  /* --- 3c. 生成选择器（STEP 1 级联）：A/B 两卡 → A 出结果或 B 再选 ①/② --- */
+  document.querySelectorAll('[data-gen-picker]').forEach(function (root) {
+    var topBtns = root.querySelectorAll(':scope > .gen-choices .gen-choice[data-gen]');
+    var panelA = root.querySelector('[data-gen-panel="a"]');
+    var panelB = root.querySelector('[data-gen-panel="b"]');
+    var subBtns = root.querySelectorAll('[data-gen-sub]');
+    var subPanels = root.querySelectorAll('[data-gen-sub-panel]');
+    var back = root.querySelector('[data-gen-back]');
+    function resetSub() {
+      subBtns.forEach(function (b) { b.classList.remove('is-on'); b.setAttribute('aria-pressed', 'false'); });
+      subPanels.forEach(function (p) { p.hidden = true; });
+    }
+    function resetAll() {
+      topBtns.forEach(function (b) { b.classList.remove('is-on'); b.setAttribute('aria-pressed', 'false'); });
+      panelA.hidden = true; panelB.hidden = true;
+      resetSub();
+      if (back) back.hidden = true;
+    }
+    topBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        resetAll();
+        btn.classList.add('is-on');
+        btn.setAttribute('aria-pressed', 'true');
+        if (btn.getAttribute('data-gen') === 'a') { panelA.hidden = false; }
+        else { panelB.hidden = false; }
+        if (back) back.hidden = false;
+      });
+    });
+    subBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        resetSub();
+        btn.classList.add('is-on');
+        btn.setAttribute('aria-pressed', 'true');
+        var target = root.querySelector('[data-gen-sub-panel="' + btn.getAttribute('data-gen-sub') + '"]');
+        if (target) target.hidden = false;
+      });
+    });
+    if (back) back.addEventListener('click', resetAll);
   });
 
   /* --- 4. Tips 悬浮按钮：点击展开 / 收起小贴士卡 --- */

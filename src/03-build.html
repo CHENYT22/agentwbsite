@@ -12,15 +12,27 @@
       <div class="node is-open" data-node>
         <button class="node-head" type="button" data-node-toggle aria-expanded="true">
           <span class="bs-num">STEP 1</span>
-          <span class="node-title">如何生成</span>
+          <span class="node-title">生成</span>
           <span class="node-hint">有需求直接说，没想法就聊着来</span>
           <span class="node-arrow" aria-hidden="true">›</span>
         </button>
         <div class="node-body">
           <div class="node-inner">
-            <div class="branches">
-              <div class="branch">
-                <div class="branch-k">A · 已有详细需求和框架</div>
+            <div class="gen-picker" data-gen-picker>
+              <!-- 第一层：先选 A 还是 B -->
+              <div class="gen-choices">
+                <button class="gen-choice" type="button" data-gen="a" aria-pressed="false">
+                  <span class="gen-k">A · 我已有详细需求和框架</span>
+                  <span class="gen-d">目标、受众、风格都想清楚了，直接开说</span>
+                </button>
+                <button class="gen-choice" type="button" data-gen="b" aria-pressed="false">
+                  <span class="gen-k">B · 我还没有具体想法</span>
+                  <span class="gen-d">只有一个模糊念头，先聊起来也行</span>
+                </button>
+              </div>
+
+              <!-- A 的结果 -->
+              <div class="gen-panel" data-gen-panel="a" hidden>
                 <div class="leaf">
                   <p>把这三件事直接说给 Agent：</p>
                   <div class="tag-row">
@@ -30,17 +42,33 @@
                   </div>
                 </div>
               </div>
-              <div class="branch">
-                <div class="branch-k">B · 没有具体想法</div>
-                <div class="leaf prompt-card prompt-card--sm">
-                  <button class="copy-btn" type="button" data-copy>复制</button>
-                  <div class="prompt-tag">① 像聊天一样问它</div>
-                  <div class="prompt-text">我想做一个 xxxx 网站，我们可以怎样开始？</div>
+
+              <!-- B：再选 ① 还是 ② -->
+              <div class="gen-panel" data-gen-panel="b" hidden>
+                <div class="gen-choices gen-choices--sm">
+                  <button class="gen-choice gen-choice--sm" type="button" data-gen-sub="1" aria-pressed="false">
+                    <span class="gen-k">① 像聊天一样问它</span>
+                    <span class="gen-d">用一句话开场，让 Agent 帮你把想法问出来</span>
+                  </button>
+                  <button class="gen-choice gen-choice--sm" type="button" data-gen-sub="2" aria-pressed="false">
+                    <span class="gen-k">② 用现成模板</span>
+                    <span class="gen-d">拿现成提示词改一改，最快</span>
+                  </button>
                 </div>
-                <div class="leaf">
-                  <b>② 用现成模板</b>
-                  <p class="leaf-p"><a class="tpl-link" href="#prompt-card" data-scroll-to="#prompt-card">滚到本章「示例提示词」卡</a>，或 <a class="tpl-link" href="02-workflow.html#prompt-template">用第 2 章的四句话模板</a>。</p>
+                <div class="gen-panel" data-gen-sub-panel="1" hidden>
+                  <div class="leaf prompt-card prompt-card--sm">
+                    <button class="copy-btn" type="button" data-copy>复制</button>
+                    <div class="prompt-tag">可直接发给 Agent 的原话</div>
+                    <div class="prompt-text">我想做一个 xxxx 网站，我们可以怎样开始？</div>
+                  </div>
                 </div>
+                <div class="gen-panel" data-gen-sub-panel="2" hidden>
+                  <div class="leaf"><p class="leaf-p"><a class="tpl-link" href="#prompt-card" data-scroll-to="#prompt-card">滚到本章「示例提示词」卡</a>，或 <a class="tpl-link" href="02-workflow.html#prompt-template">用第 2 章的四句话模板</a>。</p></div>
+                </div>
+              </div>
+
+              <div class="gen-foot">
+                <button class="chip chip-ghost" type="button" data-gen-back hidden>重新选择</button>
               </div>
             </div>
           </div>
@@ -51,7 +79,7 @@
       <div class="node" data-node>
         <button class="node-head" type="button" data-node-toggle aria-expanded="false">
           <span class="bs-num">STEP 2</span>
-          <span class="node-title">如何修改</span>
+          <span class="node-title">修改</span>
           <span class="node-hint">一次只说一件事</span>
           <span class="node-arrow" aria-hidden="true">›</span>
         </button>
@@ -107,7 +135,7 @@
       <div class="node" data-node>
         <button class="node-head" type="button" data-node-toggle aria-expanded="false">
           <span class="bs-num">STEP 3</span>
-          <span class="node-title">如何部署上线</span>
+          <span class="node-title">部署上线</span>
           <span class="node-hint">存文件、推仓库、开 Pages</span>
           <span class="node-arrow" aria-hidden="true">›</span>
         </button>

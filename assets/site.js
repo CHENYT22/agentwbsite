@@ -97,6 +97,46 @@
     });
   });
 
+  /* --- 3c. 生成选择器（STEP 1 级联）：A/B 两卡 → A 出结果或 B 再选 ①/② --- */
+  document.querySelectorAll('[data-gen-picker]').forEach(function (root) {
+    var topBtns = root.querySelectorAll(':scope > .gen-choices .gen-choice[data-gen]');
+    var panelA = root.querySelector('[data-gen-panel="a"]');
+    var panelB = root.querySelector('[data-gen-panel="b"]');
+    var subBtns = root.querySelectorAll('[data-gen-sub]');
+    var subPanels = root.querySelectorAll('[data-gen-sub-panel]');
+    var back = root.querySelector('[data-gen-back]');
+    function resetSub() {
+      subBtns.forEach(function (b) { b.classList.remove('is-on'); b.setAttribute('aria-pressed', 'false'); });
+      subPanels.forEach(function (p) { p.hidden = true; });
+    }
+    function resetAll() {
+      topBtns.forEach(function (b) { b.classList.remove('is-on'); b.setAttribute('aria-pressed', 'false'); });
+      panelA.hidden = true; panelB.hidden = true;
+      resetSub();
+      if (back) back.hidden = true;
+    }
+    topBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        resetAll();
+        btn.classList.add('is-on');
+        btn.setAttribute('aria-pressed', 'true');
+        if (btn.getAttribute('data-gen') === 'a') { panelA.hidden = false; }
+        else { panelB.hidden = false; }
+        if (back) back.hidden = false;
+      });
+    });
+    subBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        resetSub();
+        btn.classList.add('is-on');
+        btn.setAttribute('aria-pressed', 'true');
+        var target = root.querySelector('[data-gen-sub-panel="' + btn.getAttribute('data-gen-sub') + '"]');
+        if (target) target.hidden = false;
+      });
+    });
+    if (back) back.addEventListener('click', resetAll);
+  });
+
   /* --- 4. Tips 悬浮按钮：点击展开 / 收起小贴士卡 --- */
   var fab = document.querySelector('[data-tips-toggle]');
   if (fab) {
