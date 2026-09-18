@@ -1,150 +1,65 @@
-<!-- ============ 三步：树状可折叠导图 ============ -->
+<!-- ============ 修改与部署：树状可折叠导图 ============ -->
 <section class="sec" id="make-steps">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="mono-label">Step By Step</span>
-      <h2 class="h2">三步，做出一个网站</h2>
+      <span class="mono-label">Revise &amp; Deploy</span>
+      <h2 class="h2">改到满意，再上线</h2>
       <p class="sec-sub">点开每一步看细节，同一时间只展开一步。</p>
     </div>
 
     <div class="tree rv">
-      <!-- STEP 1 -->
+      <!-- STEP 1 修改 -->
       <div class="node is-open" data-node>
         <button class="node-head" type="button" data-node-toggle aria-expanded="true">
           <span class="bs-num">STEP 1</span>
-          <span class="node-title">生成</span>
-          <span class="node-hint">有需求直接说，没想法就聊着来</span>
-          <span class="node-arrow" aria-hidden="true">›</span>
-        </button>
-        <div class="node-body">
-          <div class="node-inner">
-            <div class="gen-picker" data-gen-picker>
-              <!-- 第一层：先选 A 还是 B -->
-              <div class="gen-choices">
-                <button class="gen-choice" type="button" data-gen="a" aria-pressed="false">
-                  <span class="gen-k">A · 我已有详细需求和框架</span>
-                  <span class="gen-d">目标、受众、风格都想清楚了，直接开说</span>
-                </button>
-                <button class="gen-choice" type="button" data-gen="b" aria-pressed="false">
-                  <span class="gen-k">B · 我还没有具体想法</span>
-                  <span class="gen-d">只有一个模糊念头，先聊起来也行</span>
-                </button>
-              </div>
-
-              <!-- A 的结果 -->
-              <div class="gen-panel" data-gen-panel="a" hidden>
-                <div class="leaf">
-                  <p>把这三件事直接说给 Agent：</p>
-                  <div class="tag-row">
-                    <span class="term tag" tabindex="0" data-tip="这个网站要达成什么，比如「让人看完就报名」">目标</span>
-                    <span class="term tag" tabindex="0" data-tip="给谁看，比如「25–35 岁想学手冲的城市白领」">受众</span>
-                    <span class="term tag" tabindex="0" data-tip="看起来是什么感觉，比如「极简黑白、大字标题、留白多」">风格</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- B：再选 ① 还是 ② -->
-              <div class="gen-panel" data-gen-panel="b" hidden>
-                <div class="gen-choices gen-choices--sm">
-                  <button class="gen-choice gen-choice--sm" type="button" data-gen-sub="1" aria-pressed="false">
-                    <span class="gen-k">① 像聊天一样问它</span>
-                    <span class="gen-d">用一句话开场，让 Agent 帮你把想法问出来</span>
-                  </button>
-                  <button class="gen-choice gen-choice--sm" type="button" data-gen-sub="2" aria-pressed="false">
-                    <span class="gen-k">② 用现成模板</span>
-                    <span class="gen-d">拿现成提示词改一改，最快</span>
-                  </button>
-                </div>
-                <div class="gen-panel" data-gen-sub-panel="1" hidden>
-                  <div class="leaf prompt-card prompt-card--sm">
-                    <button class="copy-btn" type="button" data-copy>复制</button>
-                    <div class="prompt-tag">可直接发给 Agent 的原话</div>
-                    <div class="prompt-text">我想做一个 xxxx 网站，我们可以怎样开始？</div>
-                  </div>
-                </div>
-                <div class="gen-panel" data-gen-sub-panel="2" hidden>
-                  <div class="leaf prompt-card prompt-card--sm">
-                    <button class="copy-btn" type="button" data-copy>复制</button>
-                    <div class="prompt-tag">PROMPT · 咖啡课落地页 · 拿去改改就能用</div>
-                    <div class="prompt-text">我想要一个咖啡课程报名落地页。受众是 25–35 岁想学手冲的城市白领。风格极简黑白、大字标题、像 Apple 官网那样留白多。单页，顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="gen-foot">
-                <button class="chip chip-ghost" type="button" data-gen-back hidden>重新选择</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 2 -->
-      <div class="node" data-node>
-        <button class="node-head" type="button" data-node-toggle aria-expanded="false">
-          <span class="bs-num">STEP 2</span>
           <span class="node-title">修改</span>
-          <span class="node-hint">一次只说一件事</span>
+          <span class="node-hint">有想法就指着改，没想法就让它提</span>
           <span class="node-arrow" aria-hidden="true">›</span>
         </button>
         <div class="node-body">
           <div class="node-inner">
             <div class="branches">
               <div class="branch">
-                <div class="branch-k">A · 说清楚要改哪里</div>
+                <div class="branch-k">A · 自己有明确想法</div>
                 <div class="leaf">
-                  <p>一次只说一件事。点一句现成话术，下面出现可直接发给 Agent 的原话：</p>
-                  <div class="talk-picker" data-talk-picker>
-                    <div class="chooser chooser--talk">
-                      <button class="chip" type="button" data-talk="title" aria-pressed="false">标题加大</button>
-                      <button class="chip" type="button" data-talk="color" aria-pressed="false">换配色</button>
-                      <button class="chip" type="button" data-talk="section" aria-pressed="false">加区块</button>
-                      <button class="chip" type="button" data-talk="mobile" aria-pressed="false">修手机端</button>
-                    </div>
-                    <div class="talk-result" data-talk-result hidden>
-                      <div class="prompt-card prompt-card--sm result-card" data-card="title" hidden>
-                        <button class="copy-btn" type="button" data-copy>复制</button>
-                        <div class="prompt-tag">可直接发给 Agent 的原话</div>
-                        <div class="prompt-text">首屏标题再大一点，和正文拉开层次。</div>
-                      </div>
-                      <div class="prompt-card prompt-card--sm result-card" data-card="color" hidden>
-                        <button class="copy-btn" type="button" data-copy>复制</button>
-                        <div class="prompt-tag">可直接发给 Agent 的原话</div>
-                        <div class="prompt-text">整体配色换成奶咖色系，别太冷。</div>
-                      </div>
-                      <div class="prompt-card prompt-card--sm result-card" data-card="section" hidden>
-                        <button class="copy-btn" type="button" data-copy>复制</button>
-                        <div class="prompt-tag">可直接发给 Agent 的原话</div>
-                        <div class="prompt-text">亮点下面加一屏用户评价，三张卡横排。</div>
-                      </div>
-                      <div class="prompt-card prompt-card--sm result-card" data-card="mobile" hidden>
-                        <button class="copy-btn" type="button" data-copy>复制</button>
-                        <div class="prompt-tag">可直接发给 Agent 的原话</div>
-                        <div class="prompt-text">手机上卡片竖排，字号别小于 14px。</div>
-                      </div>
-                    </div>
-                  </div>
+                  <b>截图给 AI，框选要改的部分</b>
+                  <p class="leaf-p">把页面截图发给 Agent，圈出或框选不满意的地方，一句话说明怎么改——比打字描述位置准得多。</p>
+                </div>
+                <div class="leaf">
+                  <b>让 AI 在网页里直接标记</b>
+                  <p class="leaf-p">部分 Agent 能直接在预览的网页上加评论、标修改点，改哪点哪，改完自动更新。</p>
                 </div>
               </div>
               <div class="branch">
-                <div class="branch-k">B · 改完没变化</div>
-                <div class="leaf">先按 <b>Ctrl + F5</b> 强制刷新，把旧缓存丢掉；还不行就等一下再看——线上部署本身也需要一点时间。</div>
+                <div class="branch-k">B · 不知道如何修改</div>
+                <div class="leaf">
+                  <b>说需求，让它提修改清单</b>
+                  <p class="leaf-p">把感受告诉它：「页面有点乱，帮我看看哪里能改」，它会给你一份修改清单，你挑着执行。</p>
+                </div>
+                <div class="leaf">
+                  <b>直接问它该改哪</b>
+                  <p class="leaf-p">问「以你的眼光，这个页面最该先改什么」，让它输出一份按优先级排好的清单。</p>
+                </div>
               </div>
             </div>
+            <div class="leaf" style="margin-top:16px;">改的时候<b>一次只说一件事</b>，例如「首屏标题再大一点，和正文拉开层次」，改完满意再提下一条。改完没变化？先 <b>Ctrl + F5</b> 强制刷新。</div>
           </div>
         </div>
       </div>
 
-      <!-- STEP 3 -->
+      <!-- STEP 2 部署上线 -->
       <div class="node" data-node>
         <button class="node-head" type="button" data-node-toggle aria-expanded="false">
-          <span class="bs-num">STEP 3</span>
+          <span class="bs-num">STEP 2</span>
           <span class="node-title">部署上线</span>
           <span class="node-hint">存文件、推仓库、开 Pages</span>
           <span class="node-arrow" aria-hidden="true">›</span>
         </button>
         <div class="node-body">
           <div class="node-inner">
+            <div class="leaf" style="margin-bottom:16px;">
+              <b>认识 GitHub：</b><span class="term" tabindex="0" data-tip="存代码和文件的网站，全球程序员都在用，本教程拿它免费上线网页">GitHub</span> 是一个存代码和文件的网站；<span class="term" tabindex="0" data-tip="GitHub 提供的免费静态网站托管服务，把你的 index.html 变成一个公开网址">GitHub Pages</span> 是它附赠的免费托管服务——把你的 <code>index.html</code> 放进去，就得到一个任何人都能访问的网址。
+            </div>
             <div class="branches">
               <div class="branch">
                 <div class="branch-k">A · 存成 index.html</div>
@@ -254,7 +169,7 @@
     <div class="end-card rv">
       <span class="end-kicker">That's It</span>
       <h2>你的第一个网站，已经上线</h2>
-      <p>把网址发给一个朋友，听听真实反馈——然后用第 2 步的方法继续改，改到满意为止。剩下的交给 Agent。</p>
+      <p>把网址发给一个朋友，听听真实反馈——然后用「修改」里的方法继续改，改到满意为止。剩下的交给 Agent。</p>
       <a class="btn btn-primary" href="index.html">回到首页，再走一遍 →</a>
     </div>
   </div>

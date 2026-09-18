@@ -1,98 +1,125 @@
-<!-- ============ 1.1 先懂三个词：直接展示 ============ -->
+<!-- ============ 1.1 先懂三个词 + 词典：圆形按钮展开 ============ -->
 <section class="sec" id="terms">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="mono-label">Three Words</span>
-      <div class="tips-head">
-        <h2 class="h2">先懂三个词</h2>
-        <span class="fab-wrap fab-wrap--inline">
-          <span class="fab-card" data-tips-pop hidden role="dialog" aria-label="怎么装 Skill 和插件">
-            <h3 class="tip-title">Tips · 怎么装 Skill 和插件</h3>
-            <div class="tip-list">
-              <div class="tip-item"><span class="tip-n">01</span><span>直接说需求就行：「帮我装一个能读 PDF 的技能」，它会告诉你在哪点。</span></div>
-              <div class="tip-item"><span class="tip-n">02</span><span>多数工具在「设置 → 技能 / 插件市场」里搜名字，一键就能装。</span></div>
-              <div class="tip-item"><span class="tip-n">03</span><span>装完通常先要权限（读文件、发邮件），不同意就不给。</span></div>
-            </div>
-          </span>
-          <button class="fab" type="button" data-tips-toggle aria-expanded="false" aria-label="怎么装 Skill 和插件">TIPS</button>
-        </span>
-      </div>
-      <p class="sec-sub">聊工具之前，先把这三个词弄清楚。</p>
+      <span class="mono-label">Dictionary</span>
+      <h2 class="h2">先懂三个词</h2>
+      <p class="sec-sub">点击下面的圆形按钮，展开词汇区：三个基础词 + 词典 + 提示词模板。</p>
     </div>
-    <div class="grid-3">
-      <div class="card card-static rv">
-        <div class="path-emoji" aria-hidden="true">🤖</div>
-        <div class="el-name">Agent</div>
-        <p class="el-desc">一个能听懂你说话、并代替你动手干活的 AI 员工。</p>
+    <button class="dict-fab rv" type="button" data-dict-toggle aria-expanded="false" aria-controls="dict-panel">词典</button>
+  </div>
+
+  <div class="dict-panel" id="dict-panel" data-dict-panel hidden>
+    <div class="wrap">
+      <!-- 三个基础词 -->
+      <div class="grid-3">
+        <div class="card card-static">
+          <div class="path-emoji" aria-hidden="true">🤖</div>
+          <div class="el-name">Agent</div>
+          <p class="el-desc">一个能听懂你说话、并代替你动手干活的 AI 员工。</p>
+        </div>
+        <div class="card card-static">
+          <div class="path-emoji" aria-hidden="true">🎓</div>
+          <div class="el-name">Skill</div>
+          <p class="el-desc">给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」。</p>
+        </div>
+        <div class="card card-static">
+          <div class="path-emoji" aria-hidden="true">🔌</div>
+          <div class="el-name">插件</div>
+          <p class="el-desc">让 Agent 能直接连上外部 App 的钥匙，比如直接收发邮件。</p>
+        </div>
       </div>
-      <div class="card card-static rv">
-        <div class="path-emoji" aria-hidden="true">🎓</div>
-        <div class="el-name">Skill</div>
-        <p class="el-desc">给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」。</p>
+
+      <!-- Skill 怎么装 -->
+      <div class="dict-block" id="skill-how">
+        <div class="dict-h">Skill 怎么装</div>
+        <div class="tip-list">
+          <div class="tip-item"><span class="tip-n">01</span><span>直接说需求就行：「帮我装一个能读 PDF 的技能」，它会告诉你在哪点。</span></div>
+          <div class="tip-item"><span class="tip-n">02</span><span>多数工具在「设置 → 技能 / 插件市场」里搜名字，一键就能装。</span></div>
+          <div class="tip-item"><span class="tip-n">03</span><span>装完通常先要权限（读文件、发邮件），不同意就不给。</span></div>
+        </div>
       </div>
-      <div class="card card-static rv">
-        <div class="path-emoji" aria-hidden="true">🔌</div>
-        <div class="el-name">插件</div>
-        <p class="el-desc">让 Agent 能直接连上外部 App 的钥匙，比如直接收发邮件。</p>
+
+      <!-- 词汇汇总 -->
+      <div class="dict-block">
+        <div class="dict-h">词汇汇总 · 悬停看解释，点 ☆ 收藏</div>
+        <div class="dict-list" data-dict-list></div>
+      </div>
+
+      <!-- 收藏词语 -->
+      <div class="dict-block">
+        <div class="dict-h">收藏词语</div>
+        <div class="dict-favs" data-dict-favs><span class="dict-empty">还没有收藏。在词汇汇总里点 ☆，就会出现在这里（保存在你的浏览器里）。</span></div>
+      </div>
+
+      <!-- 手动添加词语 -->
+      <div class="dict-block">
+        <div class="dict-h">手动添加词语</div>
+        <div class="dict-add">
+          <input class="dict-input" type="text" data-dict-word placeholder="词语，如：部署" aria-label="词语">
+          <input class="dict-input" type="text" data-dict-def placeholder="解释，如：把做好的网站放到网上" aria-label="解释">
+          <button class="chip" type="button" data-dict-add>添加</button>
+        </div>
+      </div>
+
+      <!-- 提示词模板 -->
+      <div class="dict-block">
+        <div class="dict-h">提示词模板 · 默认</div>
+        <div class="prompt-card prompt-card--sm">
+          <button class="copy-btn" type="button" data-copy>复制</button>
+          <div class="prompt-tag">PROMPT · 咖啡课落地页 · 拿去改改就能用</div>
+          <div class="prompt-text">我想要一个咖啡课程报名落地页。受众是 25–35 岁想学手冲的城市白领。风格极简黑白、大字标题、像 Apple 官网那样留白多。单页，顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
+        </div>
+        <div class="dict-h" style="margin-top:16px;">自定义模板 · 添加你自己的</div>
+        <div class="dict-add">
+          <input class="dict-input" type="text" data-tpl-name placeholder="模板名，如：个人主页" aria-label="模板名">
+          <input class="dict-input" type="text" data-tpl-text placeholder="模板内容，如：我想要一个个人主页……" aria-label="模板内容">
+          <button class="chip" type="button" data-tpl-add>添加</button>
+        </div>
+        <div class="tpl-list" data-tpl-list></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 1.3 三秒选工具 + 五类工具网格 ============ -->
+<!-- ============ 1.2 三秒选工具：两条路 ============ -->
 <section class="sec" id="chooser">
   <div class="wrap">
     <div class="sec-head rv">
       <span class="mono-label">Three-Second Pick</span>
       <h2 class="h2">三秒选工具</h2>
-      <p class="sec-sub">你更像哪一种？点一下，下面网格会亮起推荐。</p>
+      <p class="sec-sub">你更像哪一种？点一下，下面会亮起推荐。</p>
     </div>
     <div class="picker" data-picker="tools">
-    <div class="chooser rv">
-      <button class="chip" type="button" data-pick="nocode" aria-pressed="false">我完全不会代码</button>
-      <button class="chip" type="button" data-pick="fast" aria-pressed="false">我要最快出图</button>
-      <button class="chip" type="button" data-pick="design" aria-pressed="false">我有设计稿</button>
-      <button class="chip" type="button" data-pick="pro" aria-pressed="false">我已熟知基础操作</button>
-    </div>
-    <div class="tool-grid rv" style="margin-top:24px;">
-      <div class="card card-static" data-tool="code">
-        <div class="tool-name">编程型 Agent</div>
-        <div class="tool-rows">
-          <div class="tool-row"><span class="k">代表</span><span class="v">Cursor、Claude Code、Codex、Trae、Cline</span></div>
-          <div class="tool-row"><span class="k">适合</span><span class="v">已会装客户端、追求效率的人</span></div>
-          <div class="tool-row"><span class="k">缺点</span><span class="v">需要安装<span class="term" tabindex="0" data-tip="要先下载安装到电脑上的软件，比如 Cursor、Trae">客户端</span>，门槛最高</span></div>
+      <div class="chooser chooser--two rv">
+        <button class="chip" type="button" data-pick="nocode" aria-pressed="false">我完全不会代码</button>
+        <button class="chip" type="button" data-pick="pro" aria-pressed="false">我已熟知基础操作</button>
+      </div>
+      <div class="tool-grid rv" style="margin-top:24px;">
+        <div class="card card-static" data-tool="general">
+          <div class="tool-name">通用型 Agent<span class="tool-tag">本教程用的就是它</span></div>
+          <div class="tool-rows">
+            <div class="tool-row"><span class="k">代表</span><span class="v"><b>WorkBuddy</b>、Trae、Manus、Devin</span></div>
+            <div class="tool-row"><span class="k">适合</span><span class="v">完全不会代码的新手、懒得折腾的人</span></div>
+            <div class="tool-row"><span class="k">优点</span><span class="v">网页登录就能用，聊天、写代码、存文件一条龙</span></div>
+            <div class="tool-row"><span class="k">缺点</span><span class="v">覆盖广，单项深度略逊专精工具</span></div>
+          </div>
+          <div class="tool-alt">更轻的代替：纯对话型（ChatGPT / Claude / 文心一言）能聊但代码要自己复制粘贴，新手不推荐。</div>
+        </div>
+        <div class="card card-static" data-tool="code">
+          <div class="tool-name">编程型 Agent</div>
+          <div class="tool-rows">
+            <div class="tool-row"><span class="k">代表</span><span class="v">Codex、Trae、Cursor、Claude Code、Cline</span></div>
+            <div class="tool-row"><span class="k">适合</span><span class="v">已熟知基础操作、追求效率的人</span></div>
+            <div class="tool-row"><span class="k">优点</span><span class="v">改动、调试都在自己电脑里完成，效率最高</span></div>
+            <div class="tool-row"><span class="k">缺点</span><span class="v">需要安装<span class="term" tabindex="0" data-tip="要先下载安装到电脑上的软件，比如 Cursor、Trae">客户端</span>，门槛最高</span></div>
+          </div>
         </div>
       </div>
-      <div class="card card-static" data-tool="gen">
-        <div class="tool-name">建站生成型</div>
-        <div class="tool-rows">
-          <div class="tool-row"><span class="k">代表</span><span class="v">v0、Lovable、Bolt</span></div>
-          <div class="tool-row"><span class="k">适合</span><span class="v">想一句话最快出图的人</span></div>
-          <div class="tool-row"><span class="k">缺点</span><span class="v">样式固定、二次改动受限</span></div>
-        </div>
+      <p class="chooser-note" data-result hidden></p>
+      <div class="chooser rv" style="margin-top:16px;">
+        <button class="chip chip-ghost" type="button" data-pick="reset" hidden>显示全部</button>
       </div>
-      <div class="card card-static" data-tool="design">
-        <div class="tool-name">设计型 Agent</div>
-        <div class="tool-rows">
-          <div class="tool-row"><span class="k">代表</span><span class="v">MasterGo 莫高、Figma Make</span></div>
-          <div class="tool-row"><span class="k">适合</span><span class="v">有设计稿、想高度还原的人</span></div>
-          <div class="tool-row"><span class="k">缺点</span><span class="v">没有设计稿就没有用武之地</span></div>
-        </div>
-      </div>
-      <div class="card card-static" data-tool="general">
-        <div class="tool-name">通用型 Agent<span class="tool-tag">本教程用的就是它</span></div>
-        <div class="tool-rows">
-          <div class="tool-row"><span class="k">代表</span><span class="v"><b>WorkBuddy</b>、Manus、Devin</span></div>
-          <div class="tool-row"><span class="k">适合</span><span class="v">新手、懒得选的人</span></div>
-          <div class="tool-row"><span class="k">缺点</span><span class="v">覆盖广，单项深度略逊专精工具</span></div>
-        </div>
-        <div class="tool-alt">更轻的代替：纯对话型（ChatGPT / Claude / 文心一言）能聊但代码要自己复制粘贴，新手不推荐。</div>
-      </div>
-    </div>
-    <p class="chooser-note" data-result hidden></p>
-    <div class="chooser rv" style="margin-top:16px;">
-      <button class="chip chip-ghost" type="button" data-pick="reset" hidden>显示全部</button>
-    </div>
     </div>
     <div class="warn rv" style="margin-top:24px;">
       <span class="w-ico" aria-hidden="true">⚠️</span>
@@ -100,5 +127,3 @@
     </div>
   </div>
 </section>
-
-

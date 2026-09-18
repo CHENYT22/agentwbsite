@@ -1,43 +1,9 @@
-<!-- ============ 2.1 五步流程：箭头串联 ============ -->
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <span class="mono-label">Five Steps</span>
-      <h2 class="h2">从想法到上线，只走五步</h2>
-      <p class="sec-sub">箭头串起来就是完整路径，第 3 步开始动手。</p>
-    </div>
-    <div class="flow rv">
-      <div class="flow-step">
-        <span class="step-num">01</span>
-        <span class="flow-act">想清楚要什么</span>
-        <span class="flow-note">生成提示词</span>
-      </div>
-      <div class="flow-step">
-        <span class="step-num">02</span>
-        <span class="flow-act">讲给 <span class="term" tabindex="0" data-tip="一个能听懂你说话、并代替你动手干活的 AI 员工">Agent</span> 听</span>
-      </div>
-      <div class="flow-step">
-        <span class="step-num">03</span>
-        <span class="flow-act">生成页面</span>
-      </div>
-      <div class="flow-step">
-        <span class="step-num">04</span>
-        <span class="flow-act">预览改稿</span>
-      </div>
-      <div class="flow-step">
-        <span class="step-num">05</span>
-        <span class="flow-act">部署上线</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 三要素：A/B/C 卡 ============ -->
-<section class="sec">
+<!-- ============ 2.1 提示词三要素 ============ -->
+<section class="sec" id="elements">
   <div class="wrap">
     <div class="sec-head rv">
       <span class="mono-label">Three Elements</span>
-      <h2 class="h2">讲清楚需求：三要素</h2>
+      <h2 class="h2">一条提示词，说清三件事</h2>
       <p class="sec-sub">不用背模板，记住 A、B、C 三句就够用。</p>
     </div>
     <div class="grid-3">
@@ -63,7 +29,7 @@
   </div>
 </section>
 
-<!-- ============ 提示词模板：可复制 ============ -->
+<!-- ============ 2.2 提示词模板：可复制 ============ -->
 <section class="sec" id="prompt-template">
   <div class="wrap">
     <div class="sec-head rv">
@@ -80,5 +46,42 @@
 结构：顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
     </div>
     <p class="prose rv mt">把这四句粘给 Agent，就已经超过 80% 的新手提示词了。</p>
+  </div>
+</section>
+
+<!-- ============ 2.3 生成：两条路 ============ -->
+<section class="sec" id="generate">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">Generate</span>
+      <h2 class="h2">生成：两条路挑一条</h2>
+      <p class="sec-sub">提示词准备好了就发给 Agent，让它给你第一版页面。</p>
+    </div>
+    <div class="branches rv">
+      <div class="branch">
+        <div class="branch-k">A · 已有详细需求和框架</div>
+        <div class="leaf">
+          <p>把这三件事直接说给 Agent：</p>
+          <div class="tag-row">
+            <span class="term tag" tabindex="0" data-tip="这个网站要达成什么，比如「让人看完就报名」">目标</span>
+            <span class="term tag" tabindex="0" data-tip="给谁看，比如「25–35 岁想学手冲的城市白领」">受众</span>
+            <span class="term tag" tabindex="0" data-tip="看起来是什么感觉，比如「极简黑白、大字标题、留白多」">风格</span>
+          </div>
+          <p class="leaf-p">按上面的三要素说，或者直接<a class="tpl-link" href="#prompt-template" data-scroll-to="#prompt-template">用四句话模板</a>填好方括号发过去。</p>
+        </div>
+      </div>
+      <div class="branch">
+        <div class="branch-k">B · 没有具体想法</div>
+        <div class="leaf prompt-card prompt-card--sm">
+          <button class="copy-btn" type="button" data-copy>复制</button>
+          <div class="prompt-tag">① 像聊天一样问它</div>
+          <div class="prompt-text">我想做一个 xxxx 网站，我们可以怎样开始？</div>
+        </div>
+        <div class="leaf">
+          <b>② 用现成模板先跑通</b>
+          <p class="leaf-p"><a class="tpl-link" href="#prompt-template" data-scroll-to="#prompt-template">复制上面的四句话模板</a>，改改方括号发出去，先把流程跑起来。</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>

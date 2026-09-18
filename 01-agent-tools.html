@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>先认识 Agent 工具 · Agent 建站指南</title>
-<meta name="description" content="五类工具，各有分工。看完就知道该把任务交给谁。">
+<meta name="description" content="三个基础词 + 词典 + 两条工具路线。看完就知道该把任务交给谁。">
 <meta name="theme-color" content="#FAFAF7">
 <style>
 /* ============================================================
@@ -111,6 +111,9 @@ code {
 .btn-primary:hover { background: #000; }
 .btn-ghost { background: transparent; color: var(--ink); }
 .btn-ghost:hover { background: var(--surface); }
+.btn-lg { font-size: 16px; padding: 16px 48px; border-radius: 14px; }
+.flow-cta { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.flow-cta-sub { font-size: 12px; color: var(--ink-3); }
 
 /* ---------- 区块 ---------- */
 .sec { padding: 52px 0; border-top: 1px solid var(--line); }
@@ -430,29 +433,59 @@ a.card { display: block; }
   border-top-color: transparent; border-bottom-color: var(--ink);
 }
 
-/* ---------- 01 章：Tips 按钮（标题旁内联版，点击卡片 pop 展开，260ms） ---------- */
-.fab-wrap { position: fixed; right: 20px; bottom: 20px; z-index: 40; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
-.tips-head { display: flex; align-items: center; gap: 16px; }
-.fab-wrap--inline { position: relative; right: auto; bottom: auto; z-index: 20; }
-.fab-wrap--inline .fab-card { position: absolute; top: calc(100% + 12px); left: 0; z-index: 30; }
-.fab-card {
-  width: min(340px, calc(100vw - 40px));
-  background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 14px;
-  padding: 24px; box-shadow: var(--shadow); animation: pop .26s var(--ease) both;
+/* ---------- 01 章：词典（圆形按钮展开，FLIP 停靠屏幕右侧） ---------- */
+.dict-fab {
+  display: block; width: 60px; height: 60px; border-radius: 50%;
+  margin: 24px auto 0; background: var(--ink); color: var(--paper);
+  border: 0; cursor: pointer; box-shadow: var(--shadow);
+  font-size: 14px; font-weight: 600; letter-spacing: .1em; line-height: 1;
+  transition: transform .3s var(--ease), background .18s ease;
 }
-.fab-card[hidden] { display: none; }
-.fab {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: transparent; color: var(--ink-3);
-  border: 1px solid var(--line); border-radius: 999px;
-  cursor: pointer; padding: 6px 14px;
-  font-family: var(--mono); font-size: 12px; letter-spacing: .12em; line-height: 1;
-  transition: transform .12s ease, background .18s ease, color .18s ease, border-color .18s ease;
+.dict-fab:hover { background: #000; }
+.dict-fab:active { transform: scale(.96); }
+.dict-fab.is-dock { position: fixed; right: 18px; top: 50%; left: auto; margin: -30px 0 0; z-index: 60; }
+.dict-panel { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 40px 0 48px; margin-top: 32px; }
+.dict-panel:not([hidden]) { animation: pop .26s var(--ease) both; }
+.dict-panel .grid-3 { margin-bottom: 28px; }
+.dict-block + .dict-block { margin-top: 28px; }
+.dict-h { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-3); margin-bottom: 12px; }
+.dict-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 16px; }
+.dict-row {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
+  padding: 8px 12px; font-size: 14px;
 }
-.fab:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.fab:active { transform: scale(.98); }
-.fab.is-on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.tip-title { font-size: 20px; font-weight: 600; letter-spacing: -.01em; line-height: 1.4; }
+.dict-w { flex: 0 0 auto; font-weight: 600; color: var(--ink); }
+.dict-d { flex: 1 1 auto; color: var(--ink-2); font-size: 13px; line-height: 1.5; }
+.dict-link { flex: 0 0 auto; font-size: 13px; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.dict-link:hover { text-decoration: none; }
+.dict-row .star {
+  flex: 0 0 auto; width: 26px; height: 26px; border-radius: 8px;
+  background: transparent; border: 1px solid var(--line); cursor: pointer;
+  font-size: 14px; line-height: 1; color: var(--ink-3);
+  transition: color .18s ease, border-color .18s ease;
+}
+.dict-row .star:hover { border-color: var(--ink); color: var(--ink); }
+.dict-row .star.is-on { color: #B8860B; border-color: #D9C58A; }
+.dict-row .dict-del, .prompt-card .dict-del {
+  flex: 0 0 auto; background: transparent; border: 1px solid var(--line); border-radius: 8px;
+  padding: 4px 10px; font-size: 12px; color: var(--ink-3); cursor: pointer;
+}
+.dict-row .dict-del:hover, .prompt-card .dict-del:hover { border-color: var(--ink); color: var(--ink); }
+.dict-favs { display: flex; flex-wrap: wrap; gap: 10px; }
+.dict-empty { font-size: 13px; color: var(--ink-3); }
+.chip--fav { background: var(--paper); border: 1px solid #D9C58A; color: #8A6A00; }
+.chip--fav:hover { border-color: #B8860B; }
+.dict-add { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.dict-input {
+  flex: 1 1 180px; min-width: 0; background: var(--paper); border: 1px solid var(--line);
+  border-radius: 10px; padding: 10px 14px; font-size: 14px; color: var(--ink); font-family: inherit;
+}
+.dict-input:focus { outline: none; border-color: var(--ink); }
+.dict-add .chip { flex: 0 0 auto; }
+.tpl-list { margin-top: 12px; display: grid; gap: 12px; }
+.tpl-list:empty { display: none; }
+.chooser--two { grid-template-columns: repeat(2, 1fr); }
 .tip-list { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
 .tip-item { display: flex; gap: 10px; font-size: 14px; color: var(--warn-ink); line-height: 1.7; }
 .tip-item .tip-n { flex: 0 0 auto; font-family: var(--mono); font-size: 12px; padding-top: 3px; }
@@ -498,7 +531,10 @@ a.card { display: block; }
   .node-head { padding: 16px 18px; }
   .node-inner { padding: 0 18px 18px; }
   .chooser--talk { grid-template-columns: 1fr; }
+  .chooser--two { grid-template-columns: 1fr; }
   .gen-choices { grid-template-columns: 1fr; }
+  .dict-list { grid-template-columns: 1fr; }
+  .dict-row { flex-wrap: wrap; }
 }
 
 /* ---------- 无障碍降级 ---------- */
@@ -524,105 +560,132 @@ a.card { display: block; }
   <div class="wrap">
     <span class="pill">第 01 章</span>
     <h1 class="hero-title">先认识 Agent 工具</h1>
-    <p class="hero-sub">五类工具，各有分工。看完就知道该把任务交给谁。</p>
-    <div class="btn-row"><a class="btn btn-primary" href="02-workflow.html">下一章：流程与提示词 →</a></div>
+    <p class="hero-sub">三个基础词 + 词典 + 两条工具路线。看完就知道该把任务交给谁。</p>
+    <div class="btn-row"><a class="btn btn-primary" href="02-workflow.html">下一章：提示词与生成 →</a></div>
   </div>
 </section>
-<!-- ============ 1.1 先懂三个词：直接展示 ============ -->
+<!-- ============ 1.1 先懂三个词 + 词典：圆形按钮展开 ============ -->
 <section class="sec" id="terms">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="mono-label">Three Words</span>
-      <div class="tips-head">
-        <h2 class="h2">先懂三个词</h2>
-        <span class="fab-wrap fab-wrap--inline">
-          <span class="fab-card" data-tips-pop hidden role="dialog" aria-label="怎么装 Skill 和插件">
-            <h3 class="tip-title">Tips · 怎么装 Skill 和插件</h3>
-            <div class="tip-list">
-              <div class="tip-item"><span class="tip-n">01</span><span>直接说需求就行：「帮我装一个能读 PDF 的技能」，它会告诉你在哪点。</span></div>
-              <div class="tip-item"><span class="tip-n">02</span><span>多数工具在「设置 → 技能 / 插件市场」里搜名字，一键就能装。</span></div>
-              <div class="tip-item"><span class="tip-n">03</span><span>装完通常先要权限（读文件、发邮件），不同意就不给。</span></div>
-            </div>
-          </span>
-          <button class="fab" type="button" data-tips-toggle aria-expanded="false" aria-label="怎么装 Skill 和插件">TIPS</button>
-        </span>
-      </div>
-      <p class="sec-sub">聊工具之前，先把这三个词弄清楚。</p>
+      <span class="mono-label">Dictionary</span>
+      <h2 class="h2">先懂三个词</h2>
+      <p class="sec-sub">点击下面的圆形按钮，展开词汇区：三个基础词 + 词典 + 提示词模板。</p>
     </div>
-    <div class="grid-3">
-      <div class="card card-static rv">
-        <div class="path-emoji" aria-hidden="true">🤖</div>
-        <div class="el-name">Agent</div>
-        <p class="el-desc">一个能听懂你说话、并代替你动手干活的 AI 员工。</p>
+    <button class="dict-fab rv" type="button" data-dict-toggle aria-expanded="false" aria-controls="dict-panel">词典</button>
+  </div>
+
+  <div class="dict-panel" id="dict-panel" data-dict-panel hidden>
+    <div class="wrap">
+      <!-- 三个基础词 -->
+      <div class="grid-3">
+        <div class="card card-static">
+          <div class="path-emoji" aria-hidden="true">🤖</div>
+          <div class="el-name">Agent</div>
+          <p class="el-desc">一个能听懂你说话、并代替你动手干活的 AI 员工。</p>
+        </div>
+        <div class="card card-static">
+          <div class="path-emoji" aria-hidden="true">🎓</div>
+          <div class="el-name">Skill</div>
+          <p class="el-desc">给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」。</p>
+        </div>
+        <div class="card card-static">
+          <div class="path-emoji" aria-hidden="true">🔌</div>
+          <div class="el-name">插件</div>
+          <p class="el-desc">让 Agent 能直接连上外部 App 的钥匙，比如直接收发邮件。</p>
+        </div>
       </div>
-      <div class="card card-static rv">
-        <div class="path-emoji" aria-hidden="true">🎓</div>
-        <div class="el-name">Skill</div>
-        <p class="el-desc">给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」。</p>
+
+      <!-- Skill 怎么装 -->
+      <div class="dict-block" id="skill-how">
+        <div class="dict-h">Skill 怎么装</div>
+        <div class="tip-list">
+          <div class="tip-item"><span class="tip-n">01</span><span>直接说需求就行：「帮我装一个能读 PDF 的技能」，它会告诉你在哪点。</span></div>
+          <div class="tip-item"><span class="tip-n">02</span><span>多数工具在「设置 → 技能 / 插件市场」里搜名字，一键就能装。</span></div>
+          <div class="tip-item"><span class="tip-n">03</span><span>装完通常先要权限（读文件、发邮件），不同意就不给。</span></div>
+        </div>
       </div>
-      <div class="card card-static rv">
-        <div class="path-emoji" aria-hidden="true">🔌</div>
-        <div class="el-name">插件</div>
-        <p class="el-desc">让 Agent 能直接连上外部 App 的钥匙，比如直接收发邮件。</p>
+
+      <!-- 词汇汇总 -->
+      <div class="dict-block">
+        <div class="dict-h">词汇汇总 · 悬停看解释，点 ☆ 收藏</div>
+        <div class="dict-list" data-dict-list></div>
+      </div>
+
+      <!-- 收藏词语 -->
+      <div class="dict-block">
+        <div class="dict-h">收藏词语</div>
+        <div class="dict-favs" data-dict-favs><span class="dict-empty">还没有收藏。在词汇汇总里点 ☆，就会出现在这里（保存在你的浏览器里）。</span></div>
+      </div>
+
+      <!-- 手动添加词语 -->
+      <div class="dict-block">
+        <div class="dict-h">手动添加词语</div>
+        <div class="dict-add">
+          <input class="dict-input" type="text" data-dict-word placeholder="词语，如：部署" aria-label="词语">
+          <input class="dict-input" type="text" data-dict-def placeholder="解释，如：把做好的网站放到网上" aria-label="解释">
+          <button class="chip" type="button" data-dict-add>添加</button>
+        </div>
+      </div>
+
+      <!-- 提示词模板 -->
+      <div class="dict-block">
+        <div class="dict-h">提示词模板 · 默认</div>
+        <div class="prompt-card prompt-card--sm">
+          <button class="copy-btn" type="button" data-copy>复制</button>
+          <div class="prompt-tag">PROMPT · 咖啡课落地页 · 拿去改改就能用</div>
+          <div class="prompt-text">我想要一个咖啡课程报名落地页。受众是 25–35 岁想学手冲的城市白领。风格极简黑白、大字标题、像 Apple 官网那样留白多。单页，顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
+        </div>
+        <div class="dict-h" style="margin-top:16px;">自定义模板 · 添加你自己的</div>
+        <div class="dict-add">
+          <input class="dict-input" type="text" data-tpl-name placeholder="模板名，如：个人主页" aria-label="模板名">
+          <input class="dict-input" type="text" data-tpl-text placeholder="模板内容，如：我想要一个个人主页……" aria-label="模板内容">
+          <button class="chip" type="button" data-tpl-add>添加</button>
+        </div>
+        <div class="tpl-list" data-tpl-list></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 1.3 三秒选工具 + 五类工具网格 ============ -->
+<!-- ============ 1.2 三秒选工具：两条路 ============ -->
 <section class="sec" id="chooser">
   <div class="wrap">
     <div class="sec-head rv">
       <span class="mono-label">Three-Second Pick</span>
       <h2 class="h2">三秒选工具</h2>
-      <p class="sec-sub">你更像哪一种？点一下，下面网格会亮起推荐。</p>
+      <p class="sec-sub">你更像哪一种？点一下，下面会亮起推荐。</p>
     </div>
     <div class="picker" data-picker="tools">
-    <div class="chooser rv">
-      <button class="chip" type="button" data-pick="nocode" aria-pressed="false">我完全不会代码</button>
-      <button class="chip" type="button" data-pick="fast" aria-pressed="false">我要最快出图</button>
-      <button class="chip" type="button" data-pick="design" aria-pressed="false">我有设计稿</button>
-      <button class="chip" type="button" data-pick="pro" aria-pressed="false">我已熟知基础操作</button>
-    </div>
-    <div class="tool-grid rv" style="margin-top:24px;">
-      <div class="card card-static" data-tool="code">
-        <div class="tool-name">编程型 Agent</div>
-        <div class="tool-rows">
-          <div class="tool-row"><span class="k">代表</span><span class="v">Cursor、Claude Code、Codex、Trae、Cline</span></div>
-          <div class="tool-row"><span class="k">适合</span><span class="v">已会装客户端、追求效率的人</span></div>
-          <div class="tool-row"><span class="k">缺点</span><span class="v">需要安装<span class="term" tabindex="0" data-tip="要先下载安装到电脑上的软件，比如 Cursor、Trae">客户端</span>，门槛最高</span></div>
+      <div class="chooser chooser--two rv">
+        <button class="chip" type="button" data-pick="nocode" aria-pressed="false">我完全不会代码</button>
+        <button class="chip" type="button" data-pick="pro" aria-pressed="false">我已熟知基础操作</button>
+      </div>
+      <div class="tool-grid rv" style="margin-top:24px;">
+        <div class="card card-static" data-tool="general">
+          <div class="tool-name">通用型 Agent<span class="tool-tag">本教程用的就是它</span></div>
+          <div class="tool-rows">
+            <div class="tool-row"><span class="k">代表</span><span class="v"><b>WorkBuddy</b>、Trae、Manus、Devin</span></div>
+            <div class="tool-row"><span class="k">适合</span><span class="v">完全不会代码的新手、懒得折腾的人</span></div>
+            <div class="tool-row"><span class="k">优点</span><span class="v">网页登录就能用，聊天、写代码、存文件一条龙</span></div>
+            <div class="tool-row"><span class="k">缺点</span><span class="v">覆盖广，单项深度略逊专精工具</span></div>
+          </div>
+          <div class="tool-alt">更轻的代替：纯对话型（ChatGPT / Claude / 文心一言）能聊但代码要自己复制粘贴，新手不推荐。</div>
+        </div>
+        <div class="card card-static" data-tool="code">
+          <div class="tool-name">编程型 Agent</div>
+          <div class="tool-rows">
+            <div class="tool-row"><span class="k">代表</span><span class="v">Codex、Trae、Cursor、Claude Code、Cline</span></div>
+            <div class="tool-row"><span class="k">适合</span><span class="v">已熟知基础操作、追求效率的人</span></div>
+            <div class="tool-row"><span class="k">优点</span><span class="v">改动、调试都在自己电脑里完成，效率最高</span></div>
+            <div class="tool-row"><span class="k">缺点</span><span class="v">需要安装<span class="term" tabindex="0" data-tip="要先下载安装到电脑上的软件，比如 Cursor、Trae">客户端</span>，门槛最高</span></div>
+          </div>
         </div>
       </div>
-      <div class="card card-static" data-tool="gen">
-        <div class="tool-name">建站生成型</div>
-        <div class="tool-rows">
-          <div class="tool-row"><span class="k">代表</span><span class="v">v0、Lovable、Bolt</span></div>
-          <div class="tool-row"><span class="k">适合</span><span class="v">想一句话最快出图的人</span></div>
-          <div class="tool-row"><span class="k">缺点</span><span class="v">样式固定、二次改动受限</span></div>
-        </div>
+      <p class="chooser-note" data-result hidden></p>
+      <div class="chooser rv" style="margin-top:16px;">
+        <button class="chip chip-ghost" type="button" data-pick="reset" hidden>显示全部</button>
       </div>
-      <div class="card card-static" data-tool="design">
-        <div class="tool-name">设计型 Agent</div>
-        <div class="tool-rows">
-          <div class="tool-row"><span class="k">代表</span><span class="v">MasterGo 莫高、Figma Make</span></div>
-          <div class="tool-row"><span class="k">适合</span><span class="v">有设计稿、想高度还原的人</span></div>
-          <div class="tool-row"><span class="k">缺点</span><span class="v">没有设计稿就没有用武之地</span></div>
-        </div>
-      </div>
-      <div class="card card-static" data-tool="general">
-        <div class="tool-name">通用型 Agent<span class="tool-tag">本教程用的就是它</span></div>
-        <div class="tool-rows">
-          <div class="tool-row"><span class="k">代表</span><span class="v"><b>WorkBuddy</b>、Manus、Devin</span></div>
-          <div class="tool-row"><span class="k">适合</span><span class="v">新手、懒得选的人</span></div>
-          <div class="tool-row"><span class="k">缺点</span><span class="v">覆盖广，单项深度略逊专精工具</span></div>
-        </div>
-        <div class="tool-alt">更轻的代替：纯对话型（ChatGPT / Claude / 文心一言）能聊但代码要自己复制粘贴，新手不推荐。</div>
-      </div>
-    </div>
-    <p class="chooser-note" data-result hidden></p>
-    <div class="chooser rv" style="margin-top:16px;">
-      <button class="chip chip-ghost" type="button" data-pick="reset" hidden>显示全部</button>
-    </div>
     </div>
     <div class="warn rv" style="margin-top:24px;">
       <span class="w-ico" aria-hidden="true">⚠️</span>
@@ -669,12 +732,10 @@ a.card { display: block; }
   }
 
   /* --- 3. 选型选择器：按容器作用域，同页可有多组互不干扰 --- */
-  var PICK_TOOL = { nocode: 'general', fast: 'gen', design: 'design', pro: 'code' };
+  var PICK_TOOL = { nocode: 'general', pro: 'code' };
   var PICK_NOTE = {
-    nocode: '为你推荐：通用型 Agent · WorkBuddy —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
-    fast: '为你推荐：建站生成型 · v0 / Lovable / Bolt —— 一句话直接生成可发布站点，出图最快；注意样式固定，二次改动受限。',
-    design: '为你推荐：设计型 Agent · MasterGo 莫高 / Figma Make —— 从设计稿或截图直接出页面，还原度最高；前提是你已经有稿子。',
-    pro: '为你推荐：编程型 Agent · Cursor / Claude Code —— 已经跑通基础流程后，本地客户端效率最高：改动、调试都在自己电脑里完成，适合追求进阶的人。'
+    nocode: '为你推荐：通用型 Agent · WorkBuddy / Trae —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
+    pro: '为你推荐：编程型 Agent · Codex / Trae / Cursor / Claude Code —— 已经跑通基础流程后，本地客户端效率最高：改动、调试都在自己电脑里完成，适合追求进阶的人。'
   };
   document.querySelectorAll('[data-picker]').forEach(function (root) {
     var scope = root.getAttribute('data-picker');
@@ -778,6 +839,197 @@ a.card { display: block; }
     if (back) back.addEventListener('click', resetAll);
   });
 
+  /* --- 3d. 词典：圆形按钮展开词汇区（FLIP 动画停靠屏幕右侧）+ 词汇汇总/收藏/手动添加/提示词模板，localStorage 持久化 --- */
+  var dictToggle = document.querySelector('[data-dict-toggle]');
+  var dictPanel = document.querySelector('[data-dict-panel]');
+  if (dictToggle && dictPanel) {
+    var dictRM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var LS = {
+      get: function (k, d) {
+        try { var v = JSON.parse(localStorage.getItem(k)); return Array.isArray(v) ? v : d; }
+        catch (e) { return d; }
+      },
+      set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* 隐私模式等场景静默失败 */ } }
+    };
+    var FAV_KEY = 'awt-favs', WORD_KEY = 'awt-words', TPL_KEY = 'awt-tpls';
+    var DICT_WORDS = [
+      { w: 'Agent', d: '能听懂你说话、并代替你动手干活的 AI 员工' },
+      { w: 'Skill', d: '给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」', skill: true },
+      { w: '插件', d: '让 Agent 直接连上外部 App 的钥匙，比如直接收发邮件' },
+      { w: '提示词', d: '你发给 Agent 的那句话需求，说清目标、受众、风格' },
+      { w: 'HTML', d: '网页的骨架，用标签告诉浏览器哪里是标题、哪里是图' },
+      { w: 'CSS', d: '网页的衣服，管颜色、字号和排版' },
+      { w: '客户端', d: '要先下载安装到电脑上的软件，比如 Cursor、Trae' },
+      { w: '部署', d: '把做好的网站放到网上，让别人用网址访问' },
+      { w: 'GitHub', d: '存代码和文件的网站，本教程用它免费上线网页' },
+      { w: 'GitHub Pages', d: 'GitHub 提供的免费静态网站托管服务' }
+    ];
+    var favs = LS.get(FAV_KEY, []);
+    var customWords = LS.get(WORD_KEY, []);
+    var customTpls = LS.get(TPL_KEY, []);
+    var dictList = dictPanel.querySelector('[data-dict-list]');
+    var favBox = dictPanel.querySelector('[data-dict-favs]');
+    var tplBox = dictPanel.querySelector('[data-tpl-list]');
+    function allWords() { return DICT_WORDS.concat(customWords); }
+    function isFav(w) { return favs.indexOf(w) > -1; }
+    function renderWords() {
+      if (!dictList) return;
+      dictList.innerHTML = '';
+      allWords().forEach(function (item, i) {
+        var row = document.createElement('div');
+        row.className = 'dict-row';
+        var name = document.createElement('b');
+        name.className = 'dict-w';
+        name.textContent = item.w;
+        var def = document.createElement('span');
+        def.className = 'dict-d';
+        def.textContent = item.d;
+        row.appendChild(name);
+        row.appendChild(def);
+        if (item.skill) {
+          var lnk = document.createElement('a');
+          lnk.className = 'dict-link';
+          lnk.href = '#skill-how';
+          lnk.textContent = '如何安装';
+          row.appendChild(lnk);
+        }
+        var star = document.createElement('button');
+        star.type = 'button';
+        star.className = 'star' + (isFav(item.w) ? ' is-on' : '');
+        star.setAttribute('aria-pressed', isFav(item.w) ? 'true' : 'false');
+        star.setAttribute('aria-label', '收藏 ' + item.w);
+        star.textContent = isFav(item.w) ? '★' : '☆';
+        star.addEventListener('click', function () {
+          if (isFav(item.w)) favs = favs.filter(function (f) { return f !== item.w; });
+          else favs.push(item.w);
+          LS.set(FAV_KEY, favs);
+          renderWords(); renderFavs();
+        });
+        row.appendChild(star);
+        if (i >= DICT_WORDS.length) {
+          var del = document.createElement('button');
+          del.type = 'button';
+          del.className = 'dict-del';
+          del.setAttribute('aria-label', '删除 ' + item.w);
+          del.textContent = '删除';
+          del.addEventListener('click', function () {
+            customWords = customWords.filter(function (c) { return c.w !== item.w; });
+            LS.set(WORD_KEY, customWords);
+            favs = favs.filter(function (f) { return f !== item.w; });
+            LS.set(FAV_KEY, favs);
+            renderWords(); renderFavs();
+          });
+          row.appendChild(del);
+        }
+        dictList.appendChild(row);
+      });
+    }
+    function renderFavs() {
+      if (!favBox) return;
+      favBox.innerHTML = '';
+      if (!favs.length) {
+        var empty = document.createElement('span');
+        empty.className = 'dict-empty';
+        empty.textContent = '还没有收藏。在词汇汇总里点 ☆，就会出现在这里（保存在你的浏览器里）。';
+        favBox.appendChild(empty);
+        return;
+      }
+      favs.forEach(function (w) {
+        var item = allWords().filter(function (x) { return x.w === w; })[0];
+        var chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'chip chip--fav';
+        chip.title = item ? item.d : '点击取消收藏';
+        chip.textContent = '★ ' + w;
+        chip.addEventListener('click', function () {
+          favs = favs.filter(function (f) { return f !== w; });
+          LS.set(FAV_KEY, favs);
+          renderWords(); renderFavs();
+        });
+        favBox.appendChild(chip);
+      });
+    }
+    function renderTpls() {
+      if (!tplBox) return;
+      tplBox.innerHTML = '';
+      customTpls.forEach(function (t, i) {
+        var card = document.createElement('div');
+        card.className = 'prompt-card prompt-card--sm';
+        var copy = document.createElement('button');
+        copy.type = 'button';
+        copy.className = 'copy-btn';
+        copy.setAttribute('data-copy', '');
+        copy.textContent = '复制';
+        var tag = document.createElement('div');
+        tag.className = 'prompt-tag';
+        tag.textContent = 'PROMPT · ' + t.n;
+        var text = document.createElement('div');
+        text.className = 'prompt-text';
+        text.textContent = t.t;
+        card.appendChild(copy); card.appendChild(tag); card.appendChild(text);
+        var del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'dict-del';
+        del.setAttribute('aria-label', '删除模板 ' + t.n);
+        del.textContent = '删除';
+        del.addEventListener('click', function () {
+          customTpls.splice(i, 1);
+          LS.set(TPL_KEY, customTpls);
+          renderTpls();
+        });
+        card.appendChild(del);
+        tplBox.appendChild(card);
+      });
+    }
+    /* 添加词语 */
+    var addWordBtn = dictPanel.querySelector('[data-dict-add]');
+    if (addWordBtn) addWordBtn.addEventListener('click', function () {
+      var wI = dictPanel.querySelector('[data-dict-word]');
+      var dI = dictPanel.querySelector('[data-dict-def]');
+      var w = (wI.value || '').trim(), d = (dI.value || '').trim();
+      if (!w || !d) return;
+      customWords.push({ w: w, d: d });
+      LS.set(WORD_KEY, customWords);
+      wI.value = ''; dI.value = '';
+      renderWords();
+    });
+    /* 添加模板 */
+    var addTplBtn = dictPanel.querySelector('[data-tpl-add]');
+    if (addTplBtn) addTplBtn.addEventListener('click', function () {
+      var nI = dictPanel.querySelector('[data-tpl-name]');
+      var tI = dictPanel.querySelector('[data-tpl-text]');
+      var n = (nI.value || '').trim(), t = (tI.value || '').trim();
+      if (!n || !t) return;
+      customTpls.push({ n: n, t: t });
+      LS.set(TPL_KEY, customTpls);
+      nI.value = ''; tI.value = '';
+      renderTpls();
+    });
+    renderWords(); renderFavs(); renderTpls();
+    /* 开合：展开时按钮 FLIP 动画移到屏幕右侧，收起时回到原位 */
+    function flip(move) {
+      var r1 = dictToggle.getBoundingClientRect();
+      move();
+      if (dictRM) return;
+      var r2 = dictToggle.getBoundingClientRect();
+      dictToggle.style.transition = 'none';
+      dictToggle.style.transform = 'translate(' + (r1.left - r2.left) + 'px,' + (r1.top - r2.top) + 'px)';
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          dictToggle.style.transition = '';
+          dictToggle.style.transform = '';
+        });
+      });
+    }
+    dictToggle.addEventListener('click', function () {
+      var open = dictPanel.hidden;
+      dictPanel.hidden = !open;
+      dictToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) dictPanel.scrollIntoView({ behavior: dictRM ? 'auto' : 'smooth', block: 'start' });
+      flip(function () { dictToggle.classList.toggle('is-dock', open); });
+    });
+  }
+
   /* --- 4. Tips 悬浮按钮：点击展开 / 收起小贴士卡 --- */
   var fab = document.querySelector('[data-tips-toggle]');
   if (fab) {
@@ -799,9 +1051,10 @@ a.card { display: block; }
     });
   }
 
-  /* --- 5. 复制按钮：成功后变「已复制」，1.5s 复原 --- */
-  document.querySelectorAll('[data-copy]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
+  /* --- 5. 复制按钮（事件委托，动态渲染的卡片同样生效）：成功后变「已复制」，1.5s 复原 --- */
+  document.addEventListener('click', function (ev) {
+    var btn = ev.target && ev.target.closest ? ev.target.closest('[data-copy]') : null;
+    if (!btn) return;
       var card = btn.closest('.prompt-card');
       var src = btn.getAttribute('data-copy');
       var el = (src && document.querySelector(src)) || (card && card.querySelector('.prompt-text'));
@@ -836,7 +1089,6 @@ a.card { display: block; }
       } else {
         fallback();
       }
-    });
   });
 
   /* --- 6. 勾选清单：每个 .checklist 各自算进度，键盘（Enter、Space）同样可用 --- */

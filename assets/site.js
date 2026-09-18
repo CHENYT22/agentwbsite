@@ -28,12 +28,10 @@
   }
 
   /* --- 3. 选型选择器：按容器作用域，同页可有多组互不干扰 --- */
-  var PICK_TOOL = { nocode: 'general', fast: 'gen', design: 'design', pro: 'code' };
+  var PICK_TOOL = { nocode: 'general', pro: 'code' };
   var PICK_NOTE = {
-    nocode: '为你推荐：通用型 Agent · WorkBuddy —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
-    fast: '为你推荐：建站生成型 · v0 / Lovable / Bolt —— 一句话直接生成可发布站点，出图最快；注意样式固定，二次改动受限。',
-    design: '为你推荐：设计型 Agent · MasterGo 莫高 / Figma Make —— 从设计稿或截图直接出页面，还原度最高；前提是你已经有稿子。',
-    pro: '为你推荐：编程型 Agent · Cursor / Claude Code —— 已经跑通基础流程后，本地客户端效率最高：改动、调试都在自己电脑里完成，适合追求进阶的人。'
+    nocode: '为你推荐：通用型 Agent · WorkBuddy / Trae —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
+    pro: '为你推荐：编程型 Agent · Codex / Trae / Cursor / Claude Code —— 已经跑通基础流程后，本地客户端效率最高：改动、调试都在自己电脑里完成，适合追求进阶的人。'
   };
   document.querySelectorAll('[data-picker]').forEach(function (root) {
     var scope = root.getAttribute('data-picker');
@@ -137,6 +135,197 @@
     if (back) back.addEventListener('click', resetAll);
   });
 
+  /* --- 3d. 词典：圆形按钮展开词汇区（FLIP 动画停靠屏幕右侧）+ 词汇汇总/收藏/手动添加/提示词模板，localStorage 持久化 --- */
+  var dictToggle = document.querySelector('[data-dict-toggle]');
+  var dictPanel = document.querySelector('[data-dict-panel]');
+  if (dictToggle && dictPanel) {
+    var dictRM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var LS = {
+      get: function (k, d) {
+        try { var v = JSON.parse(localStorage.getItem(k)); return Array.isArray(v) ? v : d; }
+        catch (e) { return d; }
+      },
+      set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* 隐私模式等场景静默失败 */ } }
+    };
+    var FAV_KEY = 'awt-favs', WORD_KEY = 'awt-words', TPL_KEY = 'awt-tpls';
+    var DICT_WORDS = [
+      { w: 'Agent', d: '能听懂你说话、并代替你动手干活的 AI 员工' },
+      { w: 'Skill', d: '给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」', skill: true },
+      { w: '插件', d: '让 Agent 直接连上外部 App 的钥匙，比如直接收发邮件' },
+      { w: '提示词', d: '你发给 Agent 的那句话需求，说清目标、受众、风格' },
+      { w: 'HTML', d: '网页的骨架，用标签告诉浏览器哪里是标题、哪里是图' },
+      { w: 'CSS', d: '网页的衣服，管颜色、字号和排版' },
+      { w: '客户端', d: '要先下载安装到电脑上的软件，比如 Cursor、Trae' },
+      { w: '部署', d: '把做好的网站放到网上，让别人用网址访问' },
+      { w: 'GitHub', d: '存代码和文件的网站，本教程用它免费上线网页' },
+      { w: 'GitHub Pages', d: 'GitHub 提供的免费静态网站托管服务' }
+    ];
+    var favs = LS.get(FAV_KEY, []);
+    var customWords = LS.get(WORD_KEY, []);
+    var customTpls = LS.get(TPL_KEY, []);
+    var dictList = dictPanel.querySelector('[data-dict-list]');
+    var favBox = dictPanel.querySelector('[data-dict-favs]');
+    var tplBox = dictPanel.querySelector('[data-tpl-list]');
+    function allWords() { return DICT_WORDS.concat(customWords); }
+    function isFav(w) { return favs.indexOf(w) > -1; }
+    function renderWords() {
+      if (!dictList) return;
+      dictList.innerHTML = '';
+      allWords().forEach(function (item, i) {
+        var row = document.createElement('div');
+        row.className = 'dict-row';
+        var name = document.createElement('b');
+        name.className = 'dict-w';
+        name.textContent = item.w;
+        var def = document.createElement('span');
+        def.className = 'dict-d';
+        def.textContent = item.d;
+        row.appendChild(name);
+        row.appendChild(def);
+        if (item.skill) {
+          var lnk = document.createElement('a');
+          lnk.className = 'dict-link';
+          lnk.href = '#skill-how';
+          lnk.textContent = '如何安装';
+          row.appendChild(lnk);
+        }
+        var star = document.createElement('button');
+        star.type = 'button';
+        star.className = 'star' + (isFav(item.w) ? ' is-on' : '');
+        star.setAttribute('aria-pressed', isFav(item.w) ? 'true' : 'false');
+        star.setAttribute('aria-label', '收藏 ' + item.w);
+        star.textContent = isFav(item.w) ? '★' : '☆';
+        star.addEventListener('click', function () {
+          if (isFav(item.w)) favs = favs.filter(function (f) { return f !== item.w; });
+          else favs.push(item.w);
+          LS.set(FAV_KEY, favs);
+          renderWords(); renderFavs();
+        });
+        row.appendChild(star);
+        if (i >= DICT_WORDS.length) {
+          var del = document.createElement('button');
+          del.type = 'button';
+          del.className = 'dict-del';
+          del.setAttribute('aria-label', '删除 ' + item.w);
+          del.textContent = '删除';
+          del.addEventListener('click', function () {
+            customWords = customWords.filter(function (c) { return c.w !== item.w; });
+            LS.set(WORD_KEY, customWords);
+            favs = favs.filter(function (f) { return f !== item.w; });
+            LS.set(FAV_KEY, favs);
+            renderWords(); renderFavs();
+          });
+          row.appendChild(del);
+        }
+        dictList.appendChild(row);
+      });
+    }
+    function renderFavs() {
+      if (!favBox) return;
+      favBox.innerHTML = '';
+      if (!favs.length) {
+        var empty = document.createElement('span');
+        empty.className = 'dict-empty';
+        empty.textContent = '还没有收藏。在词汇汇总里点 ☆，就会出现在这里（保存在你的浏览器里）。';
+        favBox.appendChild(empty);
+        return;
+      }
+      favs.forEach(function (w) {
+        var item = allWords().filter(function (x) { return x.w === w; })[0];
+        var chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'chip chip--fav';
+        chip.title = item ? item.d : '点击取消收藏';
+        chip.textContent = '★ ' + w;
+        chip.addEventListener('click', function () {
+          favs = favs.filter(function (f) { return f !== w; });
+          LS.set(FAV_KEY, favs);
+          renderWords(); renderFavs();
+        });
+        favBox.appendChild(chip);
+      });
+    }
+    function renderTpls() {
+      if (!tplBox) return;
+      tplBox.innerHTML = '';
+      customTpls.forEach(function (t, i) {
+        var card = document.createElement('div');
+        card.className = 'prompt-card prompt-card--sm';
+        var copy = document.createElement('button');
+        copy.type = 'button';
+        copy.className = 'copy-btn';
+        copy.setAttribute('data-copy', '');
+        copy.textContent = '复制';
+        var tag = document.createElement('div');
+        tag.className = 'prompt-tag';
+        tag.textContent = 'PROMPT · ' + t.n;
+        var text = document.createElement('div');
+        text.className = 'prompt-text';
+        text.textContent = t.t;
+        card.appendChild(copy); card.appendChild(tag); card.appendChild(text);
+        var del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'dict-del';
+        del.setAttribute('aria-label', '删除模板 ' + t.n);
+        del.textContent = '删除';
+        del.addEventListener('click', function () {
+          customTpls.splice(i, 1);
+          LS.set(TPL_KEY, customTpls);
+          renderTpls();
+        });
+        card.appendChild(del);
+        tplBox.appendChild(card);
+      });
+    }
+    /* 添加词语 */
+    var addWordBtn = dictPanel.querySelector('[data-dict-add]');
+    if (addWordBtn) addWordBtn.addEventListener('click', function () {
+      var wI = dictPanel.querySelector('[data-dict-word]');
+      var dI = dictPanel.querySelector('[data-dict-def]');
+      var w = (wI.value || '').trim(), d = (dI.value || '').trim();
+      if (!w || !d) return;
+      customWords.push({ w: w, d: d });
+      LS.set(WORD_KEY, customWords);
+      wI.value = ''; dI.value = '';
+      renderWords();
+    });
+    /* 添加模板 */
+    var addTplBtn = dictPanel.querySelector('[data-tpl-add]');
+    if (addTplBtn) addTplBtn.addEventListener('click', function () {
+      var nI = dictPanel.querySelector('[data-tpl-name]');
+      var tI = dictPanel.querySelector('[data-tpl-text]');
+      var n = (nI.value || '').trim(), t = (tI.value || '').trim();
+      if (!n || !t) return;
+      customTpls.push({ n: n, t: t });
+      LS.set(TPL_KEY, customTpls);
+      nI.value = ''; tI.value = '';
+      renderTpls();
+    });
+    renderWords(); renderFavs(); renderTpls();
+    /* 开合：展开时按钮 FLIP 动画移到屏幕右侧，收起时回到原位 */
+    function flip(move) {
+      var r1 = dictToggle.getBoundingClientRect();
+      move();
+      if (dictRM) return;
+      var r2 = dictToggle.getBoundingClientRect();
+      dictToggle.style.transition = 'none';
+      dictToggle.style.transform = 'translate(' + (r1.left - r2.left) + 'px,' + (r1.top - r2.top) + 'px)';
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          dictToggle.style.transition = '';
+          dictToggle.style.transform = '';
+        });
+      });
+    }
+    dictToggle.addEventListener('click', function () {
+      var open = dictPanel.hidden;
+      dictPanel.hidden = !open;
+      dictToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) dictPanel.scrollIntoView({ behavior: dictRM ? 'auto' : 'smooth', block: 'start' });
+      flip(function () { dictToggle.classList.toggle('is-dock', open); });
+    });
+  }
+
   /* --- 4. Tips 悬浮按钮：点击展开 / 收起小贴士卡 --- */
   var fab = document.querySelector('[data-tips-toggle]');
   if (fab) {
@@ -158,9 +347,10 @@
     });
   }
 
-  /* --- 5. 复制按钮：成功后变「已复制」，1.5s 复原 --- */
-  document.querySelectorAll('[data-copy]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
+  /* --- 5. 复制按钮（事件委托，动态渲染的卡片同样生效）：成功后变「已复制」，1.5s 复原 --- */
+  document.addEventListener('click', function (ev) {
+    var btn = ev.target && ev.target.closest ? ev.target.closest('[data-copy]') : null;
+    if (!btn) return;
       var card = btn.closest('.prompt-card');
       var src = btn.getAttribute('data-copy');
       var el = (src && document.querySelector(src)) || (card && card.querySelector('.prompt-text'));
@@ -195,7 +385,6 @@
       } else {
         fallback();
       }
-    });
   });
 
   /* --- 6. 勾选清单：每个 .checklist 各自算进度，键盘（Enter、Space）同样可用 --- */
