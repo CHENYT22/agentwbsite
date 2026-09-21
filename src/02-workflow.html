@@ -1,87 +1,36 @@
-<!-- ============ 2.1 提示词三要素 ============ -->
-<section class="sec" id="elements">
+<!-- ============ 修改：两条路 ============ -->
+<section class="sec" id="revise">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="mono-label">Three Elements</span>
-      <h2 class="h2">一条提示词，说清三件事</h2>
-      <p class="sec-sub">不用背模板，记住 A、B、C 三句就够用。</p>
-    </div>
-    <div class="grid-3">
-      <div class="card card-static rv">
-        <div class="el-letter">A / GOAL</div>
-        <div class="el-name">目标</div>
-        <p class="el-desc">这个页面是干嘛的。</p>
-        <p class="el-eg"><b>例：</b>「咖啡店的课程报名落地页」</p>
-      </div>
-      <div class="card card-static rv">
-        <div class="el-letter">B / AUDIENCE</div>
-        <div class="el-name">受众</div>
-        <p class="el-desc">谁会来看。</p>
-        <p class="el-eg"><b>例：</b>「25–35 岁想学手冲的城市白领」</p>
-      </div>
-      <div class="card card-static rv">
-        <div class="el-letter">C / STYLE</div>
-        <div class="el-name">风格</div>
-        <p class="el-desc">像什么，或直接贴一个参考链接。</p>
-        <p class="el-eg"><b>例：</b>「极简黑白、大字标题，像 Apple 官网」</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 2.2 提示词模板：可复制 ============ -->
-<section class="sec" id="prompt-template">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <span class="mono-label">Prompt Template</span>
-      <h2 class="h2">拿走就能用的<span class="term" tabindex="0" data-tip="你写给 Agent 的那段话，说得越具体，它做得越准">提示词</span>模板</h2>
-      <p class="sec-sub">把方括号里的内容换成你的，点右上角复制，粘给任何 Agent。</p>
-    </div>
-    <div class="prompt-card rv">
-      <button class="copy-btn" type="button" data-copy>复制</button>
-      <div class="prompt-tag">PROMPT · 四句话</div>
-      <div class="prompt-text">我想做一个[目标：咖啡课程报名落地页]。
-受众是[受众：25–35 岁想学手冲的城市白领]。
-风格[风格：极简黑白、大字标题、留白多，像 Apple 官网]。
-结构：顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
-    </div>
-    <p class="prose rv mt">把这四句粘给 Agent，就已经超过 80% 的新手提示词了。</p>
-  </div>
-</section>
-
-<!-- ============ 2.3 生成：两条路 ============ -->
-<section class="sec" id="generate">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <span class="mono-label">Generate</span>
-      <h2 class="h2">生成：两条路挑一条</h2>
-      <p class="sec-sub">提示词准备好了就发给 Agent，让它给你第一版页面。</p>
+      <span class="mono-label">Revise</span>
+      <h2 class="h2">修改：两条路</h2>
+      <p class="sec-sub">有想法就指着改，没想法就让 Agent 提清单。</p>
     </div>
     <div class="branches rv">
       <div class="branch">
-        <div class="branch-k">A · 已有详细需求和框架</div>
+        <div class="branch-k">A · 自己有明确想法，但不知如何修改</div>
         <div class="leaf">
-          <p>把这三件事直接说给 Agent：</p>
-          <div class="tag-row">
-            <span class="term tag" tabindex="0" data-tip="这个网站要达成什么，比如「让人看完就报名」">目标</span>
-            <span class="term tag" tabindex="0" data-tip="给谁看，比如「25–35 岁想学手冲的城市白领」">受众</span>
-            <span class="term tag" tabindex="0" data-tip="看起来是什么感觉，比如「极简黑白、大字标题、留白多」">风格</span>
-          </div>
-          <p class="leaf-p">按上面的三要素说，或者直接<a class="tpl-link" href="#prompt-template" data-scroll-to="#prompt-template">用四句话模板</a>填好方括号发过去。</p>
+          <b>① 截图给 AI，框选并说明修改</b>
+          <p class="leaf-p">把页面截图发给 AI，框选出自己要修改的部分，并且一句话说明怎么改——比打字描述位置准得多。</p>
+        </div>
+        <div class="leaf">
+          <b>② 让 AI 在网页里直接添加评论</b>
+          <p class="leaf-p">部分 AI 可以直接在网站里添加评论，在需修改的地方添加说明修改，改哪点哪，改完自动更新。</p>
         </div>
       </div>
       <div class="branch">
-        <div class="branch-k">B · 没有具体想法</div>
-        <div class="leaf prompt-card prompt-card--sm">
-          <button class="copy-btn" type="button" data-copy>复制</button>
-          <div class="prompt-tag">① 像聊天一样问它</div>
-          <div class="prompt-text">我想做一个 xxxx 网站，我们可以怎样开始？</div>
+        <div class="branch-k">B · 不知道如何修改</div>
+        <div class="leaf">
+          <b>① 说需求，让 AI 理解并提修改清单</b>
+          <p class="leaf-p">和 AI 说自己的需求：「页面有点乱，帮我看看哪里能改」，让它理解后输出一份修改清单，你挑着执行。</p>
         </div>
         <div class="leaf">
-          <b>② 用现成模板先跑通</b>
-          <p class="leaf-p"><a class="tpl-link" href="#prompt-template" data-scroll-to="#prompt-template">复制上面的四句话模板</a>，改改方括号发出去，先把流程跑起来。</p>
+          <b>② 直接问 AI，让 AI 输出修改清单</b>
+          <p class="leaf-p">问「以你的眼光，这个页面最该先改什么」，让 AI 来输出一份按优先级排好的修改清单。</p>
         </div>
       </div>
     </div>
+    <div class="leaf rv" style="margin-top:20px;">改的时候<b>一次只说一件事</b>，例如「首屏标题再大一点，和正文拉开层次」，改完满意再提下一条。改完没变化？先 <b>Ctrl + F5</b> 强制刷新。</div>
+    <p class="prose rv" style="margin-top:24px;">到这里核心循环已经跑起来了：<b>写需求 → 看效果 → 改需求</b>。剩下的只是熟练度。</p>
   </div>
 </section>

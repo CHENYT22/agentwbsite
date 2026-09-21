@@ -30,34 +30,34 @@ PAGES = [
     dict(
         slug="index", file="index.html", src="index.html", nav="首页", num="00",
         pill="",
-        title="不会代码，也能让 Agent 帮你做出网站",
+        title="不会代码，也能三步制作一个网站",
         sub='说清楚你想要什么，剩下的交给 <span class="term term--down" tabindex="0" data-tip="一个能听懂你说话、并代替你动手干活的 AI 员工">Agent</span> 做。',
         cta_text="开始 →", cta_href="01-agent-tools.html",
         hero_center=True,    ),
     dict(
-        slug="tools", file="01-agent-tools.html", src="01-agent-tools.html", nav="工具", num="01",
+        slug="tools", file="01-agent-tools.html", src="01-agent-tools.html", nav="生成", num="01",
         pill="第 01 章",
-        title="先认识 Agent 工具",
-        sub="三个基础词 + 词典 + 两条工具路线。看完就知道该把任务交给谁。",
-        cta_text="下一章：提示词与生成 →", cta_href="02-workflow.html",
+        title="生成：选好工具，说清需求",
+        sub="两条工具路线 + 两条需求路线，第一版页面就这样拿到。",
+        cta_text="下一章：修改 →", cta_href="02-workflow.html",
     ),
     dict(
-        slug="workflow", file="02-workflow.html", src="02-workflow.html", nav="流程", num="02",
+        slug="workflow", file="02-workflow.html", src="02-workflow.html", nav="修改", num="02",
         pill="第 02 章",
-        title="提示词与生成",
-        sub="三要素把需求一次讲清楚，两条路拿到第一版页面。",
-        cta_text="下一章：改到满意再上线 →", cta_href="03-build.html",
+        title="修改：两条路",
+        sub="有想法就指着改，没想法就让 Agent 提修改清单。",
+        cta_text="下一章：部署上线 →", cta_href="03-build.html",
     ),
     dict(
-        slug="build", file="03-build.html", src="03-build.html", nav="实战", num="03",
+        slug="build", file="03-build.html", src="03-build.html", nav="部署", num="03",
         pill="第 03 章",
-        title="修改与部署上线",
-        sub="把第一版改到满意，再用 GitHub 免费上线。",
-        cta_text="开始第 1 步 ↓", cta_href="#make-steps",
+        title="部署上线",
+        sub="认识 GitHub，勾完上线五步，拿到你的网址。",
+        cta_text="看上线五步清单 ↓", cta_href="#deploy",
     ),
 ]
 
-NAV = [("index", "首页"), ("tools", "工具"), ("workflow", "流程"), ("build", "实战")]
+NAV = [("index", "首页"), ("tools", "生成"), ("workflow", "修改"), ("build", "部署")]
 BY_SLUG = {p["slug"]: p for p in PAGES}
 CHAPTERS = [p for p in PAGES if p["slug"] != "index"]
 

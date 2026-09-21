@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>先认识 Agent 工具 · Agent 建站指南</title>
-<meta name="description" content="三个基础词 + 词典 + 两条工具路线。看完就知道该把任务交给谁。">
+<title>生成：选好工具，说清需求 · Agent 建站指南</title>
+<meta name="description" content="两条工具路线 + 两条需求路线，第一版页面就这样拿到。">
 <meta name="theme-color" content="#FAFAF7">
 <style>
 /* ============================================================
@@ -257,29 +257,7 @@ a.card { display: block; }
 .el-eg { font-size: 14px; margin-top: 12px; padding: 10px 14px; background: #F4F4EE; border-radius: 10px; color: var(--ink-2); }
 .el-eg b { color: var(--ink); font-weight: 600; }
 
-/* ---------- 三步：树状可折叠导图（折叠动效复用高度过渡 240ms） ---------- */
-.tree { display: flex; flex-direction: column; gap: 16px; }
-.bs-num {
-  font-family: var(--mono); font-size: 12px; color: var(--paper);
-  background: var(--ink); border-radius: 999px; padding: 2px 10px;
-}
-.node { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
-.node + .node::before {
-  content: ""; position: absolute; left: 50%; top: -16px; width: 1px; height: 16px; background: #D6D6CC;
-}
-.node-head {
-  display: flex; align-items: center; gap: 12px; width: 100%;
-  padding: 18px 22px; background: none; border: 0; cursor: pointer;
-  font: inherit; color: inherit; text-align: left;
-}
-.node-head:hover .node-title { color: var(--ink); }
-.node-title { font-size: 20px; font-weight: 600; }
-.node-hint { margin-left: auto; font-size: 12px; color: #8A8A80; }
-.node-arrow { flex: 0 0 auto; font-size: 16px; line-height: 1; color: #8A8A80; transition: transform .24s var(--ease); }
-.node.is-open .node-arrow { transform: rotate(90deg); }
-.node-body { height: 0; overflow: hidden; transition: height .24s var(--ease); }
-.node.is-open .node-body { overflow: visible; } /* 展开态放开裁剪，术语气泡可越出卡片 */
-.node-inner { padding: 0 22px 22px; }
+/* ---------- 分支叶子（需求两路 / 修改两路） ---------- */
 .branches { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .branch { min-width: 0; }
 .branch-k { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: #8A8A80; margin-bottom: 10px; }
@@ -294,30 +272,6 @@ a.card { display: block; }
   display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 999px;
   border: 1px solid var(--line-2); background: var(--surface); font-size: 14px; color: var(--ink);
 }
-.node-foot { margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--line); }
-/* 话术选择器：选中出原话卡（淡入上移复用 pop 260ms） */
-.chooser--talk { grid-template-columns: repeat(2, 1fr); }
-.talk-result { margin-top: 12px; }
-.talk-result .result-card + .result-card { margin-top: 0; }
-.talk-result .result-card[hidden] { display: none; }
-.talk-result .result-card { animation: pop .26s var(--ease) both; }
-.chooser--talk .chip { padding: 12px 10px; }
-/* 生成选择器（STEP 1 级联：先选 A/B，B 再选 ①/②） */
-.gen-choices { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.gen-choice {
-  text-align: left; cursor: pointer; background: var(--surface);
-  border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px;
-  transition: border-color .18s ease, box-shadow .18s ease;
-}
-.gen-choice:hover { border-color: var(--ink); }
-.gen-choice.is-on { border-color: var(--ink); box-shadow: var(--shadow); }
-.gen-k { display: block; font-size: 14px; font-weight: 600; }
-.gen-d { display: block; margin-top: 6px; font-size: 12px; color: var(--ink-3); line-height: 1.6; }
-.gen-panel { margin-top: 16px; animation: pop .26s var(--ease) both; }
-.gen-panel[hidden] { display: none; }
-.gen-choices--sm { margin-top: 16px; }
-.gen-choice--sm { padding: 12px 14px; }
-.gen-foot { margin-top: 14px; }
 /* 提示词卡紧凑变体（分支叶子内） */
 .prompt-card--sm { padding: 12px 84px 12px 14px; border-radius: 10px; border-color: var(--line); transition: border-color .2s ease; }
 .prompt-card--sm .prompt-tag { margin-bottom: 6px; }
@@ -433,58 +387,7 @@ a.card { display: block; }
   border-top-color: transparent; border-bottom-color: var(--ink);
 }
 
-/* ---------- 01 章：词典（圆形按钮展开，FLIP 停靠屏幕右侧） ---------- */
-.dict-fab {
-  display: block; width: 60px; height: 60px; border-radius: 50%;
-  margin: 24px auto 0; background: var(--ink); color: var(--paper);
-  border: 0; cursor: pointer; box-shadow: var(--shadow);
-  font-size: 14px; font-weight: 600; letter-spacing: .1em; line-height: 1;
-  transition: transform .3s var(--ease), background .18s ease;
-}
-.dict-fab:hover { background: #000; }
-.dict-fab:active { transform: scale(.96); }
-.dict-fab.is-dock { position: fixed; right: 18px; top: 50%; left: auto; margin: -30px 0 0; z-index: 60; }
-.dict-panel { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 40px 0 48px; margin-top: 32px; }
-.dict-panel:not([hidden]) { animation: pop .26s var(--ease) both; }
-.dict-panel .grid-3 { margin-bottom: 28px; }
-.dict-block + .dict-block { margin-top: 28px; }
-.dict-h { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-3); margin-bottom: 12px; }
-.dict-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 16px; }
-.dict-row {
-  display: flex; align-items: center; gap: 10px;
-  background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
-  padding: 8px 12px; font-size: 14px;
-}
-.dict-w { flex: 0 0 auto; font-weight: 600; color: var(--ink); }
-.dict-d { flex: 1 1 auto; color: var(--ink-2); font-size: 13px; line-height: 1.5; }
-.dict-link { flex: 0 0 auto; font-size: 13px; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-.dict-link:hover { text-decoration: none; }
-.dict-row .star {
-  flex: 0 0 auto; width: 26px; height: 26px; border-radius: 8px;
-  background: transparent; border: 1px solid var(--line); cursor: pointer;
-  font-size: 14px; line-height: 1; color: var(--ink-3);
-  transition: color .18s ease, border-color .18s ease;
-}
-.dict-row .star:hover { border-color: var(--ink); color: var(--ink); }
-.dict-row .star.is-on { color: #B8860B; border-color: #D9C58A; }
-.dict-row .dict-del, .prompt-card .dict-del {
-  flex: 0 0 auto; background: transparent; border: 1px solid var(--line); border-radius: 8px;
-  padding: 4px 10px; font-size: 12px; color: var(--ink-3); cursor: pointer;
-}
-.dict-row .dict-del:hover, .prompt-card .dict-del:hover { border-color: var(--ink); color: var(--ink); }
-.dict-favs { display: flex; flex-wrap: wrap; gap: 10px; }
-.dict-empty { font-size: 13px; color: var(--ink-3); }
-.chip--fav { background: var(--paper); border: 1px solid #D9C58A; color: #8A6A00; }
-.chip--fav:hover { border-color: #B8860B; }
-.dict-add { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.dict-input {
-  flex: 1 1 180px; min-width: 0; background: var(--paper); border: 1px solid var(--line);
-  border-radius: 10px; padding: 10px 14px; font-size: 14px; color: var(--ink); font-family: inherit;
-}
-.dict-input:focus { outline: none; border-color: var(--ink); }
-.dict-add .chip { flex: 0 0 auto; }
-.tpl-list { margin-top: 12px; display: grid; gap: 12px; }
-.tpl-list:empty { display: none; }
+/* ---------- 01 章：工具选择 ---------- */
 .chooser--two { grid-template-columns: repeat(2, 1fr); }
 .tip-list { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
 .tip-item { display: flex; gap: 10px; font-size: 14px; color: var(--warn-ink); line-height: 1.7; }
@@ -527,14 +430,7 @@ a.card { display: block; }
   .grid-2, .grid-3, .grid-a3, .tool-grid { grid-template-columns: 1fr; }
   .chooser { grid-template-columns: repeat(2, 1fr); }
   .pager, .pager.is-single { grid-template-columns: 1fr; }
-  .node-hint { display: none; }
-  .node-head { padding: 16px 18px; }
-  .node-inner { padding: 0 18px 18px; }
-  .chooser--talk { grid-template-columns: 1fr; }
   .chooser--two { grid-template-columns: 1fr; }
-  .gen-choices { grid-template-columns: 1fr; }
-  .dict-list { grid-template-columns: 1fr; }
-  .dict-row { flex-wrap: wrap; }
 }
 
 /* ---------- 无障碍降级 ---------- */
@@ -552,108 +448,24 @@ a.card { display: block; }
     <a class="brand" href="index.html" aria-label="Agent 建站指南 首页">
       <span class="brand-mark" aria-hidden="true">A</span><span>Agent 建站指南</span>
     </a>
-    <nav class="topnav" aria-label="主导航"><a href="index.html">首页</a><a href="01-agent-tools.html" class="is-active">工具</a><a href="02-workflow.html">流程</a><a href="03-build.html">实战</a></nav>
+    <nav class="topnav" aria-label="主导航"><a href="index.html">首页</a><a href="01-agent-tools.html" class="is-active">生成</a><a href="02-workflow.html">修改</a><a href="03-build.html">部署</a></nav>
   </div>
 </header>
 <main>
 <section class="hero">
   <div class="wrap">
     <span class="pill">第 01 章</span>
-    <h1 class="hero-title">先认识 Agent 工具</h1>
-    <p class="hero-sub">三个基础词 + 词典 + 两条工具路线。看完就知道该把任务交给谁。</p>
-    <div class="btn-row"><a class="btn btn-primary" href="02-workflow.html">下一章：提示词与生成 →</a></div>
+    <h1 class="hero-title">生成：选好工具，说清需求</h1>
+    <p class="hero-sub">两条工具路线 + 两条需求路线，第一版页面就这样拿到。</p>
+    <div class="btn-row"><a class="btn btn-primary" href="02-workflow.html">下一章：修改 →</a></div>
   </div>
 </section>
-<!-- ============ 1.1 先懂三个词 + 词典：圆形按钮展开 ============ -->
-<section class="sec" id="terms">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <span class="mono-label">Dictionary</span>
-      <h2 class="h2">先懂三个词</h2>
-      <p class="sec-sub">点击下面的圆形按钮，展开词汇区：三个基础词 + 词典 + 提示词模板。</p>
-    </div>
-    <button class="dict-fab rv" type="button" data-dict-toggle aria-expanded="false" aria-controls="dict-panel">词典</button>
-  </div>
-
-  <div class="dict-panel" id="dict-panel" data-dict-panel hidden>
-    <div class="wrap">
-      <!-- 三个基础词 -->
-      <div class="grid-3">
-        <div class="card card-static">
-          <div class="path-emoji" aria-hidden="true">🤖</div>
-          <div class="el-name">Agent</div>
-          <p class="el-desc">一个能听懂你说话、并代替你动手干活的 AI 员工。</p>
-        </div>
-        <div class="card card-static">
-          <div class="path-emoji" aria-hidden="true">🎓</div>
-          <div class="el-name">Skill</div>
-          <p class="el-desc">给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」。</p>
-        </div>
-        <div class="card card-static">
-          <div class="path-emoji" aria-hidden="true">🔌</div>
-          <div class="el-name">插件</div>
-          <p class="el-desc">让 Agent 能直接连上外部 App 的钥匙，比如直接收发邮件。</p>
-        </div>
-      </div>
-
-      <!-- Skill 怎么装 -->
-      <div class="dict-block" id="skill-how">
-        <div class="dict-h">Skill 怎么装</div>
-        <div class="tip-list">
-          <div class="tip-item"><span class="tip-n">01</span><span>直接说需求就行：「帮我装一个能读 PDF 的技能」，它会告诉你在哪点。</span></div>
-          <div class="tip-item"><span class="tip-n">02</span><span>多数工具在「设置 → 技能 / 插件市场」里搜名字，一键就能装。</span></div>
-          <div class="tip-item"><span class="tip-n">03</span><span>装完通常先要权限（读文件、发邮件），不同意就不给。</span></div>
-        </div>
-      </div>
-
-      <!-- 词汇汇总 -->
-      <div class="dict-block">
-        <div class="dict-h">词汇汇总 · 悬停看解释，点 ☆ 收藏</div>
-        <div class="dict-list" data-dict-list></div>
-      </div>
-
-      <!-- 收藏词语 -->
-      <div class="dict-block">
-        <div class="dict-h">收藏词语</div>
-        <div class="dict-favs" data-dict-favs><span class="dict-empty">还没有收藏。在词汇汇总里点 ☆，就会出现在这里（保存在你的浏览器里）。</span></div>
-      </div>
-
-      <!-- 手动添加词语 -->
-      <div class="dict-block">
-        <div class="dict-h">手动添加词语</div>
-        <div class="dict-add">
-          <input class="dict-input" type="text" data-dict-word placeholder="词语，如：部署" aria-label="词语">
-          <input class="dict-input" type="text" data-dict-def placeholder="解释，如：把做好的网站放到网上" aria-label="解释">
-          <button class="chip" type="button" data-dict-add>添加</button>
-        </div>
-      </div>
-
-      <!-- 提示词模板 -->
-      <div class="dict-block">
-        <div class="dict-h">提示词模板 · 默认</div>
-        <div class="prompt-card prompt-card--sm">
-          <button class="copy-btn" type="button" data-copy>复制</button>
-          <div class="prompt-tag">PROMPT · 咖啡课落地页 · 拿去改改就能用</div>
-          <div class="prompt-text">我想要一个咖啡课程报名落地页。受众是 25–35 岁想学手冲的城市白领。风格极简黑白、大字标题、像 Apple 官网那样留白多。单页，顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
-        </div>
-        <div class="dict-h" style="margin-top:16px;">自定义模板 · 添加你自己的</div>
-        <div class="dict-add">
-          <input class="dict-input" type="text" data-tpl-name placeholder="模板名，如：个人主页" aria-label="模板名">
-          <input class="dict-input" type="text" data-tpl-text placeholder="模板内容，如：我想要一个个人主页……" aria-label="模板内容">
-          <button class="chip" type="button" data-tpl-add>添加</button>
-        </div>
-        <div class="tpl-list" data-tpl-list></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 1.2 三秒选工具：两条路 ============ -->
+<!-- ============ 1.1 生成 · 工具选择：两条路 ============ -->
 <section class="sec" id="chooser">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="mono-label">Three-Second Pick</span>
-      <h2 class="h2">三秒选工具</h2>
+      <span class="mono-label">Pick Your Agent</span>
+      <h2 class="h2">工具选择</h2>
       <p class="sec-sub">你更像哪一种？点一下，下面会亮起推荐。</p>
     </div>
     <div class="picker" data-picker="tools">
@@ -665,7 +477,7 @@ a.card { display: block; }
         <div class="card card-static" data-tool="general">
           <div class="tool-name">通用型 Agent<span class="tool-tag">本教程用的就是它</span></div>
           <div class="tool-rows">
-            <div class="tool-row"><span class="k">代表</span><span class="v"><b>WorkBuddy</b>、Trae、Manus、Devin</span></div>
+            <div class="tool-row"><span class="k">代表</span><span class="v"><b>WorkBuddy</b>、TreaWork 等</span></div>
             <div class="tool-row"><span class="k">适合</span><span class="v">完全不会代码的新手、懒得折腾的人</span></div>
             <div class="tool-row"><span class="k">优点</span><span class="v">网页登录就能用，聊天、写代码、存文件一条龙</span></div>
             <div class="tool-row"><span class="k">缺点</span><span class="v">覆盖广，单项深度略逊专精工具</span></div>
@@ -675,7 +487,7 @@ a.card { display: block; }
         <div class="card card-static" data-tool="code">
           <div class="tool-name">编程型 Agent</div>
           <div class="tool-rows">
-            <div class="tool-row"><span class="k">代表</span><span class="v">Codex、Trae、Cursor、Claude Code、Cline</span></div>
+            <div class="tool-row"><span class="k">代表</span><span class="v">Codex、TraeCode、Cursor、Claude Code 等</span></div>
             <div class="tool-row"><span class="k">适合</span><span class="v">已熟知基础操作、追求效率的人</span></div>
             <div class="tool-row"><span class="k">优点</span><span class="v">改动、调试都在自己电脑里完成，效率最高</span></div>
             <div class="tool-row"><span class="k">缺点</span><span class="v">需要安装<span class="term" tabindex="0" data-tip="要先下载安装到电脑上的软件，比如 Cursor、Trae">客户端</span>，门槛最高</span></div>
@@ -693,7 +505,90 @@ a.card { display: block; }
     </div>
   </div>
 </section>
-<nav class="pager" aria-label="章节翻页"><a class="prev" href="index.html"><span class="dir">← 上一章</span><span class="t">首页</span><span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"/></svg></span></a><a class="next" href="02-workflow.html"><span class="dir">下一章 →</span><span class="t">流程</span><span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"/></svg></span></a></nav>
+
+<!-- ============ 1.2 生成 · 需求：两条路 ============ -->
+<section class="sec" id="require">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">Your Need</span>
+      <h2 class="h2">需求：两条路挑一条</h2>
+      <p class="sec-sub">不管走哪条，最后都是把「目标、受众、风格」说给 Agent。</p>
+    </div>
+    <div class="branches rv">
+      <div class="branch">
+        <div class="branch-k">A · 已有详细需求和框架</div>
+        <div class="leaf">
+          <b>把详细需求与框架整理好，直接给 Agent</b>
+          <p class="leaf-p">用<a class="tpl-link" href="#elements" data-scroll-to="#elements">提示词三要素卡</a>把目标、受众、风格理成需求框架，直接发给 Agent。</p>
+        </div>
+      </div>
+      <div class="branch">
+        <div class="branch-k">B · 没有具体想法</div>
+        <div class="leaf prompt-card prompt-card--sm">
+          <button class="copy-btn" type="button" data-copy>复制</button>
+          <div class="prompt-tag">① 像聊天一样问它</div>
+          <div class="prompt-text">我想做一个 xxxx 网站，我可以怎样开始？</div>
+        </div>
+        <div class="leaf">
+          <b>② 用三要素 + 模板卡先开始</b>
+          <p class="leaf-p">先看<a class="tpl-link" href="#elements" data-scroll-to="#elements">提示词三要素卡</a>理清思路，再<a class="tpl-link" href="#prompt-template" data-scroll-to="#prompt-template">跳转默认模板</a>——复制模板卡，先开始尝试。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1.3 提示词三要素卡 ============ -->
+<section class="sec" id="elements">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">Three Elements</span>
+      <h2 class="h2">提示词三要素卡</h2>
+      <p class="sec-sub">不用背模板，记住 A、B、C 三句就够用。</p>
+    </div>
+    <div class="grid-3">
+      <div class="card card-static rv">
+        <div class="el-letter">A / GOAL</div>
+        <div class="el-name">目标</div>
+        <p class="el-desc">这个页面是干嘛的。</p>
+        <p class="el-eg"><b>例：</b>「咖啡店的课程报名落地页」</p>
+      </div>
+      <div class="card card-static rv">
+        <div class="el-letter">B / AUDIENCE</div>
+        <div class="el-name">受众</div>
+        <p class="el-desc">谁会来看。</p>
+        <p class="el-eg"><b>例：</b>「25–35 岁想学手冲的城市白领」</p>
+      </div>
+      <div class="card card-static rv">
+        <div class="el-letter">C / STYLE</div>
+        <div class="el-name">风格</div>
+        <p class="el-desc">像什么，或直接贴一个参考链接。</p>
+        <p class="el-eg"><b>例：</b>「极简黑白、大字标题，像 Apple 官网」</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1.4 提示词模板卡（可复制） ============ -->
+<section class="sec" id="prompt-template">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">Prompt Template</span>
+      <h2 class="h2">提示词模板卡（可复制）</h2>
+      <p class="sec-sub">复制模板卡，先开始尝试——把方括号换成你的，粘给任何 Agent。</p>
+    </div>
+    <div class="prompt-card rv">
+      <button class="copy-btn" type="button" data-copy>复制</button>
+      <div class="prompt-tag">PROMPT · 四句话</div>
+      <div class="prompt-text">我想做一个[目标：咖啡课程报名落地页]。
+受众是[受众：25–35 岁想学手冲的城市白领]。
+风格[风格：极简黑白、大字标题、留白多，像 Apple 官网]。
+结构：顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
+    </div>
+    <p class="prose rv mt">把这四句粘给 Agent，就已经超过 80% 的新手提示词了。</p>
+  </div>
+</section>
+<nav class="pager" aria-label="章节翻页"><a class="prev" href="index.html"><span class="dir">← 上一章</span><span class="t">首页</span><span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"/></svg></span></a><a class="next" href="02-workflow.html"><span class="dir">下一章 →</span><span class="t">修改</span><span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"/></svg></span></a></nav>
 </main>
 <footer class="sitefoot">
   <div class="wrap">
@@ -702,7 +597,7 @@ a.card { display: block; }
   </div>
 </footer>
 <script>
-/* 教程站交互 v3：进度条 + 滚动进场 + 选型高亮 + Tips 悬浮按钮 + 复制 + 勾选清单 */
+/* 教程站交互 v4：进度条 + 滚动进场 + 选型高亮 + Tips 悬浮按钮 + 复制 + 勾选清单 */
 (function () {
   'use strict';
 
@@ -734,8 +629,8 @@ a.card { display: block; }
   /* --- 3. 选型选择器：按容器作用域，同页可有多组互不干扰 --- */
   var PICK_TOOL = { nocode: 'general', pro: 'code' };
   var PICK_NOTE = {
-    nocode: '为你推荐：通用型 Agent · WorkBuddy / Trae —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
-    pro: '为你推荐：编程型 Agent · Codex / Trae / Cursor / Claude Code —— 已经跑通基础流程后，本地客户端效率最高：改动、调试都在自己电脑里完成，适合追求进阶的人。'
+    nocode: '为你推荐：通用型 Agent · WorkBuddy / TreaWork —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
+    pro: '为你推荐：编程型 Agent · Codex / TraeCode / Cursor / Claude Code —— 已经跑通基础流程后，本地客户端效率最高：改动、调试都在自己电脑里完成，适合追求进阶的人。'
   };
   document.querySelectorAll('[data-picker]').forEach(function (root) {
     var scope = root.getAttribute('data-picker');
@@ -772,263 +667,6 @@ a.card { display: block; }
       });
     });
   });
-
-  /* --- 3b. 话术选择器：选中一句，下方出对应原话卡（每张自带复制） --- */
-  document.querySelectorAll('[data-talk-picker]').forEach(function (root) {
-    var chips = root.querySelectorAll('.chip[data-talk]');
-    var box = root.querySelector('[data-talk-result]');
-    var cards = box ? box.querySelectorAll('.result-card') : [];
-    if (!box) return;
-    chips.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var key = btn.getAttribute('data-talk');
-        var on = !btn.classList.contains('is-on');
-        chips.forEach(function (b) {
-          b.classList.remove('is-on');
-          b.setAttribute('aria-pressed', 'false');
-        });
-        cards.forEach(function (c) {
-          var hit = on && c.getAttribute('data-card') === key;
-          c.hidden = !hit;
-          if (hit) { c.style.animation = 'none'; void c.offsetWidth; c.style.animation = ''; }
-        });
-        btn.classList.toggle('is-on', on);
-        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-        box.hidden = !on;
-      });
-    });
-  });
-
-  /* --- 3c. 生成选择器（STEP 1 级联）：A/B 两卡 → A 出结果或 B 再选 ①/② --- */
-  document.querySelectorAll('[data-gen-picker]').forEach(function (root) {
-    var topBtns = root.querySelectorAll(':scope > .gen-choices .gen-choice[data-gen]');
-    var panelA = root.querySelector('[data-gen-panel="a"]');
-    var panelB = root.querySelector('[data-gen-panel="b"]');
-    var subBtns = root.querySelectorAll('[data-gen-sub]');
-    var subPanels = root.querySelectorAll('[data-gen-sub-panel]');
-    var back = root.querySelector('[data-gen-back]');
-    function resetSub() {
-      subBtns.forEach(function (b) { b.classList.remove('is-on'); b.setAttribute('aria-pressed', 'false'); });
-      subPanels.forEach(function (p) { p.hidden = true; });
-    }
-    function resetAll() {
-      topBtns.forEach(function (b) { b.classList.remove('is-on'); b.setAttribute('aria-pressed', 'false'); });
-      panelA.hidden = true; panelB.hidden = true;
-      resetSub();
-      if (back) back.hidden = true;
-    }
-    topBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        resetAll();
-        btn.classList.add('is-on');
-        btn.setAttribute('aria-pressed', 'true');
-        if (btn.getAttribute('data-gen') === 'a') { panelA.hidden = false; }
-        else { panelB.hidden = false; }
-        if (back) back.hidden = false;
-      });
-    });
-    subBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        resetSub();
-        btn.classList.add('is-on');
-        btn.setAttribute('aria-pressed', 'true');
-        var target = root.querySelector('[data-gen-sub-panel="' + btn.getAttribute('data-gen-sub') + '"]');
-        if (target) target.hidden = false;
-      });
-    });
-    if (back) back.addEventListener('click', resetAll);
-  });
-
-  /* --- 3d. 词典：圆形按钮展开词汇区（FLIP 动画停靠屏幕右侧）+ 词汇汇总/收藏/手动添加/提示词模板，localStorage 持久化 --- */
-  var dictToggle = document.querySelector('[data-dict-toggle]');
-  var dictPanel = document.querySelector('[data-dict-panel]');
-  if (dictToggle && dictPanel) {
-    var dictRM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var LS = {
-      get: function (k, d) {
-        try { var v = JSON.parse(localStorage.getItem(k)); return Array.isArray(v) ? v : d; }
-        catch (e) { return d; }
-      },
-      set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* 隐私模式等场景静默失败 */ } }
-    };
-    var FAV_KEY = 'awt-favs', WORD_KEY = 'awt-words', TPL_KEY = 'awt-tpls';
-    var DICT_WORDS = [
-      { w: 'Agent', d: '能听懂你说话、并代替你动手干活的 AI 员工' },
-      { w: 'Skill', d: '给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」', skill: true },
-      { w: '插件', d: '让 Agent 直接连上外部 App 的钥匙，比如直接收发邮件' },
-      { w: '提示词', d: '你发给 Agent 的那句话需求，说清目标、受众、风格' },
-      { w: 'HTML', d: '网页的骨架，用标签告诉浏览器哪里是标题、哪里是图' },
-      { w: 'CSS', d: '网页的衣服，管颜色、字号和排版' },
-      { w: '客户端', d: '要先下载安装到电脑上的软件，比如 Cursor、Trae' },
-      { w: '部署', d: '把做好的网站放到网上，让别人用网址访问' },
-      { w: 'GitHub', d: '存代码和文件的网站，本教程用它免费上线网页' },
-      { w: 'GitHub Pages', d: 'GitHub 提供的免费静态网站托管服务' }
-    ];
-    var favs = LS.get(FAV_KEY, []);
-    var customWords = LS.get(WORD_KEY, []);
-    var customTpls = LS.get(TPL_KEY, []);
-    var dictList = dictPanel.querySelector('[data-dict-list]');
-    var favBox = dictPanel.querySelector('[data-dict-favs]');
-    var tplBox = dictPanel.querySelector('[data-tpl-list]');
-    function allWords() { return DICT_WORDS.concat(customWords); }
-    function isFav(w) { return favs.indexOf(w) > -1; }
-    function renderWords() {
-      if (!dictList) return;
-      dictList.innerHTML = '';
-      allWords().forEach(function (item, i) {
-        var row = document.createElement('div');
-        row.className = 'dict-row';
-        var name = document.createElement('b');
-        name.className = 'dict-w';
-        name.textContent = item.w;
-        var def = document.createElement('span');
-        def.className = 'dict-d';
-        def.textContent = item.d;
-        row.appendChild(name);
-        row.appendChild(def);
-        if (item.skill) {
-          var lnk = document.createElement('a');
-          lnk.className = 'dict-link';
-          lnk.href = '#skill-how';
-          lnk.textContent = '如何安装';
-          row.appendChild(lnk);
-        }
-        var star = document.createElement('button');
-        star.type = 'button';
-        star.className = 'star' + (isFav(item.w) ? ' is-on' : '');
-        star.setAttribute('aria-pressed', isFav(item.w) ? 'true' : 'false');
-        star.setAttribute('aria-label', '收藏 ' + item.w);
-        star.textContent = isFav(item.w) ? '★' : '☆';
-        star.addEventListener('click', function () {
-          if (isFav(item.w)) favs = favs.filter(function (f) { return f !== item.w; });
-          else favs.push(item.w);
-          LS.set(FAV_KEY, favs);
-          renderWords(); renderFavs();
-        });
-        row.appendChild(star);
-        if (i >= DICT_WORDS.length) {
-          var del = document.createElement('button');
-          del.type = 'button';
-          del.className = 'dict-del';
-          del.setAttribute('aria-label', '删除 ' + item.w);
-          del.textContent = '删除';
-          del.addEventListener('click', function () {
-            customWords = customWords.filter(function (c) { return c.w !== item.w; });
-            LS.set(WORD_KEY, customWords);
-            favs = favs.filter(function (f) { return f !== item.w; });
-            LS.set(FAV_KEY, favs);
-            renderWords(); renderFavs();
-          });
-          row.appendChild(del);
-        }
-        dictList.appendChild(row);
-      });
-    }
-    function renderFavs() {
-      if (!favBox) return;
-      favBox.innerHTML = '';
-      if (!favs.length) {
-        var empty = document.createElement('span');
-        empty.className = 'dict-empty';
-        empty.textContent = '还没有收藏。在词汇汇总里点 ☆，就会出现在这里（保存在你的浏览器里）。';
-        favBox.appendChild(empty);
-        return;
-      }
-      favs.forEach(function (w) {
-        var item = allWords().filter(function (x) { return x.w === w; })[0];
-        var chip = document.createElement('button');
-        chip.type = 'button';
-        chip.className = 'chip chip--fav';
-        chip.title = item ? item.d : '点击取消收藏';
-        chip.textContent = '★ ' + w;
-        chip.addEventListener('click', function () {
-          favs = favs.filter(function (f) { return f !== w; });
-          LS.set(FAV_KEY, favs);
-          renderWords(); renderFavs();
-        });
-        favBox.appendChild(chip);
-      });
-    }
-    function renderTpls() {
-      if (!tplBox) return;
-      tplBox.innerHTML = '';
-      customTpls.forEach(function (t, i) {
-        var card = document.createElement('div');
-        card.className = 'prompt-card prompt-card--sm';
-        var copy = document.createElement('button');
-        copy.type = 'button';
-        copy.className = 'copy-btn';
-        copy.setAttribute('data-copy', '');
-        copy.textContent = '复制';
-        var tag = document.createElement('div');
-        tag.className = 'prompt-tag';
-        tag.textContent = 'PROMPT · ' + t.n;
-        var text = document.createElement('div');
-        text.className = 'prompt-text';
-        text.textContent = t.t;
-        card.appendChild(copy); card.appendChild(tag); card.appendChild(text);
-        var del = document.createElement('button');
-        del.type = 'button';
-        del.className = 'dict-del';
-        del.setAttribute('aria-label', '删除模板 ' + t.n);
-        del.textContent = '删除';
-        del.addEventListener('click', function () {
-          customTpls.splice(i, 1);
-          LS.set(TPL_KEY, customTpls);
-          renderTpls();
-        });
-        card.appendChild(del);
-        tplBox.appendChild(card);
-      });
-    }
-    /* 添加词语 */
-    var addWordBtn = dictPanel.querySelector('[data-dict-add]');
-    if (addWordBtn) addWordBtn.addEventListener('click', function () {
-      var wI = dictPanel.querySelector('[data-dict-word]');
-      var dI = dictPanel.querySelector('[data-dict-def]');
-      var w = (wI.value || '').trim(), d = (dI.value || '').trim();
-      if (!w || !d) return;
-      customWords.push({ w: w, d: d });
-      LS.set(WORD_KEY, customWords);
-      wI.value = ''; dI.value = '';
-      renderWords();
-    });
-    /* 添加模板 */
-    var addTplBtn = dictPanel.querySelector('[data-tpl-add]');
-    if (addTplBtn) addTplBtn.addEventListener('click', function () {
-      var nI = dictPanel.querySelector('[data-tpl-name]');
-      var tI = dictPanel.querySelector('[data-tpl-text]');
-      var n = (nI.value || '').trim(), t = (tI.value || '').trim();
-      if (!n || !t) return;
-      customTpls.push({ n: n, t: t });
-      LS.set(TPL_KEY, customTpls);
-      nI.value = ''; tI.value = '';
-      renderTpls();
-    });
-    renderWords(); renderFavs(); renderTpls();
-    /* 开合：展开时按钮 FLIP 动画移到屏幕右侧，收起时回到原位 */
-    function flip(move) {
-      var r1 = dictToggle.getBoundingClientRect();
-      move();
-      if (dictRM) return;
-      var r2 = dictToggle.getBoundingClientRect();
-      dictToggle.style.transition = 'none';
-      dictToggle.style.transform = 'translate(' + (r1.left - r2.left) + 'px,' + (r1.top - r2.top) + 'px)';
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          dictToggle.style.transition = '';
-          dictToggle.style.transform = '';
-        });
-      });
-    }
-    dictToggle.addEventListener('click', function () {
-      var open = dictPanel.hidden;
-      dictPanel.hidden = !open;
-      dictToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open) dictPanel.scrollIntoView({ behavior: dictRM ? 'auto' : 'smooth', block: 'start' });
-      flip(function () { dictToggle.classList.toggle('is-dock', open); });
-    });
-  }
 
   /* --- 4. Tips 悬浮按钮：点击展开 / 收起小贴士卡 --- */
   var fab = document.querySelector('[data-tips-toggle]');
@@ -1118,46 +756,8 @@ a.card { display: block; }
     updateProgress();
   });
 
-  /* --- 6b. 三步节点树：点击开合，同一时间只展开一个（高度过渡复用折叠动效） --- */
-  var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-node]'));
+  /* --- 6b. 全局减少动效开关（页内平滑滚动等共用） --- */
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function setNode(node, open) {
-    var body = node.querySelector('.node-body');
-    var head = node.querySelector('[data-node-toggle]');
-    if (!body) return;
-    head && head.setAttribute('aria-expanded', open ? 'true' : 'false');
-    if (open) {
-      node.classList.add('is-open');
-      body.style.height = body.scrollHeight + 'px';
-      var settle = function (e) {
-        if (e && e.propertyName !== 'height') return;
-        if (node.classList.contains('is-open')) body.style.height = 'auto';
-        body.removeEventListener('transitionend', settle);
-      };
-      body.addEventListener('transitionend', settle);
-      setTimeout(settle, reduceMotion ? 0 : 400); /* 兜底：过渡事件偶发丢失时也能落到 auto */
-    } else {
-      body.style.height = body.scrollHeight + 'px';
-      node.classList.remove('is-open');
-      requestAnimationFrame(function () { body.style.height = '0px'; });
-    }
-  }
-  nodes.forEach(function (node) {
-    var head = node.querySelector('[data-node-toggle]');
-    var body = node.querySelector('.node-body');
-    if (!body) return;
-    var open = node.classList.contains('is-open');
-    body.style.height = open ? 'auto' : '0px';
-    if (head) head.setAttribute('aria-expanded', open ? 'true' : 'false');
-    if (!head) return;
-    head.addEventListener('click', function () {
-      var willOpen = !node.classList.contains('is-open');
-      if (willOpen) {
-        nodes.forEach(function (o) { if (o !== node && o.classList.contains('is-open')) setNode(o, false); });
-      }
-      setNode(node, willOpen);
-    });
-  });
 
   /* --- 6c. 页内模板入口：平滑滚到目标卡，边框高亮 1.5s（只变 border-color） --- */
   document.querySelectorAll('[data-scroll-to]').forEach(function (link) {

@@ -1,93 +1,9 @@
-<!-- ============ 1.1 先懂三个词 + 词典：圆形按钮展开 ============ -->
-<section class="sec" id="terms">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <span class="mono-label">Dictionary</span>
-      <h2 class="h2">先懂三个词</h2>
-      <p class="sec-sub">点击下面的圆形按钮，展开词汇区：三个基础词 + 词典 + 提示词模板。</p>
-    </div>
-    <button class="dict-fab rv" type="button" data-dict-toggle aria-expanded="false" aria-controls="dict-panel">词典</button>
-  </div>
-
-  <div class="dict-panel" id="dict-panel" data-dict-panel hidden>
-    <div class="wrap">
-      <!-- 三个基础词 -->
-      <div class="grid-3">
-        <div class="card card-static">
-          <div class="path-emoji" aria-hidden="true">🤖</div>
-          <div class="el-name">Agent</div>
-          <p class="el-desc">一个能听懂你说话、并代替你动手干活的 AI 员工。</p>
-        </div>
-        <div class="card card-static">
-          <div class="path-emoji" aria-hidden="true">🎓</div>
-          <div class="el-name">Skill</div>
-          <p class="el-desc">给 Agent 装上的某项专业技能，比如「读 PDF」「写表格」。</p>
-        </div>
-        <div class="card card-static">
-          <div class="path-emoji" aria-hidden="true">🔌</div>
-          <div class="el-name">插件</div>
-          <p class="el-desc">让 Agent 能直接连上外部 App 的钥匙，比如直接收发邮件。</p>
-        </div>
-      </div>
-
-      <!-- Skill 怎么装 -->
-      <div class="dict-block" id="skill-how">
-        <div class="dict-h">Skill 怎么装</div>
-        <div class="tip-list">
-          <div class="tip-item"><span class="tip-n">01</span><span>直接说需求就行：「帮我装一个能读 PDF 的技能」，它会告诉你在哪点。</span></div>
-          <div class="tip-item"><span class="tip-n">02</span><span>多数工具在「设置 → 技能 / 插件市场」里搜名字，一键就能装。</span></div>
-          <div class="tip-item"><span class="tip-n">03</span><span>装完通常先要权限（读文件、发邮件），不同意就不给。</span></div>
-        </div>
-      </div>
-
-      <!-- 词汇汇总 -->
-      <div class="dict-block">
-        <div class="dict-h">词汇汇总 · 悬停看解释，点 ☆ 收藏</div>
-        <div class="dict-list" data-dict-list></div>
-      </div>
-
-      <!-- 收藏词语 -->
-      <div class="dict-block">
-        <div class="dict-h">收藏词语</div>
-        <div class="dict-favs" data-dict-favs><span class="dict-empty">还没有收藏。在词汇汇总里点 ☆，就会出现在这里（保存在你的浏览器里）。</span></div>
-      </div>
-
-      <!-- 手动添加词语 -->
-      <div class="dict-block">
-        <div class="dict-h">手动添加词语</div>
-        <div class="dict-add">
-          <input class="dict-input" type="text" data-dict-word placeholder="词语，如：部署" aria-label="词语">
-          <input class="dict-input" type="text" data-dict-def placeholder="解释，如：把做好的网站放到网上" aria-label="解释">
-          <button class="chip" type="button" data-dict-add>添加</button>
-        </div>
-      </div>
-
-      <!-- 提示词模板 -->
-      <div class="dict-block">
-        <div class="dict-h">提示词模板 · 默认</div>
-        <div class="prompt-card prompt-card--sm">
-          <button class="copy-btn" type="button" data-copy>复制</button>
-          <div class="prompt-tag">PROMPT · 咖啡课落地页 · 拿去改改就能用</div>
-          <div class="prompt-text">我想要一个咖啡课程报名落地页。受众是 25–35 岁想学手冲的城市白领。风格极简黑白、大字标题、像 Apple 官网那样留白多。单页，顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
-        </div>
-        <div class="dict-h" style="margin-top:16px;">自定义模板 · 添加你自己的</div>
-        <div class="dict-add">
-          <input class="dict-input" type="text" data-tpl-name placeholder="模板名，如：个人主页" aria-label="模板名">
-          <input class="dict-input" type="text" data-tpl-text placeholder="模板内容，如：我想要一个个人主页……" aria-label="模板内容">
-          <button class="chip" type="button" data-tpl-add>添加</button>
-        </div>
-        <div class="tpl-list" data-tpl-list></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 1.2 三秒选工具：两条路 ============ -->
+<!-- ============ 1.1 生成 · 工具选择：两条路 ============ -->
 <section class="sec" id="chooser">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="mono-label">Three-Second Pick</span>
-      <h2 class="h2">三秒选工具</h2>
+      <span class="mono-label">Pick Your Agent</span>
+      <h2 class="h2">工具选择</h2>
       <p class="sec-sub">你更像哪一种？点一下，下面会亮起推荐。</p>
     </div>
     <div class="picker" data-picker="tools">
@@ -99,7 +15,7 @@
         <div class="card card-static" data-tool="general">
           <div class="tool-name">通用型 Agent<span class="tool-tag">本教程用的就是它</span></div>
           <div class="tool-rows">
-            <div class="tool-row"><span class="k">代表</span><span class="v"><b>WorkBuddy</b>、Trae、Manus、Devin</span></div>
+            <div class="tool-row"><span class="k">代表</span><span class="v"><b>WorkBuddy</b>、TreaWork 等</span></div>
             <div class="tool-row"><span class="k">适合</span><span class="v">完全不会代码的新手、懒得折腾的人</span></div>
             <div class="tool-row"><span class="k">优点</span><span class="v">网页登录就能用，聊天、写代码、存文件一条龙</span></div>
             <div class="tool-row"><span class="k">缺点</span><span class="v">覆盖广，单项深度略逊专精工具</span></div>
@@ -109,7 +25,7 @@
         <div class="card card-static" data-tool="code">
           <div class="tool-name">编程型 Agent</div>
           <div class="tool-rows">
-            <div class="tool-row"><span class="k">代表</span><span class="v">Codex、Trae、Cursor、Claude Code、Cline</span></div>
+            <div class="tool-row"><span class="k">代表</span><span class="v">Codex、TraeCode、Cursor、Claude Code 等</span></div>
             <div class="tool-row"><span class="k">适合</span><span class="v">已熟知基础操作、追求效率的人</span></div>
             <div class="tool-row"><span class="k">优点</span><span class="v">改动、调试都在自己电脑里完成，效率最高</span></div>
             <div class="tool-row"><span class="k">缺点</span><span class="v">需要安装<span class="term" tabindex="0" data-tip="要先下载安装到电脑上的软件，比如 Cursor、Trae">客户端</span>，门槛最高</span></div>
@@ -125,5 +41,88 @@
       <span class="w-ico" aria-hidden="true">⚠️</span>
       <span><b>新手提醒：</b>别一上来就装编程型客户端——先用网页版工具跑通全流程，再考虑升级。</span>
     </div>
+  </div>
+</section>
+
+<!-- ============ 1.2 生成 · 需求：两条路 ============ -->
+<section class="sec" id="require">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">Your Need</span>
+      <h2 class="h2">需求：两条路挑一条</h2>
+      <p class="sec-sub">不管走哪条，最后都是把「目标、受众、风格」说给 Agent。</p>
+    </div>
+    <div class="branches rv">
+      <div class="branch">
+        <div class="branch-k">A · 已有详细需求和框架</div>
+        <div class="leaf">
+          <b>把详细需求与框架整理好，直接给 Agent</b>
+          <p class="leaf-p">用<a class="tpl-link" href="#elements" data-scroll-to="#elements">提示词三要素卡</a>把目标、受众、风格理成需求框架，直接发给 Agent。</p>
+        </div>
+      </div>
+      <div class="branch">
+        <div class="branch-k">B · 没有具体想法</div>
+        <div class="leaf prompt-card prompt-card--sm">
+          <button class="copy-btn" type="button" data-copy>复制</button>
+          <div class="prompt-tag">① 像聊天一样问它</div>
+          <div class="prompt-text">我想做一个 xxxx 网站，我可以怎样开始？</div>
+        </div>
+        <div class="leaf">
+          <b>② 用三要素 + 模板卡先开始</b>
+          <p class="leaf-p">先看<a class="tpl-link" href="#elements" data-scroll-to="#elements">提示词三要素卡</a>理清思路，再<a class="tpl-link" href="#prompt-template" data-scroll-to="#prompt-template">跳转默认模板</a>——复制模板卡，先开始尝试。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1.3 提示词三要素卡 ============ -->
+<section class="sec" id="elements">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">Three Elements</span>
+      <h2 class="h2">提示词三要素卡</h2>
+      <p class="sec-sub">不用背模板，记住 A、B、C 三句就够用。</p>
+    </div>
+    <div class="grid-3">
+      <div class="card card-static rv">
+        <div class="el-letter">A / GOAL</div>
+        <div class="el-name">目标</div>
+        <p class="el-desc">这个页面是干嘛的。</p>
+        <p class="el-eg"><b>例：</b>「咖啡店的课程报名落地页」</p>
+      </div>
+      <div class="card card-static rv">
+        <div class="el-letter">B / AUDIENCE</div>
+        <div class="el-name">受众</div>
+        <p class="el-desc">谁会来看。</p>
+        <p class="el-eg"><b>例：</b>「25–35 岁想学手冲的城市白领」</p>
+      </div>
+      <div class="card card-static rv">
+        <div class="el-letter">C / STYLE</div>
+        <div class="el-name">风格</div>
+        <p class="el-desc">像什么，或直接贴一个参考链接。</p>
+        <p class="el-eg"><b>例：</b>「极简黑白、大字标题，像 Apple 官网」</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1.4 提示词模板卡（可复制） ============ -->
+<section class="sec" id="prompt-template">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono-label">Prompt Template</span>
+      <h2 class="h2">提示词模板卡（可复制）</h2>
+      <p class="sec-sub">复制模板卡，先开始尝试——把方括号换成你的，粘给任何 Agent。</p>
+    </div>
+    <div class="prompt-card rv">
+      <button class="copy-btn" type="button" data-copy>复制</button>
+      <div class="prompt-tag">PROMPT · 四句话</div>
+      <div class="prompt-text">我想做一个[目标：咖啡课程报名落地页]。
+受众是[受众：25–35 岁想学手冲的城市白领]。
+风格[风格：极简黑白、大字标题、留白多，像 Apple 官网]。
+结构：顶部一句话主张 + 三个课程亮点 + 底部报名表单。</div>
+    </div>
+    <p class="prose rv mt">把这四句粘给 Agent，就已经超过 80% 的新手提示词了。</p>
   </div>
 </section>
