@@ -1,226 +1,207 @@
-/* 教程站交互 v4：进度条 + 滚动进场 + 选型高亮 + Tips 悬浮按钮 + 复制 + 勾选清单 */
-(function () {
+(() => {
   'use strict';
 
-  /* --- 1. 阅读进度条（跟手，线性，无缓动） --- */
-  var bar = document.getElementById('progressBar');
-  if (bar) {
-    var tick = function () {
-      var h = document.documentElement.scrollHeight - window.innerHeight;
-      bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 100) + '%';
-    };
-    window.addEventListener('scroll', tick, { passive: true });
-    window.addEventListener('resize', tick);
-    tick();
-  }
+  const storeKey = 'agent-guide.glossary.v1';
+  const coreTerms = [
+    { id: 'agent', name: 'Agent', definition: '能按你的要求生成、修改网站的 AI 工具。' },
+    { id: 'skill', name: 'Skill', definition: '预设好的工作流程，可让 Agent 按步骤处理任务。' },
+    { id: 'plugin', name: '插件', definition: '为 Agent 增加功能或连接其他工具。' },
+    { id: 'vibe-coding', name: 'Vibe Coding', definition: '用自然语言描述想法，让 AI 生成和修改代码的方式。' },
+    { id: 'prompt', name: '提示词', definition: '你发给 AI 的任务说明。' },
+    { id: 'github', name: 'GitHub', definition: '存放和管理网站文件的平台。' },
+    { id: 'repository', name: '仓库', definition: 'GitHub 中存放项目文件和修改记录的空间。' },
+    { id: 'github-pages', name: 'GitHub Pages', definition: '把 GitHub 仓库里的网页文件发布成网站的服务。' },
+    { id: 'index-html', name: 'index.html', definition: '网站首页常用的文件名。' },
+    { id: 'responsive', name: '响应式', definition: '让网页在手机和电脑上都能合适地显示。' }
+  ];
+  const emptyStore = () => ({ custom: [], favorites: [] });
+  let glossaryState = readGlossary();
 
-  /* --- 2. 滚动进场：卡片淡入上移，只播一次 --- */
-  var rvs = document.querySelectorAll('.rv');
-  if ('IntersectionObserver' in window && rvs.length) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.12 });
-    rvs.forEach(function (el) { io.observe(el); });
-  } else {
-    rvs.forEach(function (el) { el.classList.add('in'); });
-  }
-
-  /* --- 3. 选型选择器：按容器作用域，同页可有多组互不干扰 --- */
-  var PICK_TOOL = { nocode: 'general', pro: 'code' };
-  var PICK_NOTE = {
-    nocode: '为你推荐：通用型 Agent · WorkBuddy / TreaWork —— 网页登录就能用，聊天、写代码、存文件一条龙，不用安装，新手从它开始最省心。',
-    pro: '为你推荐：编程型 Agent · Codex / TraeCode / Cursor / Claude Code —— 已经跑通基础流程后，本地客户端效率最高：改动、调试都在自己电脑里完成，适合追求进阶的人。'
-  };
-  document.querySelectorAll('[data-picker]').forEach(function (root) {
-    var scope = root.getAttribute('data-picker');
-    var chips = root.querySelectorAll('.chip[data-pick]');
-    var note = root.querySelector('[data-result]');
-    var resetBtn = root.querySelector('.chip[data-pick="reset"]');
-    var cards = scope === 'tools' ? root.querySelectorAll('.tool-grid .card') : [];
-    function clearPick() {
-      chips.forEach(function (b) {
-        b.classList.remove('is-on');
-        b.setAttribute('aria-pressed', 'false');
-      });
-      cards.forEach(function (c) { c.classList.remove('hl', 'dim'); });
-      if (note) note.hidden = true;
-      if (resetBtn) resetBtn.hidden = true;
-    }
-    chips.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var key = btn.getAttribute('data-pick');
-        if (key === 'reset') { clearPick(); return; }
-        var tool = PICK_TOOL[key];
-        chips.forEach(function (b) {
-          var on = b === btn;
-          b.classList.toggle('is-on', on);
-          b.setAttribute('aria-pressed', on ? 'true' : 'false');
-        });
-        cards.forEach(function (c) {
-          var hit = c.getAttribute('data-tool') === tool;
-          c.classList.toggle('hl', hit);
-          c.classList.toggle('dim', !hit);
-        });
-        if (note) { note.textContent = PICK_NOTE[key] || ''; note.hidden = false; }
-        if (resetBtn) resetBtn.hidden = false;
-      });
-    });
-  });
-
-  /* --- 4. Tips 悬浮按钮：点击展开 / 收起小贴士卡 --- */
-  var fab = document.querySelector('[data-tips-toggle]');
-  if (fab) {
-    var fabCard = document.querySelector('[data-tips-pop]');
-    var setFab = function (open) {
-      fabCard.hidden = !open;
-      fab.setAttribute('aria-expanded', open ? 'true' : 'false');
-      fab.classList.toggle('is-on', open);
-    };
-    fab.addEventListener('click', function (e) {
-      e.stopPropagation();
-      setFab(fabCard.hidden);
-    });
-    document.addEventListener('click', function (e) {
-      if (!fabCard.hidden && !fabCard.contains(e.target) && e.target !== fab) setFab(false);
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !fabCard.hidden) { setFab(false); fab.focus(); }
-    });
-  }
-
-  /* --- 5. 复制按钮（事件委托，动态渲染的卡片同样生效）：成功后变「已复制」，1.5s 复原 --- */
-  document.addEventListener('click', function (ev) {
-    var btn = ev.target && ev.target.closest ? ev.target.closest('[data-copy]') : null;
-    if (!btn) return;
-      var card = btn.closest('.prompt-card');
-      var src = btn.getAttribute('data-copy');
-      var el = (src && document.querySelector(src)) || (card && card.querySelector('.prompt-text'));
-      var text = el ? el.innerText : '';
-      if (!text) return;
-      var settled = false;
-      var done = function () {
-        if (settled) return;
-        settled = true;
-        btn.textContent = '已复制 ✓';
-        btn.classList.add('done');
-        setTimeout(function () {
-          btn.textContent = '复制';
-          btn.classList.remove('done');
-        }, 1500);
-      };
-      var fallback = function () {
-        if (settled) return;
-        var ta = document.createElement('textarea');
-        ta.value = text;
-        ta.setAttribute('readonly', '');
-        ta.style.cssText = 'position:fixed;left:-9999px;top:0';
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand('copy'); done(); } catch (e) { /* 忽略 */ }
-        document.body.removeChild(ta);
-        setTimeout(done, 60); /* 兜底：即使 execCommand 不可用也给出反馈 */
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done, fallback);
-        setTimeout(fallback, 800); /* 某些环境 Promise 永不返回 */
-      } else {
-        fallback();
-      }
-  });
-
-  /* --- 6. 勾选清单：每个 .checklist 各自算进度，键盘（Enter、Space）同样可用 --- */
-  document.querySelectorAll('.checklist').forEach(function (list) {
-    var items = list.querySelectorAll('.check-item');
-    var wrap = list.closest('.check-wrap') || list.parentElement;
-    var prog = wrap ? wrap.querySelector('[data-check-progress]') : null;
-    function updateProgress() {
-      if (!prog) return;
-      var n = list.querySelectorAll('.check-item.done').length;
-      prog.textContent = '进度 ' + n + ' / ' + items.length + (n === items.length ? ' · 全部完成，去下面看看四个坑' : '');
-    }
-    function toggle(it) {
-      it.classList.toggle('done');
-      it.setAttribute('aria-checked', it.classList.contains('done') ? 'true' : 'false');
-      updateProgress();
-    }
-    items.forEach(function (it) {
-      it.addEventListener('click', function () { toggle(it); });
-      it.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
-          e.preventDefault(); /* 阻止空格滚动页面 */
-          toggle(it);
+  function readGlossary() {
+    try {
+      const value = JSON.parse(localStorage.getItem(storeKey) || 'null');
+      if (!value || !Array.isArray(value.custom) || !Array.isArray(value.favorites)) return emptyStore();
+      const names = new Set();
+      const usedIds = new Set(coreTerms.map(term => term.id));
+      const custom = [];
+      for (const term of value.custom) {
+        if (!term || typeof term.name !== 'string' || typeof term.definition !== 'string') continue;
+        const name = term.name.trim().slice(0, 40);
+        const definition = term.definition.trim().slice(0, 220);
+        const normalized = name.toLocaleLowerCase();
+        if (!name || !definition || names.has(normalized)) continue;
+        names.add(normalized);
+        let id = typeof term.id === 'string' && term.id.startsWith('custom-') ? term.id : '';
+        if (!id || usedIds.has(id)) {
+          let suffix = custom.length;
+          do { id = `custom-import-${suffix++}`; } while (usedIds.has(id));
         }
+        usedIds.add(id);
+        custom.push({ id, name, definition });
+      }
+      return { custom, favorites: value.favorites.filter(id => typeof id === 'string' && usedIds.has(id)) };
+    } catch (_) { return emptyStore(); }
+  }
+
+  function saveGlossary() {
+    try { localStorage.setItem(storeKey, JSON.stringify(glossaryState)); } catch (_) { /* Storage can be disabled. */ }
+  }
+
+  const glossary = document.createElement('dialog');
+  glossary.id = 'glossary-dialog';
+  glossary.className = 'resource-dialog';
+  glossary.setAttribute('aria-labelledby', 'glossary-title');
+  glossary.innerHTML = `
+    <div class="dialog-head"><div><p class="eyebrow">QUICK REFERENCE</p><h2 id="glossary-title">词典</h2></div><button class="dialog-close" type="button" data-close="glossary" aria-label="关闭词典">×</button></div>
+    <p class="dialog-intro">10 个常用词，输入名称查找。</p>
+    <label class="field-label" for="term-search">查找术语</label><input id="term-search" class="dialog-input" type="search" placeholder="输入名称" autocomplete="off">
+    <div id="glossary-list" class="glossary-list"></div>
+    <form id="term-form" class="term-form"><h3>添加术语</h3><label class="field-label" for="term-name">名称</label><input id="term-name" class="dialog-input" type="text" maxlength="40" required><label class="field-label" for="term-definition">一句话解释</label><input id="term-definition" class="dialog-input" type="text" maxlength="220" required><button class="button button-primary" id="term-add" type="submit">添加术语</button><p class="form-status" id="term-status" role="status"></p></form>`;
+  document.body.append(glossary);
+
+  const tips = document.createElement('dialog');
+  tips.id = 'tips-dialog';
+  tips.className = 'resource-dialog';
+  tips.setAttribute('aria-labelledby', 'tips-title');
+  tips.innerHTML = `
+    <div class="dialog-head"><div><p class="eyebrow">FIELD NOTES</p><h2 id="tips-title">实用提示</h2></div><button class="dialog-close" type="button" data-close="tips" aria-label="关闭提示">×</button></div>
+    <div class="tips-list">
+      <details><summary>如何安装 Skill</summary><p>把 Skill 的链接发给 Agent，请它安装并验证。安装后，在新对话输入 Skill 名称调用。</p></details>
+      <details><summary>如何安装插件</summary><p>打开所用工具的插件目录，查看所需权限后安装。完成后用一个小任务试运行。</p></details>
+      <details><summary>如何制作自己的 Skill</summary><p>写下重复任务的输入、步骤和结果，请 Agent 整理为 Skill，并做一次试运行。</p></details>
+    </div>`;
+  document.body.append(tips);
+
+  const list = glossary.querySelector('#glossary-list');
+  const search = glossary.querySelector('#term-search');
+  const status = glossary.querySelector('#term-status');
+
+  function renderTerms() {
+    list.replaceChildren();
+    const query = search.value.trim().toLocaleLowerCase();
+    const customByName = new Map(glossaryState.custom.map(term => [term.name.toLocaleLowerCase(), term]));
+    const coreNames = new Set(coreTerms.map(term => term.name.toLocaleLowerCase()));
+    const terms = [
+      ...coreTerms.map(term => customByName.get(term.name.toLocaleLowerCase()) || term),
+      ...glossaryState.custom.filter(term => !coreNames.has(term.name.toLocaleLowerCase()))
+    ].filter(term => term.name.toLocaleLowerCase().includes(query));
+    if (!terms.length) {
+      const empty = document.createElement('p');
+      empty.className = 'empty-terms';
+      empty.textContent = '没有找到这个词。';
+      list.append(empty);
+      return;
+    }
+    for (const term of terms) {
+      const article = document.createElement('article');
+      article.className = 'term-row';
+      const top = document.createElement('div');
+      top.className = 'term-row-top';
+      const name = document.createElement('b');
+      name.textContent = term.name;
+      const actions = document.createElement('div');
+      actions.className = 'term-actions';
+      const favorite = document.createElement('button');
+      favorite.type = 'button';
+      favorite.textContent = glossaryState.favorites.includes(term.id) ? '已收藏' : '收藏';
+      favorite.setAttribute('aria-label', `${favorite.textContent} ${term.name}`);
+      favorite.setAttribute('aria-pressed', String(glossaryState.favorites.includes(term.id)));
+      favorite.addEventListener('click', () => {
+        glossaryState.favorites = glossaryState.favorites.includes(term.id)
+          ? glossaryState.favorites.filter(id => id !== term.id)
+          : [...glossaryState.favorites, term.id];
+        const selected = glossaryState.favorites.includes(term.id);
+        favorite.textContent = selected ? '已收藏' : '收藏';
+        favorite.setAttribute('aria-label', `${favorite.textContent} ${term.name}`);
+        favorite.setAttribute('aria-pressed', String(selected));
+        saveGlossary();
       });
-    });
+      actions.append(favorite);
+      if (!coreTerms.some(item => item.id === term.id)) {
+        const remove = document.createElement('button');
+        remove.type = 'button';
+        remove.textContent = '删除';
+        remove.setAttribute('aria-label', `删除 ${term.name}`);
+        remove.addEventListener('click', () => {
+          const nextFocus = article.nextElementSibling?.querySelector('button')
+            || article.previousElementSibling?.querySelector('button') || search;
+          const builtIn = coreTerms.find(item => item.name.toLocaleLowerCase() === term.name.toLocaleLowerCase());
+          glossaryState.custom = glossaryState.custom.filter(item => item.id !== term.id);
+          glossaryState.favorites = glossaryState.favorites.filter(id => id !== term.id);
+          saveGlossary();
+          if (builtIn) {
+            const scrollTop = list.scrollTop;
+            renderTerms();
+            list.scrollTop = scrollTop;
+            const restored = [...list.querySelectorAll('.term-row')].find(row => row.querySelector('b')?.textContent === builtIn.name);
+            (restored?.querySelector('button') || search).focus();
+          } else {
+            article.remove();
+            if (!list.children.length) renderTerms();
+            nextFocus.focus();
+          }
+        });
+        actions.append(remove);
+      }
+      top.append(name, actions);
+      const definition = document.createElement('p');
+      definition.textContent = term.definition;
+      article.append(top, definition);
+      list.append(article);
+    }
+  }
+
+  search.addEventListener('input', renderTerms);
+  glossary.querySelector('#term-form').addEventListener('submit', event => {
+    event.preventDefault();
+    const nameInput = glossary.querySelector('#term-name');
+    const definitionInput = glossary.querySelector('#term-definition');
+    const name = nameInput.value.trim();
+    const definition = definitionInput.value.trim();
+    if (!name || !definition) { status.textContent = '请填写名称和解释。'; return; }
+    if ([...coreTerms, ...glossaryState.custom].some(term => term.name.toLocaleLowerCase() === name.toLocaleLowerCase())) {
+      status.textContent = '这个词已经在词典里。'; return;
+    }
+    glossaryState.custom.push({ id: `custom-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, name, definition });
+    search.value = '';
+    saveGlossary(); renderTerms();
+    nameInput.value = ''; definitionInput.value = '';
+    status.textContent = '已添加。';
+    nameInput.focus();
+  });
+
+  document.querySelectorAll('[data-open]').forEach(button => button.addEventListener('click', () => {
+    const dialog = button.dataset.open === 'glossary' ? glossary : tips;
+    if (dialog === glossary) { search.value = ''; renderTerms(); }
+    if (!dialog.open) dialog.showModal();
+  }));
+  document.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click', () => {
+    button.closest('dialog').close();
+  }));
+  [glossary, tips].forEach(dialog => dialog.addEventListener('click', event => {
+    if (event.target === dialog) dialog.close();
+  }));
+
+  document.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {
+    const text = button.closest('[data-copy-scope], .template-card').querySelector('[data-copy-text]').textContent.trim();
+    try {
+      await navigator.clipboard.writeText(text);
+      button.textContent = '已复制';
+    } catch (_) {
+      button.textContent = '请手动复制';
+    }
+    setTimeout(() => { button.textContent = '复制'; }, 2400);
+  }));
+
+  const publishChecks = [...document.querySelectorAll('.publish-check')];
+  const publishProgress = document.querySelector('[data-check-progress]');
+  if (publishChecks.length && publishProgress) {
+    const updateProgress = () => {
+      const done = publishChecks.filter(input => input.checked).length;
+      publishProgress.textContent = `进度 ${done} / ${publishChecks.length}`;
+      publishChecks.forEach(input => input.closest('.publish-item').classList.toggle('is-complete', input.checked));
+    };
+    publishChecks.forEach(input => input.addEventListener('change', updateProgress));
     updateProgress();
-  });
-
-  /* --- 6b. 全局减少动效开关（页内平滑滚动等共用） --- */
-  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* --- 6c. 页内模板入口：平滑滚到目标卡，边框高亮 1.5s（只变 border-color） --- */
-  document.querySelectorAll('[data-scroll-to]').forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      var sel = link.getAttribute('data-scroll-to');
-      var target = sel ? document.querySelector(sel) : null;
-      if (!target) return;
-      e.preventDefault();
-      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-      target.classList.add('is-flash');
-      setTimeout(function () { target.classList.remove('is-flash'); }, 1500);
-    });
-  });
-
-
-  /* --- 7. 术语气泡：绝对定位于词条内，坐标换算成视口钳制后的纯 px --- */
-  var terms = document.querySelectorAll('.term');
-  var tipStyle = document.createElement('style');
-  document.head.appendChild(tipStyle);
-  var probe = document.createElement('div');
-  probe.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;left:0;top:0;'
-    + 'width:max-content;box-sizing:border-box;font-size:12px;line-height:1.6;padding:8px 12px;'
-    + 'border-radius:8px;text-align:left;';
-  probe.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(probe);
-  var active = null;
-  function placeTip(t) {
-    var vw = document.documentElement.clientWidth;
-    var maxW = Math.min(260, Math.round(vw * 0.92));
-    probe.style.maxWidth = maxW + 'px';
-    probe.style.width = 'max-content';
-    probe.textContent = t.getAttribute('data-tip') || '';
-    var w = Math.min(probe.offsetWidth, maxW);
-    probe.style.width = w + 'px';
-    var h = probe.offsetHeight;
-    var r = t.getBoundingClientRect();
-    /* 目标视口横坐标 → 相对词条左缘的偏移 */
-    var vx = Math.min(Math.max(r.left + r.width / 2 - w / 2, 8), vw - 8 - w);
-    var x = Math.round(vx - r.left);
-    var y = -h - 8;
-    var below = r.top - h - 8 < 64; /* 56px 吸顶导航 + 8px 间距，顶上放不下就翻到下方 */
-    if (below) y = Math.round(r.height) + 8;
-    var caretX = Math.round(Math.min(Math.max(w / 2 - 5, 8), Math.max(w - 18, 8)));
-    var css = '.term.tip-on::after{top:' + y + 'px;left:' + x + 'px}'
-            + '.term.tip-on::before{top:' + (below ? y - 13 : y + h + 3) + 'px;left:' + (x + caretX) + 'px;margin-left:0;}';
-    if (below) css += '.term.tip-on::before{border-top-color:transparent;border-bottom-color:var(--ink)}';
-    tipStyle.textContent = css;
   }
-  function activate(t) {
-    if (active && active !== t) active.classList.remove('tip-on');
-    active = t;
-    placeTip(t);
-    t.classList.add('tip-on');
-  }
-  function deactivate(t) {
-    if (active === t) { active = null; t.classList.remove('tip-on'); }
-  }
-  terms.forEach(function (t) {
-    t.addEventListener('mouseenter', function () { activate(t); });
-    t.addEventListener('focus', function () { activate(t); });
-    t.addEventListener('mouseleave', function () { deactivate(t); });
-    t.addEventListener('blur', function () { deactivate(t); });
-  });
-  window.addEventListener('resize', function () { if (active) placeTip(active); });
 })();
