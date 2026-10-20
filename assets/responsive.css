@@ -1,0 +1,43 @@
+.responsive-section{padding-top:72px;scroll-margin-top:110px}
+.responsive-section .section-title{margin-bottom:24px}
+.responsive-comparison{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#fff}
+.responsive-toolbar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 22px}
+.responsive-toolbar>span{color:var(--muted);font-size:14px}
+.responsive-switch{display:flex;gap:3px;padding:3px;border:1px solid var(--line);border-radius:10px;background:#f5f7fa}
+.responsive-switch button{min-width:64px;min-height:36px;padding:5px 12px;border:0;border-radius:7px;background:transparent;color:var(--muted);font-size:13px;font-weight:650}
+.responsive-switch button[aria-pressed="true"]{background:#fff;color:var(--blue);box-shadow:0 1px 4px rgba(24,40,63,.1)}
+.responsive-figure{margin:0}
+.responsive-stage{min-height:392px;display:flex;align-items:center;justify-content:center;padding:28px 30px;border-top:1px solid var(--line);background:#f2f6fa}
+.responsive-preview{width:760px;max-width:100%;overflow:hidden;border:1px solid #d7e1eb;border-radius:11px;background:#fff;box-shadow:0 15px 34px rgba(24,40,63,.09);transition:width .25s ease}
+.responsive-preview[data-view="mobile"]{width:272px}
+.responsive-browser-bar{height:23px;display:flex;align-items:center;gap:5px;padding:0 12px;border-bottom:1px solid #e9eef3;background:#fbfcfd}
+.responsive-browser-bar span{width:5px;height:5px;border-radius:50%;background:#c9d3dd}
+.responsive-page{padding:19px 28px 25px}
+.responsive-page-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:13px;border-bottom:1px solid #e9edf2}
+.responsive-page-header strong{font-size:14px;letter-spacing:-.03em}
+.responsive-page-nav{display:flex;gap:20px;color:#687789;font-size:10px}
+.responsive-page-menu{display:none;width:19px;height:15px;flex-direction:column;justify-content:center;gap:4px}
+.responsive-page-menu i{display:block;width:100%;height:1px;background:#596b7e}
+.responsive-page-hero{padding:22px 0 19px}
+.responsive-page-hero>span{color:var(--blue);font-size:9px;font-weight:700;letter-spacing:.05em}
+.responsive-page-hero h3{margin:4px 0 2px;font-size:24px;line-height:1.25;letter-spacing:-.045em}
+.responsive-page-hero p{margin:0;color:#758294;font-size:10px}
+.responsive-projects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.responsive-project{min-width:0;padding:7px;border:1px solid #e3eaf1;border-radius:6px}
+.responsive-project i{display:block;height:64px;border-radius:3px;background:#e9eff5}
+.responsive-project:nth-child(2) i{background:#e3ebf4}
+.responsive-project:nth-child(3) i{background:#edf1f5}
+.responsive-project span{display:block;padding-top:6px;color:#46576b;font-size:10px;font-weight:600}
+.responsive-preview[data-view="mobile"] .responsive-page{padding:15px 17px 19px}
+.responsive-preview[data-view="mobile"] .responsive-page-header{padding-bottom:10px}
+.responsive-preview[data-view="mobile"] .responsive-page-header strong{font-size:12px}
+.responsive-preview[data-view="mobile"] .responsive-page-nav{display:none}
+.responsive-preview[data-view="mobile"] .responsive-page-menu{display:flex}
+.responsive-preview[data-view="mobile"] .responsive-page-hero{padding:20px 0 14px}
+.responsive-preview[data-view="mobile"] .responsive-page-hero h3{font-size:18px}
+.responsive-preview[data-view="mobile"] .responsive-projects{grid-template-columns:1fr;gap:7px}
+.responsive-preview[data-view="mobile"] .responsive-project{display:flex;align-items:center;gap:10px;padding:5px}
+.responsive-preview[data-view="mobile"] .responsive-project i{width:43px;height:32px;flex:none}
+.responsive-preview[data-view="mobile"] .responsive-project span{padding:0}
+.responsive-figure figcaption{min-height:51px;padding:14px 22px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:580px){.responsive-section{padding-top:54px}.responsive-toolbar{align-items:flex-start;flex-direction:column;gap:12px;padding:17px}.responsive-stage{min-height:352px;padding:18px 16px}.responsive-page{padding:13px 12px 16px}.responsive-page-nav{gap:8px;font-size:8px}.responsive-page-header strong{font-size:11px}.responsive-page-hero{padding:17px 0 13px}.responsive-page-hero h3{font-size:18px}.responsive-projects{gap:5px}.responsive-project{padding:4px}.responsive-project i{height:43px}.responsive-project span{font-size:8px}.responsive-figure figcaption{padding:12px 17px}}

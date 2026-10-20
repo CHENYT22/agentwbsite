@@ -11,8 +11,12 @@
 .header-tools{display:flex;justify-content:flex-end;gap:8px}
 .header-tools button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 11px;color:var(--muted);font-size:13px;font-weight:600}
 .header-tools button:hover{border-color:#AFC5E2;color:var(--blue)}
-.hero{min-height:590px;display:flex;align-items:center;padding-block:105px 120px}
-.hero-content{max-width:840px}
+.hero{position:relative;isolation:isolate;width:100%;max-width:none;min-height:590px;display:flex;align-items:center;overflow:hidden;padding-block:105px 120px;background:var(--paper)}
+.hero::before,.hero::after{content:"";position:absolute;z-index:0;pointer-events:none;border-radius:50%;filter:blur(48px)}
+.hero::before{top:-270px;right:-170px;width:940px;height:780px;background:radial-gradient(ellipse at center,rgba(112,163,225,.37) 0%,rgba(169,202,240,.24) 37%,rgba(248,250,252,0) 72%);animation:hero-glow-drift 21s ease-in-out infinite alternate}
+.hero::after{bottom:-370px;left:9%;width:790px;height:640px;background:radial-gradient(ellipse at center,rgba(175,203,235,.24) 0%,rgba(220,233,247,.15) 43%,rgba(248,250,252,0) 72%);animation:hero-glow-drift 27s ease-in-out infinite alternate-reverse}
+.hero-content{position:relative;z-index:1;width:min(calc(100% - 64px),var(--content));margin-inline:auto}
+@keyframes hero-glow-drift{from{transform:translate3d(-3%,2%,0) scale(1)}to{transform:translate3d(7%,-5%,0) scale(1.13)}}
 .hero h1{margin-bottom:22px}
 .hero-lead{margin-bottom:35px;font-size:clamp(18px,2vw,22px);color:var(--muted)}
 .journey-section{padding:110px 0 125px;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -50,6 +54,8 @@
 .finish-section{padding-block:135px 20px}.finish-section h2{margin-bottom:17px}.finish-section p{margin-bottom:30px;color:var(--muted);font-size:17px}
 @media(max-width:900px){.journey-body{display:grid;gap:10px}.journey-step{padding-right:22px}.journey-step:not(:first-child){padding-left:22px}}
 @media(max-width:760px){.header-inner{width:min(calc(100% - 36px),var(--content));min-height:0;grid-template-columns:1fr auto;gap:0}.brand,.header-tools{height:56px}.main-nav{grid-column:1/-1;grid-row:2;justify-content:space-between;gap:8px;border-top:1px solid var(--line)}.main-nav a{padding:10px 4px}.hero{min-height:0;padding-block:88px 105px}.journey-section{padding-block:80px 90px}.journey-grid{display:grid;grid-template-columns:1fr;border-top:0}.journey-grid::before{display:none}.journey-step,.journey-step:not(:first-child){min-height:155px;padding:22px 4px;border-right:0;border-top:1px solid var(--line)}.journey-body{display:flex}.journey-body strong{font-size:29px}.support-section{padding-top:80px;display:grid;gap:35px}.support-actions{min-width:0}.page-hero{padding-block:74px 55px}.footer-inner{min-height:110px}.site-footer{margin-top:60px}}
+@media(max-width:760px){.hero-content{width:min(calc(100% - 36px),var(--content))}.hero::before{top:-160px;right:-430px}.hero::after{left:-330px;bottom:-370px}}
+@media(prefers-reduced-motion:reduce){.hero::before,.hero::after{animation:none}}
 @media(max-width:350px){.brand em{font-size:12px}.header-tools button{padding:6px 8px;font-size:12px}}
 @media(max-width:600px){.resource-dialog{max-height:calc(100dvh - 16px);padding:24px 18px;border-radius:16px}.dialog-head h2{font-size:32px}.term-row-top{align-items:flex-start}.term-actions{flex-shrink:0}}
 @media(max-width:760px){.content-section{padding-block:65px 75px}.content-section.section-tint>.shell{width:min(calc(100% - 36px),var(--content))}.section-title{gap:14px;margin-bottom:30px}.tool-choice,.tool-types,.route-grid,.template-grid{grid-template-columns:1fr}.choice-button{min-height:84px;font-size:18px}.tool-types{gap:0;margin-top:40px}.tool-types>div{padding:22px 0;border-bottom:1px solid var(--line)}.route-card{min-height:210px}.route-card h3{margin-top:35px}.element-list{grid-template-columns:1fr}.element-list>div,.element-list>div:not(:first-child){padding:18px 0;border-right:0;border-bottom:1px solid var(--line)}.element-list h3{margin:15px 0 4px}.template-card{min-height:0;padding:23px}.template-card p{margin-top:33px}.next-step{margin-top:50px}}
